@@ -82,4 +82,5 @@ Document History
 Acknowledgements
 ================
 
-FIXME
+The authors would like to acknowledge the help and input of the
+other participants at the OpenPGP e-mail summmit 2019.
