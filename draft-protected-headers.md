@@ -27,7 +27,12 @@ author:
     abbrev: ACLU
     email: dkg@fifthhorseman.net
 informative:
+ I-D.draft-melnikov-smime-header-signing-05:
+ I-D.draft-luck-lamps-pep-header-protection-03:
+ RFC822:
 normative:
+ RFC2119:
+ RFC8174:
  RFC3156:
 --- abstract
 
@@ -39,6 +44,8 @@ Introduction
 ============
 
 FIXME
+(Mention {{I-D.draft-melnikov-smime-header-signing-05}} and
+{{I-D.draft-luck-lamps-pep-header-protection-03}})
 
 Requirements Language
 ---------------------
@@ -48,14 +55,27 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 Cryptographic Payload
 =====================
 
+The bode of an Email message encrypted or signed.
+
+"multipart/encrypted" has content type of "application/octet-stream"
+"multipart/signed" has content type of "text/plain"
+
+
 Message Composition (Header Copying)
 ====================================
+
+(Headers in Email message)
+(All vs headers not to mangle with: From, To, CC, Date, Message-ID)
 
 Encrypted Subject
 =================
 
 Legacy Display
 --------------
+
+The cryptographic payload containing the headers is content type of
+"multipart/mixed" composed by a content type of "text/rfc822-headers" and a
+body. 
 
 Examples
 ========
