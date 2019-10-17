@@ -31,6 +31,9 @@ author:
     abbrev: ACLU
     email: dkg@fifthhorseman.net
 informative:
+ OpenPGP-Email-Summit-2019:
+    target:  https://wiki.gnupg.org/OpenPGPEmailSummit201910
+    title: OpenPGP Email Summit 2019
 normative:
  RFC2119:
  RFC2822:
@@ -166,6 +169,7 @@ Examples
     E (original message)
     E --ABCD--
     . --1234--
+
 Text in `[` and `]` is not part of the message or not as it is, it's a clarification in the examples.
 Message-ID and boundary strings have been replaced by `message_id` and `multipart_X_boundary` to make the examples more clear.
 Extra new lines have been added to also make the examples more clear.
@@ -477,4 +481,4 @@ Document History
 Acknowledgements
 ================
 
-Used to be Memory Hole, Autocrypt working group, OpenPGP e-mail summit attendees. Others?
+Used to be Memory Hole, Autocrypt working group, OpenPGP e-mail summit attendees ({{OpenPGP-Email-Summit-2019}}). Others?
