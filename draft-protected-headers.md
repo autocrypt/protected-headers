@@ -38,6 +38,7 @@ normative:
  RFC5751:
  RFC8174:
  RFC8551:
+ I-D.draft-luck-lamps-pep-header-protection-03:
 --- abstract
 
 This document describes a common strategy to extend the cryptographic protections provided by PGP/MIME etc. to also protect message headers. In particular, how to encrypt the Subject line.
