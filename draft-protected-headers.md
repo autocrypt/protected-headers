@@ -48,7 +48,7 @@ This document describes a common strategy to extend the cryptographic protection
 Introduction
 ============
 
-The standards for cryptographic e-mail, PGP/MIME and S/MIME ({{RFC3156}} and {{RFC8551}}), can provide both integrity and confidentiality to the body of a MIME e-mail message. However, PGP/MIME alone provides no protection to message headers and the mechanism specified for header protection within S/MIME has not seen widespread adoption.
+MIME Security with OpenPGP and S/MIME standards can provide integrity, authentication, non-repudiation and confidentiality to the body of a MIME e-mail message. However, OpenPGP/MIME alone does not protect message headers and the structure to protect headers defined in S/MIME has not seen widespread adoption.
 
 This document defines a scheme, "Protected Headers for Cryptographic E-mail", which has been adopted by multiple existing e-mail clients in order to extend the cryptographic protections provided by PGP/MIME to also protect the {{RFC2822}} message headers.
 
