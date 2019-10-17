@@ -52,7 +52,7 @@ MIME Security with OpenPGP and S/MIME standards can provide integrity, authentic
 
 This document defines a scheme, "Protected Headers for Cryptographic E-mail", which has been adopted by multiple existing e-mail clients in order to extend the cryptographic protections provided by PGP/MIME to also protect the {{RFC2822}} message headers.
 
-In particular, we describe how to encrypt the Subject line and how to preserve backwards compatibility so an encrypted subject remains available to recipients using software that does not implement support for the Protected Headers scheme.
+In particular, we describe how to encrypt the Subject line and how to preserve backwards compatibility so that an encrypted subject remains available to recipients using software that does not implement support for the Protected Headers scheme.
 
 We also discuss some of the compatibility constraints and usability concerns which motivated the design of the scheme, as well as limitations.
 
