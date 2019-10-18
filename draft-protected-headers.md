@@ -34,6 +34,7 @@ informative:
  OpenPGP-Email-Summit-2019:
     target:  https://wiki.gnupg.org/OpenPGPEmailSummit201910
     title: OpenPGP Email Summit 2019
+    date: 2019-10-13
 normative:
  RFC2119:
  RFC2822:
