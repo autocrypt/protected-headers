@@ -32,17 +32,22 @@ author:
     email: dkg@fifthhorseman.net
 informative:
  OpenPGP-Email-Summit-2019:
-    target:  https://wiki.gnupg.org/OpenPGPEmailSummit201910
+    target: https://wiki.gnupg.org/OpenPGPEmailSummit201910
     title: OpenPGP Email Summit 2019
     date: 2019-10-13
+ Autocrypt:
+    target: https://autocrypt.org/level1.html
+    title: Autocrypt Specification 1.1
+    date: 2019-10-13
+ I-D.draft-luck-lamps-pep-header-protection-03:
+ I-D.draft-melnikov-lamps-header-protection-00:
+ RFC3851:
+ RFC8551:
 normative:
  RFC2119:
  RFC2822:
  RFC3156:
- RFC5751:
  RFC8174:
- RFC8551:
- I-D.draft-luck-lamps-pep-header-protection-03:
 --- abstract
 
 This document describes a common strategy to extend the cryptographic protections provided by PGP/MIME etc. to also protect message headers. In particular, how to encrypt the Subject line.
@@ -52,7 +57,7 @@ This document describes a common strategy to extend the cryptographic protection
 Introduction
 ============
 
-MIME Security with OpenPGP and S/MIME standards can provide integrity, authentication, non-repudiation and confidentiality to the body of a MIME e-mail message. However, OpenPGP/MIME alone does not protect message headers and the structure to protect headers defined in S/MIME has not seen widespread adoption.
+MIME Security with OpenPGP and S/MIME standards can provide integrity, authentication, non-repudiation and confidentiality to the body of a MIME e-mail message. However, PGP/MIME ({{RFC3156}}) alone does not protect message headers and the structure to protect headers defined in S/MIME 3.1 ({{RFC3851}}) has not seen widespread adoption.
 
 This document defines a scheme, "Protected Headers for Cryptographic E-mail", which has been adopted by multiple existing e-mail clients in order to extend the cryptographic protections provided by PGP/MIME to also protect the {{RFC2822}} message headers.
 
@@ -60,7 +65,7 @@ In particular, we describe how to encrypt the Subject line and how to preserve b
 
 We also discuss some of the compatibility constraints and usability concerns which motivated the design of the scheme, as well as limitations.
 
-The authors believe the technique is broadly applicable would also apply to other MIME-compatible cryptographic e-mail systems, including S/MIME.  Furthermore, this technique has already proven itself as a useful building block for other improvements to cryptographic e-mail, such as the Autocrypt Level 1.1 "Gossip" mechanism.
+The authors believe the technique is broadly applicable would also apply to other MIME-compatible cryptographic e-mail systems, including S/MIME ({{RFC8551}}).  Furthermore, this technique has already proven itself as a useful building block for other improvements to cryptographic e-mail, such as the Autocrypt Level 1.1 ({{Autocrypt}}) "Gossip" mechanism.
 
 
 Requirements Language
@@ -78,7 +83,7 @@ For the purposes of this document, we define the following concepts:
    * *Protection* of message data refers to cryptographic encryption and/or signatures, providing authenticity, confidentiality or both.
    * *Cryptographic Envelope* is all MIME structure directly dictated by the cryptographic e-mail system in use.
    * *Cryptographic Payload* is all message data protected by the Cryptographic Envelope.
-   * *Original Headers* are the RFC2822 message headers as known to the sending MUA at the time of message composition.
+   * *Original Headers* are the {{RFC2822}} message headers as known to the sending MUA at the time of message composition.
    * *Protected Headers* are any headers protected by the scheme described in this document.
    * *Exposed Headers* are any headers outside the Cryptographic Payload (protected or not).
    * *Obscured Headers* are any headers which have been modified or removed from the set of Exposed Headers.
@@ -467,6 +472,25 @@ Mailinglist mungles From field
 
 (describe the issue, that some mailinglist softwares mungles the From line in order to make sure, that replys go to the list and not to the author. Protected headers break this workaround. See https://cr.yp.to/proto/replyto.html how this should be fixed properly in a MUA)
 
+Comparison with Other Header Protection Schemes
+===============================================
+
+S/MIME 3.1 Header Protection
+----------------------------
+
+S/MIME 3.1 ({{RFC3851}}) introduces header protection via message/rfc822 header parts.
+
+The problem with this is that legacy clients are likely to interpret such a part as either a forwarded message, or as an unreadable substructure.
+
+forwarded=no
+------------
+
+{{I-D.draft-melnikov-lamps-header-protection-00}}
+
+pEp Header protection
+---------------------
+
+{{I-D.draft-luck-lamps-pep-header-protection-03}}
 
 IANA Considerations
 ===================
