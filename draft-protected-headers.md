@@ -50,22 +50,27 @@ normative:
  RFC8174:
 --- abstract
 
-This document describes a common strategy to extend the cryptographic protections provided by PGP/MIME etc. to also protect message headers. In particular, how to encrypt the Subject line.
+This document describes a common strategy to extend the cryptographic protections provided by PGP/MIME, etc. to protect message headers in addition to message bodies.
+In addition to protecting the authenticity and integrity of headers via signatures, it also describes how to preserve the confidentiality of the Subject header.
 
 --- middle
 
 Introduction
 ============
 
-MIME Security with OpenPGP and S/MIME standards can provide integrity, authentication, non-repudiation and confidentiality to the body of a MIME e-mail message. However, PGP/MIME ({{RFC3156}}) alone does not protect message headers and the structure to protect headers defined in S/MIME 3.1 ({{RFC3851}}) has not seen widespread adoption.
+E-mail end-to-end security with OpenPGP and S/MIME standards can provide integrity, authentication, non-repudiation and confidentiality to the body of a MIME e-mail message.
+However, PGP/MIME ({{RFC3156}}) alone does not protect message headers.
+And the structure to protect headers defined in S/MIME 3.1 ({{RFC3851}}) has not seen widespread adoption.
 
-This document defines a scheme, "Protected Headers for Cryptographic E-mail", which has been adopted by multiple existing e-mail clients in order to extend the cryptographic protections provided by PGP/MIME to also protect the {{RFC2822}} message headers.
+This document defines a scheme, "Protected Headers for Cryptographic E-mail", which has been adopted by multiple existing e-mail clients in order to extend the cryptographic protections provided by PGP/MIME to also protect the message headers.
 
-In particular, we describe how to encrypt the Subject line and how to preserve backwards compatibility so that an encrypted subject remains available to recipients using software that does not implement support for the Protected Headers scheme.
+This document describes how these protections can be applied to cryptographically signed messages, and also discusses some of the challenges of encrypting many transit-oriented headers.
 
-We also discuss some of the compatibility constraints and usability concerns which motivated the design of the scheme, as well as limitations.
+It offers guidance for encrypting non-transit-oriented headers like Subject, and also offers a means to preserve backwards compatibility so that an encrypted Subject remains available to recipients using software that does not implement support for the Protected Headers scheme.
 
-The authors believe the technique is broadly applicable would also apply to other MIME-compatible cryptographic e-mail systems, including S/MIME ({{RFC8551}}).  Furthermore, this technique has already proven itself as a useful building block for other improvements to cryptographic e-mail, such as the Autocrypt Level 1.1 ({{Autocrypt}}) "Gossip" mechanism.
+The document also discusses some of the compatibility constraints and usability concerns which motivated the design of the scheme, as well as limitations and a comparison with other proposals.
+
+While the document (and the authors') focus is primarily PGP/MIME, we believe the technique is broadly applicable and would also apply to other MIME-compatible cryptographic e-mail systems, including S/MIME ({{RFC8551}}).  Furthermore, this technique has already proven itself as a useful building block for other improvements to cryptographic e-mail, such as the Autocrypt Level 1.1 ({{Autocrypt}}) "Gossip" mechanism.
 
 
 Requirements Language
