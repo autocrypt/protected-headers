@@ -47,6 +47,7 @@ normative:
  RFC2119:
  RFC2822:
  RFC3156:
+ RFC4880:
  RFC8174:
 --- abstract
 
@@ -81,15 +82,116 @@ For the purposes of this document, we define the following concepts:
 
    * *MUA* is short for Mail User Agent; an e-mail client.
    * *Protection* of message data refers to cryptographic encryption and/or signatures, providing confidentiality, authenticity or both.
-   * *Cryptographic Envelope* is all MIME structure directly dictated by the cryptographic e-mail system in use.
-   * *Cryptographic Payload* is all message data protected by the Cryptographic Envelope.
+   * *Cryptographic Layer*, *Cryptographic Envelope* and * *Cryptographic Payload* are defined in {{cryptographic-structure}}
    * *Original Headers* are the {{RFC2822}} message headers as known to the sending MUA at the time of message composition.
    * *Protected Headers* are any headers protected by the scheme described in this document.
    * *Exposed Headers* are any headers outside the Cryptographic Payload (protected or not).
-   * *Obscured Headers* are any headers which have been modified or removed from the set of Exposed Headers.
+   * *Obscured Headers* are any Protected Headers which have been modified or removed from the set of Exposed Headers.
    * *Legacy Display Part* is a MIME construct which guarantees visibility of data from the Original Headers which may have been removed or obscured from the Unprotected Headers.
 
-The Cryptographic Envelope fully encloses the Cryptographic Payload, whether the message is signed or encrypted. The Original Headers, aside from Content-Type headers which directly pertain to the cryptographic structure, are considered to be outside of both.
+Cryptographic MIME Message Structure {#cryptographic-structure}
+====================================
+
+Implementations use the structure of an e-mail message to protect the headers.
+This section establishes some conventions about how to think about message structure.
+
+Cryptographic Layers {#cryptographic-layer}
+--------------------
+
+"Cryptographic Layer" refers to a MIME substructure that supplies some cryptographic protections to an internal MIME subtree.
+The internal subtree is known as the "protected part" though of course it may itself be a multipart object.
+
+For PGP/MIME {{RFC3156}} there are two forms of Cryptographic Layers, signing and encryption.
+
+In the diagrams below, <u>↧</u> is used to indicate "decrypts to".
+
+### PGP/MIME Signing Cryptographic Layer (multipart/signed) {#multipart-signed}
+
+    └┬╴multipart/signed
+     ├─╴[protected part]
+     └─╴application/pgp-signature
+
+### PGP/MIME Encryption Cryptographic Layer (multipart/encrypted) {#multipart-encrypted}
+
+    └┬╴multipart/encrypted
+     ├─╴application/pgp-encrypted
+     └─╴application/octet-stream
+      ↧ (decrypts to)
+      └─╴[protected part]
+
+Cryptographic Envelope
+----------------------
+
+The Cryptographic Envelope is the largest contiguous set of Cryptographic Layers of an e-mail message starting with the outermost MIME type (that is, with the Content-Type of the message itself).
+
+If the Content-Type of the message itself is not a Cryptographic Layer, then the message has no cryptographic envelope.
+
+"Contiguous" in the definition above indicates that if a Cryptographic Layer is the protected part of another Cryptographic Layer, the layers together comprise a single Cryptographic Envelope.
+
+Note that if a non-Cryptographic Layer intervenes, the inner-most Cryptographic Layer *is not* part of the Cryptographic Envelope (see the example in {{baroque-example}}).
+
+Note also that the ordering of the Cryptographic Layers implies different cryptographic properties.
+A signed-then-encrypted message is different than an encrypted-then-signed message.
+
+Cryptographic Payload
+---------------------
+
+The Cryptographic Payload of a message is the first non-Cryptographic Layer -- the "protected part" -- within the Cryptographic Envelope.
+Since the Cryptographic Payload itself is a MIME part, it has its own set of headers.
+
+Protected headers are placed on (and read from) the Cryptographic Payload, and should be considered to have the same cryptographic properties as the message itself.
+
+### Simple Cryptographic Payloads {#simple-cryptographic-payloads}
+
+As described above, if the "protected part" identified in {{multipart-signed}} or {{multipart-encrypted}} is not itself a Cryptographic Layer, that part *is* the Cryptographic Payload.
+
+If the application wants to generate a message that is both encrypted and signed, it MAY use the simple MIME structure from {{multipart-encrypted}} by ensuring that the {{RFC4880}} Encrypted Message within the `application/octet-stream` part contains an {{RFC4880}} Signed Message.
+
+### Multilayer Cryptographic Envelopes {#multilayer-cryptographic-envelopes}
+
+It is possible to construct a Cryptographic Envelope consisting of multiple layers for PGP/MIME, typically of the following structure:
+
+    A └┬╴multipart/encrypted
+    B  ├─╴application/pgp-encrypted
+    C  └─╴application/octet-stream
+    D   ↧ (decrypts to)
+    E   └┬╴multipart/signed
+    F    ├─╴[Cryptographic Payload]
+    G    └─╴application/pgp-signature
+
+When handling such a message, the properties of the Cryptographic Envelope are derived from the series A, E.
+
+As noted in {#simple-cryptographic-payloads}, PGP/MIME applications also have a simpler MIME construction available.
+
+### A Baroque Example {#baroque-example}
+
+Consider a message with the following overcomplicated structure:
+
+    H └┬╴multipart/encrypted
+    I  ├─╴application/pgp-encrypted
+    J  └─╴application/octet-stream
+    K   ↧ (decrypts to)
+    L   └┬╴multipart/signed
+    M    ├┬╴multipart/mixed
+    N    │├┬╴multipart/signed
+    O    ││├─╴text/plain
+    P    ││└─╴application/pgp-signature
+    Q    │└─╴text/plain
+    R    └─╴application/pgp-signature
+
+The 3 Cryptographic Layers in such a message are rooted in parts H, L, and N.
+The Cryptographic Envelope of the message consists of the properties derived from the series H, L.
+The Cryptographic Payload of the message is part M.
+
+It is NOT RECOMMENDED to generate messages with such complicated structures.
+Even if a receiving MUA can parse this structure properly, it is nearly impossible to render in a way that the user can reason about the cryptographic properties of part O.
+
+
+Original Headers are Outside
+----------------------------
+
+The Cryptographic Envelope fully encloses the Cryptographic Payload, whether the message is signed or encrypted or both.
+The Original Headers are considered to be outside of both.
 
 
 Message Composition
