@@ -80,7 +80,7 @@ Terminology
 For the purposes of this document, we define the following concepts:
 
    * *MUA* is short for Mail User Agent; an e-mail client.
-   * *Protection* of message data refers to cryptographic encryption and/or signatures, providing authenticity, confidentiality or both.
+   * *Protection* of message data refers to cryptographic encryption and/or signatures, providing confidentiality, authenticity or both.
    * *Cryptographic Envelope* is all MIME structure directly dictated by the cryptographic e-mail system in use.
    * *Cryptographic Payload* is all message data protected by the Cryptographic Envelope.
    * *Original Headers* are the {{RFC2822}} message headers as known to the sending MUA at the time of message composition.
