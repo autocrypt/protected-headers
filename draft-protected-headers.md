@@ -511,4 +511,8 @@ Document History
 Acknowledgements
 ================
 
-Used to be Memory Hole, Autocrypt working group, OpenPGP e-mail summit attendees ({{OpenPGP-Email-Summit-2019}}). Others?
+The set of constructs and algorithms in this document has a previous working title of "Memory Hole", but that title is no longer used as different implementations gained experience in working with it.
+
+These ideas were tested and fine-tuned in part by the loose collaboration of MUA developers known as Autocrypt.
+
+Additional feedback and useful guidance was contributed by attendees of the OpenPGP e-mail summit ({{OpenPGP-Email-Summit-2019}}).
