@@ -121,7 +121,7 @@ The target MIME part shall always be the first MIME part within the Cryptographi
 
 The reason all headers must be copied, is that otherwise it becomes impossible for implementations to reliably detect tampering with the Exposed Headers, which would greatly reduces the strength of the scheme.
 
-Encrypted Subject
+Encrypted Subject {#encrypted-subject}
 -----------------
 
 When a message is encrypted, the Subject should be obscured by replacing the Exposed Subject with three periods: ...
@@ -135,9 +135,99 @@ Due to compatibility and usability concerns, a Mail User Agent SHOULD NOT obscur
 
 Aside from that limitation, this specification does not at this time define or limit the methods a MUA may use to convert Exposed Headers into Obscured Headers.
 
-Legacy Display
---------------
+Legacy Display {#legacy-display}
+==============
 
+MUAs typically display some headers directly to the user.
+An encrypted message may be read by an decryption-capable MUA that is unaware of this standard.
+The user of such a legacy client risks losing access to any obscured headers.
+
+This section presents a workaround to mitigate this risk by restructuring the Cryptographic Payload before encrypting to include a "Legacy Display" part.
+
+Typically Visible Headers {#typically-visible-headers}
+-------------------------
+
+Of all the headers that an e-mail message may contain, only a handful are typically presented directly to the user.
+The typically visible headers are:
+
+ - `Subject`
+ - `From`
+ - `To`
+ - `Cc`
+ - `Date`
+
+The above is a complete list.  No other headers are considered "typically visible".
+
+Other headers may affect the visible rendering of the message (e.g., `References` and `In-Reply-To` may affect the placement of a message in a threaded discussion), but they are not directly displayed to the user and so are not considered "typically visible" for the purposes of this document.
+
+Message Generation: Including a Legacy Display Part
+---------------------------------------------------
+
+A generating MUA that wants to make an obscured Subject (or any other typically visible header) visible to a recipient using a legacy MUA SHOULD modify the Cryptographic Payload by wrapping the intended body of the message in a `multipart/mixed` MIME part that prefixes the intended body with a Legacy Display part.
+
+The Legacy Display part MUST be of Content-Type `text/rfc822-headers`, and MUST contain a `protected-headers` parameter whose value is `v1`.
+It SHOULD be marked with `Content-Disposition: inline` to encourage recipients to render it.
+
+The conents of the Legacy Display part MUST be only the typically visible headers that the sending MUA intends to obscure after encryption.
+
+The original body (now a subpart) SHOULD also be marked with `Content-Disposition: inline` to discourage legacy clients from presenting it as an attachment.
+
+### Legacy Display Transformation {#legacy-display-transformation}
+
+Consider a message whose Cryptographic Payload, before encrypting, that would have a traditional `multipart/alternative` structure:
+
+    X └┬╴multipart/alternative
+    Y  ├─╴text/plain
+    Z  └─╴text/html
+
+When adding a Legacy Display part, this structure becomes:
+
+    V └┬╴multipart/mixed
+    W  ├─╴text/rfc-822-headers ("Legacy Display" part)
+    X  └┬╴multipart/alternative ("original body")
+    Y   ├─╴text/plain
+    Z   └─╴text/html
+
+Note that with the inclusion of the Legacy Display part, the Cryptographic Payload is the `multipart/mixed` part (part `V` in the example above), so Protected Headers should be placed at that part.
+
+### When to Generate Legacy Display
+
+A MUA SHOULD transform a Cryptographic Payload to include a Legacy Display part only when:
+
+ - The message is going to be encrypted, and
+ - At least one typically visible header (see {{#typically-visible-header}}) is going to be obscured
+
+Additionally, if the sender knows that the recipient's MUA is capable of interpreting Protected Headers, it SHOULD NOT attempt to include a Legacy Display part.
+(Signalling such a capability is out of scope for this document)
+
+Message Rendering: Omitting a Legacy Display Part
+-------------------------------------------------
+
+A MUA that understands Protected Headers may receive an encrypted message that contains a Legacy Display part.
+Such an MUA SHOULD avoid rendering the Legacy Display part to the user at all, since it knows and can render the actual Protected Headers.
+
+If a Legacy Display part is detected, the Protected Headers should still be pulled from the Cryptographic Payload (part `V` in the example above), but the body of message SHOULD be rendered as though it were only the original body (part `X` in the example above).
+
+### Legacy Display Detection Algorithm
+
+A receiving MUA acting on a message SHOULD detect the presence of a Legacy Display part and the corresponding "original body" with the following simple algorithm:
+
+ - Check that all of the following are true for the message:
+  - The Cryptographic Envelope must contain an encrypting Cryptographic Layer
+  - The Cryptographic Payload must have a `Content-Type` of `multipart/mixed`
+  - The Cryptographic Payload must have exactly two subparts
+  - The first subpart of the Cryptographic Payload must have a `Content-Type` of `text/rfc822-headers`
+  - The first subpart of the Cryptographic Payload's `Content-Type` must contain a property of `protected-headers`, and its value must be `v1`.
+ - If all of the above are true, then the first subpart is the Legacy Display part, and the second subpart is the "original body".  Otherwise, the message does not have a Legacy Display part.
+
+### Legacy Display is Decorative and Transitional
+
+As the above makes clear, the Legacy Display part is strictly decorative, for the benefit of legacy decryption-capable MUAs that may handle the message.
+As such, the existence of the Legacy Display part and its `multipart/mixed` wrapper are part of a transition plan.
+
+As the number of decryption-capable clients that understand Protected Headers grows in comparison to the number of legacy decryption-capable clients, it is expected that some senders will decide to stop generating Legacy Display parts entirely.
+
+A MUA developer concerned about accessiblity of the Subject header for their users of encrypted mail when Legacy Display parts are omitted SHOULD implement the Protected Headers scheme described in this document.
 
 Message Interpretation
 ======================
