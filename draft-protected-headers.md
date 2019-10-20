@@ -348,6 +348,17 @@ Message Interpretation
 
 (Brief discussion about potential strategies to reverse the process above.)
 
+Replying to a Message with Obscured Headers
+-------------------------------------------
+
+When replying to a message, many MUAs copy headers from the original message into their reply.
+
+When replying to an encrypted message, users expect the replying MUA to generate an encrypted message if possible.
+If it is not possible, and the reply will be cleartext, users typically want the MUA to avoid leaking previously-encrypted content into the cleartext of the reply.
+
+For this reason, an MUA replying to an encrypted message with Obscured Headers SHOULD NOT leak the cleartext of any Obscured Headers into the cleartext of the reply, whether encrypted or not.
+
+In particular, the contents of any Obscured Header from the original message SHOULD NOT be placed in the Exposed Headers of the reply message.
 
 Examples
 ========
