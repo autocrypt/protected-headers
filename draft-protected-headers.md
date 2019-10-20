@@ -21,6 +21,10 @@ author:
     country: Iceland
     email: bre@mailpile.is
  -
+    name: juga
+    email: juga@riseup.net
+    org: Independent
+ -
     ins: D. K. Gillmor
     name: Daniel Kahn Gillmor
     org: American Civil Liberties Union
