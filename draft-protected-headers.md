@@ -228,7 +228,7 @@ The target MIME part shall always be the first MIME part within the Cryptographi
 
 The reason all headers must be copied, is that otherwise it becomes impossible for implementations to reliably detect tampering with the Exposed Headers, which would greatly reduces the strength of the scheme.
 
-Encrypted Subject
+Encrypted Subject {#encrypted-subject}
 -----------------
 
 When a message is encrypted, the Subject should be obscured by replacing the Exposed Subject with three periods: ...
@@ -604,6 +604,37 @@ IANA Considerations
 
 FIXME: register flag for legacy-display part
 
+Security Considerations
+=======================
+
+This document describes a technique that can be used to defend against two security vulnerabilities in traditional end-to-end encrypted e-mail.
+
+Subject Leak
+------------
+
+While e-mail structure considers the Subject header to be part of the message metadata, nearly all users consider the Subject header to be part of the message content.
+
+As such, a user sending end-to-end encrypted e-mail may inadvertently leak sensitive material in the Subject line.
+
+If the user's MUA uses Protected Headers and obscures the Subject header as described in {{encrypted-subject}} then they can avoid this breach of confidentiality.
+
+Signature Replay
+----------------
+
+Messages without Protected Headers may be subject to a signature replay attack.
+Such an attack works by taking a message delivered in one context (e.g., to someone else, at a different time, with a different subject, in reply to a different message), and replaying it with different message headers.
+
+A MUA that generates all its signed messages with Protected Headers gives recipients the opportunity to avoid falling victim to this attack.
+
+Guidance for how a message recipient can use Protected Headers to defend against a signature replay attack are out of scope for this document.
+
+Privacy Considerations
+======================
+
+This document only explicitly contemplates confidentiality protection for the Subject header, but not for other headers which may leak associational metadata.
+For example, `From` and `To` and `Cc` and `Reply-To` and `Date` and `Message-Id` and `References` and `In-Reply-To` are not explicitly necessary for messages in transit, since the SMTP envelope carries all necessary routing information, but an encrypted {{RFC2822}} message as described in this document will contain all this associational metadata in the clear.
+
+Although this document does not provide guidance for protecting the privacy of this metadata directly, it offers a platform upon which thoughtful implementations may experiment with obscuring additional e-mail headers.
 
 Document Considerations
 =======================
