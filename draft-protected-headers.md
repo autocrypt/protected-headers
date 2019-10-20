@@ -40,8 +40,11 @@ informative:
     title: Autocrypt Specification 1.1
     date: 2019-10-13
  I-D.draft-luck-lamps-pep-header-protection-03:
- I-D.draft-melnikov-lamps-header-protection-00:
+ I-D.draft-ietf-lamps-header-protection-requirements-00:
+ RFC2634:
  RFC3851:
+ RFC6736:
+ RFC7508:
  RFC8551:
 normative:
  RFC2119:
@@ -242,7 +245,7 @@ Due to compatibility and usability concerns, a Mail User Agent SHOULD NOT obscur
 
 Aside from that limitation, this specification does not at this time define or limit the methods a MUA may use to convert Exposed Headers into Obscured Headers.
 
-Legacy Display
+Legacy Display {#legacy-display}
 --------------
 
 
@@ -545,7 +548,7 @@ Note that this structure is the same as in the example signed message.
 Common Pitfalls and Guidelines
 ==============================
 
-Misunderstood Obscured Subjects
+Misunderstood Obscured Subjects {#misunderstood-obscured-subjects}
 -------------------------------
 
 (describe why Encrypted Message is a dangerous subject line)
@@ -582,22 +585,86 @@ Mailinglist mungles From field
 Comparison with Other Header Protection Schemes
 ===============================================
 
-S/MIME 3.1 Header Protection
+Other header protection schemes have been proposed (in the IETF and elsewhere) that are distinct from this mechanism.
+This section documents the differences between those earlier mechanisms and this one, and hypothesizes why it has seen greater interoperable adoption.
+
+The distinctions include:
+
+ * backward compatibility with legacy clients
+ * compatibility across PGP/MIME and S/MIME
+ * protection for both confidentiality and signing
+
+S/MIME 3.1 Header Protection {#smime-31}
 ----------------------------
 
-S/MIME 3.1 ({{RFC3851}}) introduces header protection via message/rfc822 header parts.
+S/MIME 3.1 ({{RFC3851}}) introduces header protection via `message/rfc822` header parts.
 
-The problem with this is that legacy clients are likely to interpret such a part as either a forwarded message, or as an unreadable substructure.
+The problem with this mechanism is that many legacy clients encountering such a message were likely to interpret it as either a forwarded message, or as an unreadable substructure.
 
-forwarded=no
-------------
+For signed messages, this is particularly jarring -- a message that was previously easily readable by a client that knows nothing about signed messages suddenly shows up as a message-within-a-message, just by virtue of signing.  This has an impact on *all* clients, whether they are cryptographically-capable or not.
 
-{{I-D.draft-melnikov-lamps-header-protection-00}}
+For encrypted messages, whose interpretation only matters on the smaller set of cryptographically-capable legacy clients, the resulting message rendering is awkward at best.
+
+Furthermore, Formulating a reply to such a message on a legacy client can also leave the user with weirdly-structured quoted and attributed content.
+
+Additionally, a message deliberately forwarded in its own right (without preamble or adjacent explanatory notes) could potentially be confused with a message using the declared structure.
+
+The mechanism described here allows cryptographically-incapable legacy MUAs to read and handle cleartext signed messages without any modifications, and permits cryptographically-capable legacy MUAs to handle encrypted messages without any modifications.
+
+In particular, the Legacy Display part described in {#legacy-display} makes makes it feasible for a conformant MUA to generate messages with obscured Subject lines that nonetheless give access to the obscured Subject header for recipients with legacy MUAs.
+
+The Content-Type property "forwarded=no" {forwarded=no}
+----------------------------------------
+
+{{I-D.draft-ietf-lamps-header-protection-requirements-00}} contains a proposal that attempts to mitigate one of the drawbacks of the scheme described in S/MIME 3.1 ({{smime-31}}).
+
+In particular, it allows *non-legacy* clients to distinguish between deliberately forwarded messages and those intended to use the defined structure for header protection.
+
+However, this fix has no impact on the confusion experienced by legacy clients.
 
 pEp Header protection
 ---------------------
 
-{{I-D.draft-luck-lamps-pep-header-protection-03}}
+{{I-D.draft-luck-lamps-pep-header-protection-03}} is applicable only to signed+encrypted mail, and does not contemplate protection of signed-only mail.
+
+In addition, the pEp header protection involved for "pEp message format 2" has an additional `multipart/mixed`  layer designed to facilitate transfer of OpenPGP Transferable Public Keys, which seems orthogonal to the effort to protect headers.
+
+Finally, that draft suggests that the exposed Subject header be one of "=?utf-8?Q?p=E2=89=A1p?=", "pEp", or "Encrypted message".
+"pEp" is a mysterious choice for most users, and see {{misunderstood-obscured-subjects}} for more commentary on why "Encrypted message" is likely to be problematic.
+
+DKIM
+----
+
+{{RFC6736}} offers DKIM, which is often used to sign headers associated with a message.
+
+DKIM is orthogonal to the work described in this document, since it is typically done by the domain operator and not the end user generating the original message.
+That is, DKIM is not "end-to-end" and does not represent the intent of the entity generating the message.
+
+Furthermore, a DKIM signer does not have access to headers inside an encrypted Cryptographic Layer, and a DKIM verifier cannot effectively use DKIM to verify such confidential headers.
+
+S/MIME "Secure Headers"
+-----------------------
+
+{{RFC7508}} describes a mechanism that embeds message header fields in the S/MIME signature using ASN.1.
+
+The mechanism proposed in that draft is undefined for use with PGP/MIME.
+While all S/MIME clients must be able to handle CMS and ASN.1 as well as MIME, a standard that works at the MIME layer itself should be applicable to any MUA that can work with MIME, regardess of whether end-to-end security layers are provided by S/MIME or PGP/MIME.
+
+That mechanism also does not propose a means to provide confidentiality protection for headers within an encrypted-but-not-signed message.
+
+Finally, that mechanism offers no equivalent to the Legacy Display described in {{legacy-display}}.
+Instead, sender and receiver are expected to negotiate in some unspecified way to ensure that it is safe to remove or modify Exposed Headers in an encrypted message.
+
+Triple-wrapping
+---------------
+
+{{RFC2634}} defines "Triple Wrapping" as a means of providing cleartext signatures over signed and encrypted material.
+While this can be used in combination with the mechanism described in {{RFC7508}} to authenticate some headers for transport using S/MIME.
+
+But it does not offer confidentiality protection for the protected headers, and the signer of the outer layer of a triple-wrapped message may not be the originator of the message either.
+
+In practice on today's Internet, DKIM ({{RFC6736}} provides a more widely-accepted cryptographic header-verification-for-transport mechanism  than triple-wrapped messages.
+
 
 IANA Considerations
 ===================
