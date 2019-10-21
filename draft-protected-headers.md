@@ -774,6 +774,64 @@ But it does not offer confidentiality protection for the protected headers, and 
 In practice on today's Internet, DKIM ({{RFC6736}} provides a more widely-accepted cryptographic header-verification-for-transport mechanism  than triple-wrapped messages.
 
 
+Test Vectors
+============
+
+The subsections below provide example messages that implement the Protected Header scheme.
+
+They are provided in textual source form as {{RFC2822}} messages.
+
+Signed Message with Protected Headers {#test-vector-signed-only}
+-------------------------------------
+
+This shows a clearsigned message.
+
+Note that if this message had been generated without Protected Headers, then an attacker with access to it could modify the Subject without invalidating the signature.
+Such an attacker could cause Bob to think that Alice wanted to cancel the contract with BarCorp instead of FooCorp.
+
+~~~
+Received: from localhost (localhost [127.0.0.1]);
+ Sun, 20 Oct 2019 09:18:28 -0400 (UTC-04:00)
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="904b809781";
+ protocol="application/pgp-signature"; micalg="pgp-sha512"
+From: Alice Lovelace <alice@openpgp.example>
+To: Bob Babbage <bob@openpgp.example>
+Date: Sun, 20 Oct 2019 09:18:11 -0400
+Subject: The FooCorp contract
+Message-ID: <signed-only@protected-headers.example>
+
+--904b809781
+Content-Type: text/plain; charset="us-ascii"
+From: Alice Lovelace <alice@openpgp.example>
+To: Bob Babbage <bob@openpgp.example>
+Date: Sun, 20 Oct 2019 09:18:11 -0400
+Subject: The FooCorp contract
+Message-ID: <signed-only@protected-headers.example>
+
+Bob, we need to cancel this contract.
+
+Please start the necessary processes to make that happen today.
+
+Thanks, Alice
+-- 
+Alice Lovelace
+President
+OpenPGP Example Corp
+
+--904b809781
+Content-Type: application/pgp-signature; charset="us-ascii"
+
+-----BEGIN PGP SIGNATURE-----
+
+wl4EARYKAAYFAl2sXpMACgkQ8jFVDE9H444uYwD/TpkvOT+KNMAzk00kkFM0/W/n
+noY9JG+8I1rxMH5CpskA+wXacRQ/xoDjwEBL671CDDXYTi/QiOK5vA64gUxDbE0L
+=1tUZ
+-----END PGP SIGNATURE-----
+
+--904b809781--
+~~~
+
 IANA Considerations
 ===================
 

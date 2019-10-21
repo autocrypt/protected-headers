@@ -1,0 +1,124 @@
+#!/usr/bin/python3
+'''Deterministically generate test vectors for draft-protected-headers.
+
+We want each run to produce the same specific output, which means
+hard-coding things (like timestamps, time zones, MIME boundaries,
+message-ids) which are likely to be vary across real-world conditions.
+
+Pains are taken to minimize the total amount of output, while still
+preserving a plausible, minimal, correctly-formed message.
+'''
+
+import datetime
+import email.message
+import email.policy
+import hashlib
+import sys
+
+import pgpy
+
+def usage(to=sys.stdout):
+    print(f'Usage: {sys.argv[0]} [help|sign]', file=to)
+
+# from https://tools.ietf.org/html/draft-bre-openpgp-samples-00#section-2.2:
+alice_sec = '''-----BEGIN PGP PRIVATE KEY BLOCK-----
+Comment: Alice's OpenPGP Transferable Secret Key
+
+lFgEXEcE6RYJKwYBBAHaRw8BAQdArjWwk3FAqyiFbFBKT4TzXcVBqPTB3gmzlC/U
+b7O1u10AAP9XBeW6lzGOLx7zHH9AsUDUTb2pggYGMzd0P3ulJ2AfvQ4RtCZBbGlj
+ZSBMb3ZlbGFjZSA8YWxpY2VAb3BlbnBncC5leGFtcGxlPoiQBBMWCAA4AhsDBQsJ
+CAcCBhUKCQgLAgQWAgMBAh4BAheAFiEE64W7X6M6deFelE5j8jFVDE9H444FAl2l
+nzoACgkQ8jFVDE9H447pKwD6A5xwUqIDprBzrHfahrImaYEZzncqb25vkLV2arYf
+a78A/R3AwtLQvjxwLDuzk4dUtUwvUYibL2sAHwj2kGaHnfICnF0EXEcE6RIKKwYB
+BAGXVQEFAQEHQEL/BiGtq0k84Km1wqQw2DIikVYrQrMttN8d7BPfnr4iAwEIBwAA
+/3/xFPG6U17rhTuq+07gmEvaFYKfxRB6sgAYiW6TMTpQEK6IeAQYFggAIBYhBOuF
+u1+jOnXhXpROY/IxVQxPR+OOBQJcRwTpAhsMAAoJEPIxVQxPR+OOWdABAMUdSzpM
+hzGs1O0RkWNQWbUzQ8nUOeD9wNbjE3zR+yfRAQDbYqvtWQKN4AQLTxVJN5X5AWyb
+Pnn+We1aTBhaGa86AQ==
+=n8OM
+-----END PGP PRIVATE KEY BLOCK-----
+'''
+
+(alice_key, _) = pgpy.PGPKey.from_blob(alice_sec)
+
+def signed():
+    # seconds since the unix epoch
+    posixtime = 1571577491
+    # America/New_York during DST:
+    tz = datetime.timezone(datetime.timedelta(hours=-4))
+    # 2019-10-20T09:18:11-0400
+    when = datetime.datetime.fromtimestamp(posixtime, tz)
+    whenstring = when.strftime('%a, %d %b %Y %T %z').strip()
+
+    # message was received 17 seconds after it was generated:
+    rcvd = datetime.datetime.fromtimestamp(posixtime + 17, tz)
+    rcvdstring = rcvd.strftime('%a, %d %b %Y %T %z (%Z)').strip()
+
+    # make the Cryptographic Payload:
+    payload = email.message.MIMEPart()
+    dotsig_separator = '-- ' # this is a totally different kind of "signature"
+    payload.set_content(f'''Bob, we need to cancel this contract.
+
+Please start the necessary processes to make that happen today.
+
+Thanks, Alice
+{dotsig_separator}
+Alice Lovelace
+President
+OpenPGP Example Corp''')
+    payload.set_type('text/plain')
+    payload.set_charset('us-ascii') # the test vector data is 7-bit clean
+    del payload['MIME-Version'] # MIME-Version on subparts is meaningless
+    del payload['Content-Transfer-Encoding'] # the test vector data is 7-bit clean
+    # place intended headers on the payload:
+    payload['From'] = f'{alice_key.userids[0].name} <{alice_key.userids[0].email}>'
+    payload['To'] = 'Bob Babbage <bob@openpgp.example>'
+    payload['Date'] = whenstring
+    payload['Subject'] = 'The FooCorp contract'
+    payload['Message-ID'] = '<signed-only@protected-headers.example>'
+
+    sigpart = email.message.MIMEPart()
+    # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
+    # in order for the signature creation time to match the message Date header:
+    pgpsig = alice_key.sign(pgpy.PGPMessage.new(str(payload), cleartext=True), created=when)
+    sigpart.set_content(str(pgpsig).strip())
+    sigpart.set_type('application/pgp-signature')
+    sigpart.set_charset('us-ascii') # the test vector data is 7-bit clean
+    del sigpart['MIME-Version'] # MIME-Version on subparts is meaningless
+    del sigpart['Content-Transfer-Encoding'] # the test vector data is 7-bit clean
+
+    msg = email.message.Message()
+    # Example transit header that is not part of the protected headers:
+    msg['Received'] = f'from localhost (localhost [127.0.0.1]); {rcvdstring}'
+    msg.set_type('multipart/signed')
+    # making up an arbitrary MIME boundary based on the Message-ID:
+    msg.set_boundary(hashlib.sha256(payload['Message-ID'].encode()).hexdigest()[:10])
+    msg.set_param('protocol', 'application/pgp-signature')
+    msg.set_param('micalg', f'pgp-{pgpsig.hash_algorithm.name.lower()}')
+    msg.attach(payload)
+    msg.attach(sigpart)
+
+    # ensure that all non-Content headers from the payload are also on
+    # the message:
+    for h in payload.keys():
+        if not h.lower().startswith('content-'): # don't transfer Content-* headers
+            if msg.get(h, None) != payload[h]: # don't duplicate headers that already exist
+                msg[h] = payload[h]
+    return msg
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        usage(to=sys.stderr)
+        exit(1)
+    if sys.argv[1] == 'help':
+        usage()
+    elif sys.argv[1] == 'sign':
+        # We want maxheaderlen=72 here so that the example fits nicely
+        # in an Internet Draft.  But it is risky -- i think it could
+        # break a signed message with long headers.  We get away with
+        # it because our Cryptographic Payload is already narrow.
+        print(signed().as_string(maxheaderlen=72))
+    else:
+        print(f'Unknown argument "{sys.argv[1]}"', file=sys.stderr)
+        usage(to=sys.stderr)
+        exit(1)
