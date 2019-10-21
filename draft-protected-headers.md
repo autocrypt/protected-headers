@@ -274,12 +274,12 @@ Other headers may affect the visible rendering of the message (e.g., `References
 Message Generation: Including a Legacy Display Part
 ---------------------------------------------------
 
-A generating MUA that wants to make an obscured Subject (or any other typically visible header) visible to a recipient using a legacy MUA SHOULD modify the Cryptographic Payload by wrapping the intended body of the message in a `multipart/mixed` MIME part that prefixes the intended body with a Legacy Display part.
+A generating MUA that wants to make an Obscured Subject (or any other typically visible header) visible to a recipient using a legacy MUA SHOULD modify the Cryptographic Payload by wrapping the intended body of the message in a `multipart/mixed` MIME part that prefixes the intended body with a Legacy Display part.
 
 The Legacy Display part MUST be of Content-Type `text/rfc822-headers`, and MUST contain a `protected-headers` parameter whose value is `v1`.
 It SHOULD be marked with `Content-Disposition: inline` to encourage recipients to render it.
 
-The conents of the Legacy Display part MUST be only the typically visible headers that the sending MUA intends to obscure after encryption.
+The contents of the Legacy Display part MUST be only the typically visible headers that the sending MUA intends to obscure after encryption.
 
 The original body (now a subpart) SHOULD also be marked with `Content-Disposition: inline` to discourage legacy clients from presenting it as an attachment.
 
@@ -315,7 +315,7 @@ Message Rendering: Omitting a Legacy Display Part
 -------------------------------------------------
 
 A MUA that understands Protected Headers may receive an encrypted message that contains a Legacy Display part.
-Such an MUA SHOULD avoid rendering the Legacy Display part to the user at all, since it knows and can render the actual Protected Headers.
+Such an MUA SHOULD avoid rendering the Legacy Display part to the user at all, since it is aware of and can render the actual Protected Headers.
 
 If a Legacy Display part is detected, the Protected Headers should still be pulled from the Cryptographic Payload (part `V` in the example above), but the body of message SHOULD be rendered as though it were only the original body (part `X` in the example above).
 
