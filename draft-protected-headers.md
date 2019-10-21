@@ -695,17 +695,17 @@ S/MIME 3.1 ({{RFC3851}}) introduces header protection via `message/rfc822` heade
 
 The problem with this mechanism is that many legacy clients encountering such a message were likely to interpret it as either a forwarded message, or as an unreadable substructure.
 
-For signed messages, this is particularly jarring -- a message that was previously easily readable by a client that knows nothing about signed messages suddenly shows up as a message-within-a-message, just by virtue of signing.  This has an impact on *all* clients, whether they are cryptographically-capable or not.
+For signed messages, this is particularly problematic -- a message that would otherwise have been easily readable by a client that knows nothing about signed messages suddenly shows up as a message-within-a-message, just by virtue of signing.  This has an impact on *all* clients, whether they are cryptographically-capable or not.
 
 For encrypted messages, whose interpretation only matters on the smaller set of cryptographically-capable legacy clients, the resulting message rendering is awkward at best.
 
-Furthermore, Formulating a reply to such a message on a legacy client can also leave the user with weirdly-structured quoted and attributed content.
+Furthermore, Formulating a reply to such a message on a legacy client can also leave the user with badly-structured quoted and attributed content.
 
 Additionally, a message deliberately forwarded in its own right (without preamble or adjacent explanatory notes) could potentially be confused with a message using the declared structure.
 
 The mechanism described here allows cryptographically-incapable legacy MUAs to read and handle cleartext signed messages without any modifications, and permits cryptographically-capable legacy MUAs to handle encrypted messages without any modifications.
 
-In particular, the Legacy Display part described in {#legacy-display} makes makes it feasible for a conformant MUA to generate messages with obscured Subject lines that nonetheless give access to the obscured Subject header for recipients with legacy MUAs.
+In particular, the Legacy Display part described in {#legacy-display} makes it feasible for a conformant MUA to generate messages with obscured Subject lines that nonetheless give access to the obscured Subject header for recipients with legacy MUAs.
 
 The Content-Type property "forwarded=no" {forwarded=no}
 ----------------------------------------
