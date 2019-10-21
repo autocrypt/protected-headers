@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# testing the test vector generator with notmuch
+set -e
+
+workdir=$(mktemp -d)
+mkdir -p -m 0700 "$workdir/"{g,m/{new,cur,tmp}}
+cleanup() {
+    rm -rf "$workdir"
+}
+trap cleanup EXIT
+
+export GNUPGHOME="$workdir/g"
+export NOTMUCH_CONFIG="$workdir/nm-config"
+cat >"$NOTMUCH_CONFIG" <<EOF
+[new]
+[database]
+path=$workdir/m
+[user]
+name=Bob Babbage
+primary_email=bob@openpgp.example
+[new]
+tags=unread;inbox;
+ignore=
+[maildir]
+synchronize_flags=true
+[search]
+exclude_tags=deleted;spam;
+EOF
+# from https://tools.ietf.org/html/draft-bre-openpgp-samples-00#section-2.1:
+gpg --batch --quiet --no-tty --import <<EOF
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Comment: Alice's OpenPGP certificate
+
+mDMEXEcE6RYJKwYBBAHaRw8BAQdArjWwk3FAqyiFbFBKT4TzXcVBqPTB3gmzlC/U
+b7O1u120JkFsaWNlIExvdmVsYWNlIDxhbGljZUBvcGVucGdwLmV4YW1wbGU+iJAE
+ExYIADgCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTrhbtfozp14V6UTmPy
+MVUMT0fjjgUCXaWfOgAKCRDyMVUMT0fjjukrAPoDnHBSogOmsHOsd9qGsiZpgRnO
+dypvbm+QtXZqth9rvwD9HcDC0tC+PHAsO7OTh1S1TC9RiJsvawAfCPaQZoed8gK4
+OARcRwTpEgorBgEEAZdVAQUBAQdAQv8GIa2rSTzgqbXCpDDYMiKRVitCsy203x3s
+E9+eviIDAQgHiHgEGBYIACAWIQTrhbtfozp14V6UTmPyMVUMT0fjjgUCXEcE6QIb
+DAAKCRDyMVUMT0fjjlnQAQDFHUs6TIcxrNTtEZFjUFm1M0PJ1Dng/cDW4xN80fsn
+0QEA22Kr7VkCjeAEC08VSTeV+QFsmz55/lntWkwYWhmvOgE=
+=iIGO
+-----END PGP PUBLIC KEY BLOCK-----
+EOF
+gpg --quiet --batch --no-tty --pinentry-mode=loopback --passphrase '' --quick-gen-key 'Local Test Suite Trust Anchor' futuredefault
+gpg --quiet --batch --no-tty --yes --lsign alice@openpgp.example
+notmuch new --quiet
+./generate-test-vectors.py sign | notmuch insert
+notmuch show --format=json --entire-thread=false --verify=true id:signed-only@protected-headers.example \
+    | python3 -c 'import json,sys; json.dump(json.load(sys.stdin)[0][0][0]["crypto"], sys.stdout, indent=1)'
