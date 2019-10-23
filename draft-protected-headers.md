@@ -309,7 +309,7 @@ Note that with the inclusion of the Legacy Display part, the Cryptographic Paylo
 A MUA SHOULD transform a Cryptographic Payload to include a Legacy Display part only when:
 
  - The message is going to be encrypted, and
- - At least one typically visible header (see {{#typically-visible-header}}) is going to be obscured
+ - At least one typically visible header (see {{#typically-visible-headers}}) is going to be obscured
 
 Additionally, if the sender knows that the recipient's MUA is capable of interpreting Protected Headers, it SHOULD NOT attempt to include a Legacy Display part.
 (Signalling such a capability is out of scope for this document)
