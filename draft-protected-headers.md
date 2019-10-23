@@ -43,6 +43,7 @@ informative:
     target: https://autocrypt.org/level1.html
     title: Autocrypt Specification 1.1
     date: 2019-10-13
+ I-D.draft-bre-openpgp-samples-00:
  I-D.draft-luck-lamps-pep-header-protection-03:
  I-D.draft-ietf-lamps-header-protection-requirements-00:
  RFC2634:
@@ -778,6 +779,8 @@ Test Vectors
 ============
 
 The subsections below provide example messages that implement the Protected Header scheme.
+
+The secret keys and OpenPGP certificates from {{I-D.draft-bre-openpgp-samples-00}} can be used to decrypt and verify them.
 
 They are provided in textual source form as {{RFC2822}} messages.
 
