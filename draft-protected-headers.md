@@ -682,10 +682,13 @@ Usability Impact of Obscured From/To/Cc
 
 (describe why we don't recommend this just yet)
 
-Mailinglist mungles From field
-------------------------------
+Mailinglist munges From: or In-Reply-To: headers
+------------------------------------------------
 
-(describe the issue, that some mailinglist softwares mungles the From line in order to make sure, that replys go to the list and not to the author. Protected headers break this workaround. See https://cr.yp.to/proto/replyto.html how this should be fixed properly in a MUA)
+(describe the issue, that some mailinglist softwares changes the `From:` line or `Reply-To:` in order to make sure that replies go to the list and not to the author.
+This is known as [header munging](https://www.unicom.com/pw/reply-to-harmful.html).
+Protected headers break this workaround.
+See https://cr.yp.to/proto/replyto.html how this should be fixed properly in a MUA)
 
 Comparison with Other Header Protection Schemes
 ===============================================
