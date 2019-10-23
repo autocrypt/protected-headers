@@ -787,7 +787,11 @@ They are provided in textual source form as {{RFC2822}} messages.
 Signed Message with Protected Headers {#test-vector-signed-only}
 -------------------------------------
 
-This shows a clearsigned message.
+This shows a clearsigned message.  Its MIME message structure is:
+
+    └┬╴multipart/signed
+     ├─╴text/plain
+     └─╴application/pgp-signature
 
 Note that if this message had been generated without Protected Headers, then an attacker with access to it could modify the Subject without invalidating the signature.
 Such an attacker could cause Bob to think that Alice wanted to cancel the contract with BarCorp instead of FooCorp.
