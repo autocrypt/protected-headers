@@ -839,6 +839,84 @@ noY9JG+8I1rxMH5CpskA+wXacRQ/xoDjwEBL671CDDXYTi/QiOK5vA64gUxDbE0L
 --904b809781--
 ~~~
 
+Encrypted Message with Protected Headers
+----------------------------------------
+
+This shows a simple encrypted message with protected headers.  Its MIME message structure is:
+
+    └┬╴multipart/encrypted
+     ├─╴application/pgp-encrypted
+     └─╴application/octet-stream
+       ↧ (decrypts to)
+       └─╴text/plain
+
+The `Subject:` header is successfully obscured.
+
+Note that if this message had been generated without Protected Headers, then an attacker with access to it could have read Subject.
+Such an attacker would know details about Alice and Bob's business that they wanted to keep confidential.
+
+The protected headers also protect the authenticity of subject line as well.
+
+The session key for this message's crypto layer is an AES-256 key with value `8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2` (in hex).
+
+~~~
+Received: from localhost (localhost [127.0.0.1]);
+ Mon, 21 Oct 2019 07:18:39 -0700 (UTC-07:00)
+MIME-Version: 1.0
+Content-Type: multipart/encrypted; boundary="bcde3ce988";
+ protocol="application/pgp-encrypted"
+From: Alice Lovelace <alice@openpgp.example>
+To: Bob Babbage <bob@openpgp.example>
+Date: Mon, 21 Oct 2019 07:18:11 -0700
+Message-ID: <signed+encrypted@protected-headers.example>
+Subject: ...
+
+--bcde3ce988
+Content-Type: application/pgp-encrypted; charset="us-ascii"
+
+Version: 1
+
+--bcde3ce988
+Content-Type: application/octet-stream; charset="us-ascii"
+
+-----BEGIN PGP MESSAGE-----
+
+wV4DR2b2udXyHrYSAQdA8sJB4yKldNgJl9n0ETWERq8xapTZNCECEIdT8rU62Wgw
+zxU9dwhuamBCF81fXDf/qlLd+gi6xYxhqNpnEJU48vaoq8iyUymU1eKowQ/pnKA5
+wcDMA3wvqk35PDeyAQv/a7KZ3aMmf4tqk4VlKPd6l5+JTx8Mb2cu7E++xXqAjMdr
+vAOzpvAj4qzPwWyVe+ygIqcJYg0EAMiPkD/zMhWtn3rAh3/iAHRKcMIMblS4EEnR
+ykG04jfQ73bpX4J/YLTFBNnUMF/+t3tt2xJzo5YX5jUby01J9qMz8GA2SWuNSiN/
+LWtPXp13ShqHwX5DDtE+M7Od2ApEzSBo6Uj2lqIdCs+i4u/35HRPGIrTefED5ecB
+eL4ybuZdxwta+F0QFBQ0HO8R8uio1u7xCyx/KTRejpllG8FVRkiRD3QRf0N+7d7U
+T/etRm0VhR2zYhQPEfGVr8hQ/ZSWme5QEsFkMZRJIB+/KDXn/8wdcE/Jqs+yj+hr
+XwAoxGuiN6JagrQDe9RWEZt4cmAwSQzDY8ai/4WLd8sJOssx5LwUEW92ZclLd82X
+CLR1RoOLNOxfArwoPiTJiXxgUfIZjmOAlamIGUPtZCFkYeItYFnCiDaalfCwrJX8
+j4kzAX3p/qPEdK4QWBxS0sHHASVlm4xktQ1Z2IzB7GX2h3oVK8NdzrUZEYc80+ed
+pL8mEGerujQHTtCNFPU9A2NqcriLwYg9kMDMtyk/o8tL3LHIXolOod7kVGCCAWJ8
+tPRggmVi5Ly0tPNRDU5HJDHz0kINhd3InBvUZpoiNTZrtAnmIhKgE/Fn/4bGrY0H
+UGoAGyVbs5SifNmqP9GNXEqov+h4MchzWs5hn2Vj5jnjc8+cXXJhHU/b84QHPLmN
+vLFZLq71+3gC8XM1QktYctPhI4oesD9kuCCaEbKZbqs6Cagyl8lSslMB0VyNiAVp
+niJ2AL1+bHOUjO1SFn8EQyKjKHD1Wsbc7wwuSRi1ukzTaO3g6PHmwyhoxE/RZp0D
+OZkV3rdKEtPjh0d57SW6cIPm72UX6c2HjWKHEakX9dLTc3OS8vDtBRfUGOwcrlcN
+w/Q4qte1daqUTEpcldEY03pe+VbWtprCuM192clHqvTY0UNFfaEP+ZiJrj9toaGZ
+lqo6eZS/DOdywgOFuZkfsLcAYk/PhBLTle9t5R7jMd4PflX59uGQCytQsiat/nJl
+KAd7zF8cXrxEzAISt/WKlsbGaZo371BQc2JuAr3zFUdR9HWu1knlJsUFgm4x65RK
+pqryozyQy2zUt61lisMvm6qmo6TWzrDqCK1PDHaNRO2WRFOGxAAGc1Ypa/UPCXrL
+jfpU13eh1fiNwmhWlT3/0IH0JXY5wSjCXiHTBRjMr/5pN70wXX14xDOirOoj45ef
+j2eVi38yIkT6m/vrYJxUoahQZTl0gK+hExIYXftR9BXf50I23vAspwRCE5c+RRnt
+ACZcaqsLro8SNaJdSCrFVxmuqN+h4JO8ppso5wRwPLErVPpIlC5RpDM=
+=CatE
+-----END PGP MESSAGE-----
+
+--bcde3ce988--
+~~~
+
+Encrypted Message with Protected Headers and Legacy Display Part
+----------------------------------------------------------------
+
+FIXME need to fill this in...
+
+
 IANA Considerations
 ===================
 
