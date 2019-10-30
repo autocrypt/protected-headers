@@ -225,6 +225,38 @@ Details:
 
 See below for a more detailed discussion.
 
+Message Composition Algorithm
+-----------------------------
+
+A reasonable sequential algorithm for composing a message with protected headers is:
+
+- Let `orig` be the traditional unprotected message body as a MIME part.
+- Collect all desired message headers in a separate table `H` (so `H[Foo]` refers to the value of header `Foo:` from table `H`)
+- Drop any structural headers from `H` (those whose names start with `Content-`, like `Content-Type` or `Content-Transfer-Encoding`).
+- *Optional* If the message is going to be encrypted, and the MUA has no knowledge that the recipient understands protected headers, wrap `orig` in a structure that carries a Legacy Display part:
+  - Create a new MIME part `legacydisplay` with  `Content-Type: text/rfc822-headers; protected-headers="v1"`
+  - Identify the list of headers to be obscured in table `O`.  For example, this document recommends only obscuring the subject, so `O[Subject] = '...'`.  If obscured header `Foo` is to be struck entirely, `O[Foo]`  should be the special value `null`.
+  - For each obscured header name `oh` in `O`:
+     - If `oh` is typically visible (see {{typically-visible-headers}}):
+        - Add `oh: H[oh]` to the body of `legacydisplay`.  For example, if `H[Subject]` is `lunch plans?`, then add `Subject: lunch plans?` to the body of `legacydisplay`
+  - Construct a new MIME part `wrapper` with `Content-Type: multipart/mixed` 
+  - Give `wrapper` exactly two subarts: `legacydisplay` and `orig` 
+  - Let `payload` be MIME part `wrapper`
+- Otherwise:
+  - Let `payload` be MIME part `orig`
+- For each header name `h` in `H`:
+  - Set header `h` of MIME part `payload` to `H[h]`
+- Wrap `payload` in the appropriate cryptographic layer or layers, producing candidate MIME part `cand`
+- If the cryptographic layers include an encryption layer:
+  - For each obscured header `oh` in `O`:
+    - If `O[oh]` is `null`:
+      - Drop `oh` from `H`
+    - Else:
+      - Set `H[oh]` to `O[oh]`
+- For each header name `h` in `H`:
+  - Set header `h` of `cand` to `H[h]`
+  
+MIME part `cand` is now a complete message, ready for delivery.
 
 Header Copying
 --------------
