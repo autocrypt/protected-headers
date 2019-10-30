@@ -297,7 +297,7 @@ Consider a message whose Cryptographic Payload, before encrypting, that would ha
 When adding a Legacy Display part, this structure becomes:
 
     V └┬╴multipart/mixed
-    W  ├─╴text/rfc-822-headers ("Legacy Display" part)
+    W  ├─╴text/rfc822-headers ("Legacy Display" part)
     X  └┬╴multipart/alternative ("original body")
     Y   ├─╴text/plain
     Z   └─╴text/html
