@@ -94,7 +94,7 @@ For the purposes of this document, we define the following concepts:
 
    * *MUA* is short for Mail User Agent; an e-mail client.
    * *Protection* of message data refers to cryptographic encryption and/or signatures, providing confidentiality, authenticity or both.
-   * *Cryptographic Layer*, *Cryptographic Envelope* and * *Cryptographic Payload* are defined in {{cryptographic-structure}}
+   * *Cryptographic Layer*, *Cryptographic Envelope* and *Cryptographic Payload* are defined in {{cryptographic-structure}}
    * *Original Headers* are the {{RFC2822}} message headers as known to the sending MUA at the time of message composition.
    * *Protected Headers* are any headers protected by the scheme described in this document.
    * *Exposed Headers* are any headers outside the Cryptographic Payload (protected or not).
@@ -140,7 +140,7 @@ If the Content-Type of the message itself is not a Cryptographic Layer, then the
 
 "Contiguous" in the definition above indicates that if a Cryptographic Layer is the protected part of another Cryptographic Layer, the layers together comprise a single Cryptographic Envelope.
 
-Note that if a non-Cryptographic Layer intervenes, the inner-most Cryptographic Layer *is not* part of the Cryptographic Envelope (see the example in {{baroque-example}}).
+Note that if a non-Cryptographic Layer intervenes, all Cryptographic Layers within the non-Cryptographic Layer *are not* part of the Cryptographic Envelope (see the example in {{baroque-example}}).
 
 Note also that the ordering of the Cryptographic Layers implies different cryptographic properties.
 A signed-then-encrypted message is different than an encrypted-then-signed message.
@@ -173,7 +173,7 @@ It is possible to construct a Cryptographic Envelope consisting of multiple laye
 
 When handling such a message, the properties of the Cryptographic Envelope are derived from the series A, E.
 
-As noted in {#simple-cryptographic-payloads}, PGP/MIME applications also have a simpler MIME construction available.
+As noted in {{simple-cryptographic-payloads}}, PGP/MIME applications also have a simpler MIME construction available.
 
 ### A Baroque Example {#baroque-example}
 
@@ -196,7 +196,7 @@ The Cryptographic Envelope of the message consists of the properties derived fro
 The Cryptographic Payload of the message is part M.
 
 It is NOT RECOMMENDED to generate messages with such complicated structures.
-Even if a receiving MUA can parse this structure properly, it is nearly impossible to render in a way that the user can reason about the cryptographic properties of part O.
+Even if a receiving MUA can parse this structure properly, it is nearly impossible to render in a way that the user can reason about the cryptographic properties of part O compared to part Q.
 
 
 Original Headers are Outside
@@ -220,7 +220,7 @@ The Protected Headers scheme is summarized as follows:
 Details:
 
    * Encryption SHOULD protect the Subject line
-   * When encrypting, the Subject line should be obscured (replaced) by the string "..."
+   * When encrypting, the Subject line should be obscured (replaced) by the string `...`
    * Step 3. may require adding a `multipart/mixed` MIME wrapper to the Cryptographic Payload, in turn influencing where to inject the headers from step 1.
 
 See below for a more detailed discussion.
@@ -231,21 +231,21 @@ Header Copying
 
 All headers known to the MUA at composition time MUST be copied verbatim into the header of the target MIME part.
 
-The target MIME part shall always be the first MIME part within the Cryptographic Payload. See Examples below for an illustration.
+The target MIME part shall always be the first MIME part within the Cryptographic Payload. See {{examples}} for an illustration.
 
 The reason all headers must be copied, is that otherwise it becomes impossible for implementations to reliably detect tampering with the Exposed Headers, which would greatly reduces the strength of the scheme.
 
 Encrypted Subject {#encrypted-subject}
 -----------------
 
-When a message is encrypted, the Subject should be obscured by replacing the Exposed Subject with three periods: ...
+When a message is encrypted, the Subject should be obscured by replacing the Exposed Subject with three periods: `...`
 
-This value (...) was chosen because it is believed to be language agnostic and avoids communicating any potentially misleading information to the recipient (see Common Pitfalls below for a more detailed discussion).
+This value (`...`) was chosen because it is believed to be language agnostic and avoids communicating any potentially misleading information to the recipient (see {{common-pitfalls}} for a more detailed discussion).
 
 Obscured Headers
 ----------------
 
-Due to compatibility and usability concerns, a Mail User Agent SHOULD NOT obscure any of: `From`, `To`, `Cc`, `Message-ID`, `References`, `Reply-To`, (FIXME: MORE?), unless the user has indicated they have security constraints which justify the potential downsides (see Common Pitfalls below for a more detailed discussion).
+Due to compatibility and usability concerns, a Mail User Agent SHOULD NOT obscure any of: `From`, `To`, `Cc`, `Message-ID`, `References`, `Reply-To`, (FIXME: MORE?), unless the user has indicated they have security constraints which justify the potential downsides (see {{common-pitfalls}} for a more detailed discussion).
 
 Aside from that limitation, this specification does not at this time define or limit the methods a MUA may use to convert Exposed Headers into Obscured Headers.
 
@@ -360,7 +360,7 @@ For this reason, an MUA replying to an encrypted message with Obscured Headers S
 
 In particular, the contents of any Obscured Header from the original message SHOULD NOT be placed in the Exposed Headers of the reply message.
 
-Examples
+Examples {#examples}
 ========
 
 (Use diagrams from Juga to explain the envelope/payload concept)
@@ -650,7 +650,7 @@ Note that this structure is the same as in the example signed message.
 
 
 
-Common Pitfalls and Guidelines
+Common Pitfalls and Guidelines {#common-pitfalls}
 ==============================
 
 Misunderstood Obscured Subjects {#misunderstood-obscured-subjects}
@@ -662,7 +662,7 @@ Misunderstood Obscured Subjects {#misunderstood-obscured-subjects}
 Reply/Forward Losing Subjects
 -----------------------------
 
-(describe Re: ...)
+(describe Re: `...`)
 
 
 Usability Impact of Reduced Metadata
@@ -826,6 +826,6 @@ Acknowledgements
 
 The set of constructs and algorithms in this document has a previous working title of "Memory Hole", but that title is no longer used as different implementations gained experience in working with it.
 
-These ideas were tested and fine-tuned in part by the loose collaboration of MUA developers known as Autocrypt.
+These ideas were tested and fine-tuned in part by the loose collaboration of MUA developers known as {{Autocrypt}}.
 
 Additional feedback and useful guidance was contributed by attendees of the OpenPGP e-mail summit ({{OpenPGP-Email-Summit-2019}}).
