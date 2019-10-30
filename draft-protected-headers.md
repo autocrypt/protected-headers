@@ -315,7 +315,7 @@ A MUA SHOULD transform a Cryptographic Payload to include a Legacy Display part 
 Additionally, if the sender knows that the recipient's MUA is capable of interpreting Protected Headers, it SHOULD NOT attempt to include a Legacy Display part.
 (Signalling such a capability is out of scope for this document)
 
-Message Rendering: Omitting a Legacy Display Part
+Message Rendering: Omitting a Legacy Display Part {#no-render-legacy-display}
 -------------------------------------------------
 
 A MUA that understands Protected Headers may receive an encrypted message that contains a Legacy Display part.
@@ -839,7 +839,7 @@ noY9JG+8I1rxMH5CpskA+wXacRQ/xoDjwEBL671CDDXYTi/QiOK5vA64gUxDbE0L
 --904b809781--
 ~~~
 
-Encrypted Message with Protected Headers
+Encrypted Message with Protected Headers {#encryptedsigned}
 ----------------------------------------
 
 This shows a simple encrypted message with protected headers.  Its MIME message structure is:
@@ -858,6 +858,8 @@ Such an attacker would know details about Alice and Bob's business that they wan
 The protected headers also protect the authenticity of subject line as well.
 
 The session key for this message's crypto layer is an AES-256 key with value `8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2` (in hex).
+
+If Bob's MUA is capable of interpreting these protected headers, it should render the `Subject:` of this message as `BarCorp contract signed, let's go!`.
 
 ~~~
 Received: from localhost (localhost [127.0.0.1]);
@@ -914,8 +916,79 @@ ACZcaqsLro8SNaJdSCrFVxmuqN+h4JO8ppso5wRwPLErVPpIlC5RpDM=
 Encrypted Message with Protected Headers and Legacy Display Part
 ----------------------------------------------------------------
 
-FIXME need to fill this in...
+If Alice's MUA wasn't sure whether Bob's MUA would know to render the obscured `Subject:` header correctly, it might include a legacy display part in the cryptographic payload.
 
+This message is structured in the following way:
+
+    └┬╴multipart/encrypted
+     ├─╴application/pgp-encrypted
+     └─╴application/octet-stream
+       ↧ (decrypts to)
+       └┬╴multipart/mixed
+        ├─╴text/rfc822-headers
+        └─╴text/plain
+
+The example below shows the same message as {{encryptedsigned}}.
+
+If Bob's MUA is capable of handling protected headers, the two messages should render in the same way as the message in {{encryptedsigned}}, because it will know to omit the Legacy Display part as documented in {{no-render-legacy-display}}.
+
+But if Bob's MUA is capable of decryption but is unaware of protected headers, it will likely render the Legacy Display part for him so that he can at least see the originally-intended `Subject:` line.
+
+For this message, the session key is an AES-256 key with value `95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e` (in hex).
+
+~~~
+Received: from localhost (localhost [127.0.0.1]);
+ Mon, 21 Oct 2019 07:18:39 -0700 (UTC-07:00)
+MIME-Version: 1.0
+Content-Type: multipart/encrypted; boundary="73c8655345";
+ protocol="application/pgp-encrypted"
+From: Alice Lovelace <alice@openpgp.example>
+To: Bob Babbage <bob@openpgp.example>
+Date: Mon, 21 Oct 2019 07:18:11 -0700
+Message-ID: <signed+encrypted+legacy-display@protected-headers.example>
+Subject: ...
+
+--73c8655345
+Content-Type: application/pgp-encrypted; charset="us-ascii"
+
+Version: 1
+
+--73c8655345
+Content-Type: application/octet-stream; charset="us-ascii"
+
+-----BEGIN PGP MESSAGE-----
+
+wV4DR2b2udXyHrYSAQdAHI4CaIxAXy7Iv16FZmMd/p+T+KWEwxDrllVS8jkNCWcw
+HTyfe2pnyOw3NPuwEDXcvLKTl/LC6MonWW1t91MqRnnzpUN3Kdb7gAMrmN5RMstH
+wcDMA3wvqk35PDeyAQv+NwDQfyY5BFZRI99aphwLI1lfKTg8Tx6Y8ajVHD0x4Ton
+hXnBwwMLO5BSn5/cgqFt/mhNVmILNiv4IrK+alwOLkBw6M0+F0iUiu1w1KrB+PdJ
+a8N038mKIAH3SdMTi7ryTyUq2+Hl44AVNWKmFdwesAE7b3cA1g1ZztGE1GV+WD8B
+qGd2IsB09CnkxGgoRb71xjV3ZJ3X7qvWP6B9W7eaM0vLyxA0ap2cJdkv1pGEZhch
+iEtVxmsJrXaQqjf2TJeV4bD8hfdCUpoiE07eFwWN2xBRh0lcN45QXWgpfOBsvLQ9
+Cn6vLb4IQStrhe+oNN90bzNZtAv+odvWLDW0hKP/7TkxncK4MHg/uZO45yLKpdis
+azNgAp8IbLjZ9mPodzZB035OZ+iS6KEEwo/zI/miqX4QtEpuCXIYnTsERoTTNUw7
+EJSZ+RpO0L1jGOQgqlFh+h1zLlvlnphdH72hhPHRcyY4hqQG5gGTWCHl0OA8LMlv
+0s+nYNcbIbJdV4b6s/GL0sIpAcA5Bo/Eu0hC8eXQDJMoQYk3sXhzU5LYu/V5Gn51
+BKPWzTkz+mfvTRkTb/LC8QKifm+kOg/D/IUKT87Ep1yb2on8pj789QkQUSUqO5Hc
+Hp3IElZXSKTUdvpzlQi6UzBRhTV6FqZJtzifQL3HuGPYbv3UwXrQIsA3Cqhm6KL+
+u7BVmXFlhk1Liul59zQs4RfMMHZww8Ios5r7Aib/Trp/Oyyu4erJnLjaip14+amJ
+oDF7L2sln/l9t9YtkkXKwhjsLWnfb/6JL6+MixCrTxGUG/N8TT0O8MvzeLRUiPm0
+GLHcTT9R6kO1+1BDsKpBlzChzSeHkH30lkQ6dPkv/C5D7if5f9r+UcIUuO//SEH8
+XYFjAyhi/HSZONgshmWebZxhN5AVR6qbl84/wowJf9xOpfbiW1Vdg+7gQ3m7RFPh
+/1AoC2NDkOWKo70ctEzDtnbRPUNa9aaptjJYKWKvURDhaQ5yVz/A7Wr/cmks+FMp
+S8HAdBH8+I//5OPVJHgeuO004b8YzADawajm4u7rL7nccaPCFbAZXIoX/78XNqRw
+TJGwE8MPu5w3b8d4fKk++PDHVnvIyofo7n2ST+SAS4/KI+VOlAhXmNdkxhKIEHKk
+HUPB2zeEoGVFecRIdMm5dVLtf9EOBE8QZvQnxiYN05TQ9ECaJ0ONWRjYCC8EiRme
+gzIOpjIlw81JG+m9yGDp0S7iN5UJCCiolLJy2rPIBxWpJSwALRHy2u46VGyHONfX
+VRfKSZuBwu/kkfDHmw/I7aN8JNWiIrYhaPZ3vuGZ1ZWGtxbgvUlD9lZWG6+UM9+k
+6RF3YLZKXGkJzzh9ipKZFgnWgyOSvRQzMtWSj8GSdKAXRQgQUdYg82jCe2IKYQdf
+UGy7MjEvOJTTHKvMkIuBFrQpPWklWAN4XFAf4m2iciHw/f2WxJ/Nj2HET+OxmFMD
+mZ/z90MZ2jBxCO4Rug18yFC5CsHlt6SeaPPw9GtER7J2YAcE7SXb3iXXqw==
+=9CTX
+-----END PGP MESSAGE-----
+
+--73c8655345--
+~~~
 
 IANA Considerations
 ===================

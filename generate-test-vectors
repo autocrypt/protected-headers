@@ -19,7 +19,7 @@ import codecs
 import pgpy
 
 def usage(to=sys.stdout):
-    print(f'Usage: {sys.argv[0]} [help|sign|sign+encrypt]', file=to)
+    print(f'Usage: {sys.argv[0]} [help|sign|sign+encrypt|sign+encrypt+legacy]', file=to)
 
 # We want maxheaderlen=72 here so that the example fits nicely
 # in an Internet Draft.  But it is risky -- i think it could
@@ -159,7 +159,7 @@ OpenPGP Example Corp''')
     return msg
 
 
-def signed_encrypted():
+def signed_encrypted(legacy=False):
     # seconds since the unix epoch
     posixtime = 1571667491
     # America/Los_Angeles during DST:
@@ -199,19 +199,48 @@ OpenPGP Example Corp''')
     payload.set_charset('us-ascii') # the test vector data is 7-bit clean
     del payload['MIME-Version'] # MIME-Version on subparts is meaningless
     del payload['Content-Transfer-Encoding'] # the test vector data is 7-bit clean
+
+    subj = 'BarCorp contract signed, let\'s go!'
+
+    msgid_rider = ''
+    # never do this! we only do it for a repeatable session key:
+    sessionkey = b'8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2'
+
+    if legacy:
+        sessionkey = b'95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e'
+        msgid_rider = '+legacy-display'
+
+        legacydisplay = email.message.MIMEPart()
+        legacydisplay.set_content(f'Subject: {subj}\n')
+        legacydisplay.set_type('text/rfc822-headers')
+        legacydisplay.set_param('protected-headers', 'v1')
+        legacydisplay.set_charset('us-ascii') # header data is always 7-bit clean
+        del legacydisplay['MIME-Version'] # MIME-Version on subparts is meaningless
+        del legacydisplay['Content-Transfer-Encoding'] # header data is always 7-bit clean
+        legacydisplay['Content-Disposition'] = 'inline'
+    
+        innerpayload = payload
+        payload = email.message.MIMEPart()
+        payload.set_type('multipart/mixed')
+        del legacydisplay['MIME-Version'] # MIME-Version on subparts is meaningless
+        # arbitrary fixed boundary for replicability:
+        payload.set_boundary(hashlib.sha256('legacy-wrapper'.encode()).hexdigest()[:10])
+        payload.attach(legacydisplay)
+        payload.attach(innerpayload)
+    
     # place intended headers on the payload:
     payload['From'] = f'{alice_key.userids[0].name} <{alice_key.userids[0].email}>'
     payload['To'] = f'{bob_key.userids[0].name} <{bob_key.userids[0].email}>'
     payload['Date'] = whenstring
-    payload['Subject'] = 'BarCorp contract signed, let\'s go!'
-    payload['Message-ID'] = '<signed+encrypted@protected-headers.example>'
+    payload['Subject'] = subj
+
+    sessionkey = codecs.decode(sessionkey, 'hex')
+    payload['Message-ID'] = f'<signed+encrypted{msgid_rider}@protected-headers.example>'
     payloadmsg = pgpy.PGPMessage.new(str(payload), format='m')
     # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
     # in order for the signature creation time to match the message Date header:
     payloadmsg |= alice_key.sign(payloadmsg, created=when)
     cipher = pgpy.constants.SymmetricKeyAlgorithm.AES256
-    # never do this! we only do it for a repeatable session key:
-    sessionkey = codecs.decode(b'8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2', 'hex')
 
     encmsg = alice_key.pubkey.encrypt(payloadmsg, cipher=cipher, sessionkey=sessionkey)
     encmsg = bob_key.encrypt(encmsg, cipher=cipher, sessionkey=sessionkey)
@@ -259,7 +288,9 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'sign':
         print(signed().as_string(maxheaderlen=MAXHEADERLEN))
     elif sys.argv[1] == 'sign+encrypt':
-        print(signed_encrypted().as_string(maxheaderlen=MAXHEADERLEN))
+        print(signed_encrypted(False).as_string(maxheaderlen=MAXHEADERLEN))
+    elif sys.argv[1] == 'sign+encrypt+legacy':
+        print(signed_encrypted(True).as_string(maxheaderlen=MAXHEADERLEN))
     else:
         print(f'Unknown argument "{sys.argv[1]}"', file=sys.stderr)
         usage(to=sys.stderr)
