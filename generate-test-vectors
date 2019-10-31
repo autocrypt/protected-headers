@@ -19,7 +19,12 @@ import codecs
 import pgpy
 
 def usage(to=sys.stdout):
-    print(f'Usage: {sys.argv[0]} [help|sign|sign+encrypt|sign+encrypt+legacy]', file=to)
+    print(f'''Usage: {sys.argv[0]} SUBCMD
+where SUBCMD is one of:
+  help
+  sign
+  sign+encrypt
+  sign+encrypt+legacy''', file=to)
 
 # We want maxheaderlen=72 here so that the example fits nicely
 # in an Internet Draft.  But it is risky -- i think it could
