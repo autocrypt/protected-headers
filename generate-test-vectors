@@ -98,6 +98,15 @@ NEJd3XZRzaXZE2aAMQ==
 '''
 (bob_key, _) = pgpy.PGPKey.from_blob(bob_pub)
 
+def getsigpart(pgpsig:pgpy.PGPSignature) -> email.message.MIMEPart:
+    sigpart = email.message.MIMEPart()
+    sigpart.set_content(str(pgpsig).strip())
+    sigpart.set_type('application/pgp-signature')
+    sigpart.set_charset('us-ascii') # the test vector data is 7-bit clean
+    del sigpart['MIME-Version'] # MIME-Version on subparts is meaningless
+    del sigpart['Content-Transfer-Encoding'] # ASCII-armored PGP Signature data is 7-bit clean
+    return sigpart
+
 def signed():
     # seconds since the unix epoch
     posixtime = 1571577491
@@ -134,15 +143,10 @@ OpenPGP Example Corp''')
     payload['Subject'] = 'The FooCorp contract'
     payload['Message-ID'] = '<signed-only@protected-headers.example>'
 
-    sigpart = email.message.MIMEPart()
     # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
     # in order for the signature creation time to match the message Date header:
     pgpsig = alice_key.sign(pgpy.PGPMessage.new(str(payload), cleartext=True), created=when)
-    sigpart.set_content(str(pgpsig).strip())
-    sigpart.set_type('application/pgp-signature')
-    sigpart.set_charset('us-ascii') # the test vector data is 7-bit clean
-    del sigpart['MIME-Version'] # MIME-Version on subparts is meaningless
-    del sigpart['Content-Transfer-Encoding'] # the test vector data is 7-bit clean
+    sigpart = getsigpart(pgpsig)
 
     msg = email.message.Message()
     # Example transit header that is not part of the protected headers:
