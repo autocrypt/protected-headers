@@ -839,10 +839,12 @@ noY9JG+8I1rxMH5CpskA+wXacRQ/xoDjwEBL671CDDXYTi/QiOK5vA64gUxDbE0L
 --904b809781--
 ~~~
 
-Encrypted Message with Protected Headers {#encryptedsigned}
-----------------------------------------
+Signed and Encrypted Message with Protected Headers {#encryptedsigned}
+---------------------------------------------------
 
-This shows a simple encrypted message with protected headers.  Its MIME message structure is:
+This shows a simple encrypted message with protected headers.
+The encryption also contains an signature in the OpenPGP Message structure.
+Its MIME message structure is:
 
     └┬╴multipart/encrypted
      ├─╴application/pgp-encrypted
@@ -913,8 +915,8 @@ ACZcaqsLro8SNaJdSCrFVxmuqN+h4JO8ppso5wRwPLErVPpIlC5RpDM=
 --bcde3ce988--
 ~~~
 
-Encrypted Message with Protected Headers and Legacy Display Part
-----------------------------------------------------------------
+Signed and Encrypted Message with Protected Headers and Legacy Display Part
+---------------------------------------------------------------------------
 
 If Alice's MUA wasn't sure whether Bob's MUA would know to render the obscured `Subject:` header correctly, it might include a legacy display part in the cryptographic payload.
 
