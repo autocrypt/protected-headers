@@ -24,7 +24,9 @@ where SUBCMD is one of:
   help
   sign
   sign+encrypt
-  sign+encrypt+legacy''', file=to)
+  sign+encrypt+legacy
+  multilayer
+  multilayer+legacy''', file=to)
 
 # We want maxheaderlen=72 here so that the example fits nicely
 # in an Internet Draft.  But it is risky -- i think it could
@@ -168,7 +170,7 @@ OpenPGP Example Corp''')
     return msg
 
 
-def signed_encrypted(legacy=False):
+def signed_encrypted(legacy=False, multilayer=False):
     # seconds since the unix epoch
     posixtime = 1571667491
     # America/Los_Angeles during DST:
@@ -211,14 +213,17 @@ OpenPGP Example Corp''')
 
     subj = 'BarCorp contract signed, let\'s go!'
 
-    msgid_rider = ''
-    # never do this! we only do it for a repeatable session key:
-    sessionkey = b'8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2'
+    # index by [legacy][multilayer]:
+    cfg = {False: {False: {'sk': b'8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2',
+                           'msgid': 'signed+encrypted' },
+                   True: {'sk': b'5e67165ed1516333daeba32044f88fd75d4a9485a563d14705e41d31fb61a9e9',
+                          'msgid': 'multilayer'}},
+           True: {False: {'sk': b'95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e',
+                          'msgid': 'signed+encrypted+legacy-display'},
+                  True: {'sk': b'b346a2a50fa0cf62895b74e8c0d2ad9e3ee1f02b5d564c77d879caaee7a0aa70',
+                         'msgid': 'multilayer+legacy-display'}}}
 
     if legacy:
-        sessionkey = b'95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e'
-        msgid_rider = '+legacy-display'
-
         legacydisplay = email.message.MIMEPart()
         legacydisplay.set_content(f'Subject: {subj}\n')
         legacydisplay.set_type('text/rfc822-headers')
@@ -243,12 +248,32 @@ OpenPGP Example Corp''')
     payload['Date'] = whenstring
     payload['Subject'] = subj
 
-    sessionkey = codecs.decode(sessionkey, 'hex')
-    payload['Message-ID'] = f'<signed+encrypted{msgid_rider}@protected-headers.example>'
-    payloadmsg = pgpy.PGPMessage.new(str(payload), format='m')
-    # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
-    # in order for the signature creation time to match the message Date header:
-    payloadmsg |= alice_key.sign(payloadmsg, created=when)
+    sessionkey = codecs.decode(cfg[legacy][multilayer]['sk'], 'hex')
+    payload['Message-ID'] = f"<{cfg[legacy][multilayer]['msgid']}@protected-headers.example>"
+
+    if multilayer:
+        # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
+        # in order for the signature creation time to match the message Date header:
+        pgpsig = alice_key.sign(pgpy.PGPMessage.new(str(payload), cleartext=True), created=when)
+        sigpart = getsigpart(pgpsig)
+
+        sigwrapper = email.message.MIMEPart()
+        sigwrapper.set_type('multipart/signed')
+        del sigwrapper['MIME-Version'] # MIME-Version on subparts is meaningless
+        del sigwrapper['Content-Transfer-Encoding'] # test data is all 7-bit clean
+        sigwrapper.set_boundary(hashlib.sha256(f"inner{payload['Message-ID']}".encode()).hexdigest()[:10])
+        sigwrapper.set_param('protocol', 'application/pgp-signature')
+        sigwrapper.set_param('micalg', f'pgp-{pgpsig.hash_algorithm.name.lower()}')
+        sigwrapper.attach(payload)
+        sigwrapper.attach(sigpart)
+
+        payloadmsg = pgpy.PGPMessage.new(str(sigwrapper), format='m')
+    else:
+        payloadmsg = pgpy.PGPMessage.new(str(payload), format='m')
+        # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
+        # in order for the signature creation time to match the message Date header:
+        payloadmsg |= alice_key.sign(payloadmsg, created=when)
+
     cipher = pgpy.constants.SymmetricKeyAlgorithm.AES256
 
     encmsg = alice_key.pubkey.encrypt(payloadmsg, cipher=cipher, sessionkey=sessionkey)
@@ -297,9 +322,13 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'sign':
         print(signed().as_string(maxheaderlen=MAXHEADERLEN))
     elif sys.argv[1] == 'sign+encrypt':
-        print(signed_encrypted(False).as_string(maxheaderlen=MAXHEADERLEN))
+        print(signed_encrypted(False, False).as_string(maxheaderlen=MAXHEADERLEN))
     elif sys.argv[1] == 'sign+encrypt+legacy':
-        print(signed_encrypted(True).as_string(maxheaderlen=MAXHEADERLEN))
+        print(signed_encrypted(True, False).as_string(maxheaderlen=MAXHEADERLEN))
+    elif sys.argv[1] == 'multilayer':
+        print(signed_encrypted(False, True).as_string(maxheaderlen=MAXHEADERLEN))
+    elif sys.argv[1] == 'multilayer+legacy':
+        print(signed_encrypted(True, True).as_string(maxheaderlen=MAXHEADERLEN))
     else:
         print(f'Unknown argument "{sys.argv[1]}"', file=sys.stderr)
         usage(to=sys.stderr)
