@@ -18,15 +18,43 @@ import codecs
 
 import pgpy
 
+cfg = {
+    'signed': {
+        'encrypt': False,
+    },
+    'signed+encrypted': {
+        'encrypt': True,
+        'multilayer': False,
+        'legacy': False,
+        'sk': b'8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2'
+    },
+    'multilayer': {
+        'encrypt': True,
+        'multilayer': True,
+        'legacy': False,
+        'sk': b'5e67165ed1516333daeba32044f88fd75d4a9485a563d14705e41d31fb61a9e9'
+    },
+    'signed+encrypted+legacy-display': {
+        'encrypt': True,
+        'multilayer': False,
+        'legacy': True,
+        'sk': b'95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e'
+    },
+    'multilayer+legacy-display': {
+        'encrypt': True,
+        'multilayer': True,
+        'legacy': True,
+        'sk': b'b346a2a50fa0cf62895b74e8c0d2ad9e3ee1f02b5d564c77d879caaee7a0aa70'
+    },
+}
+
+
 def usage(to=sys.stdout):
+    subcmds = '\n  '.join(list(cfg.keys()))
     print(f'''Usage: {sys.argv[0]} SUBCMD
 where SUBCMD is one of:
   help
-  sign
-  sign+encrypt
-  sign+encrypt+legacy
-  multilayer
-  multilayer+legacy''', file=to)
+  {subcmds}''', file=to)
 
 # We want maxheaderlen=72 here so that the example fits nicely
 # in an Internet Draft.  But it is risky -- i think it could
@@ -204,7 +232,7 @@ OpenPGP Example Corp'''
         raise NotImplementedError("need to get to multipart")
     return payload
 
-def signed_encrypted(legacy=False, multilayer=False, multipart_payload=False):
+def signed_encrypted(msgid:str, params):
     # seconds since the unix epoch
     posixtime = 1571667491
     # America/Los_Angeles during DST:
@@ -218,21 +246,11 @@ def signed_encrypted(legacy=False, multilayer=False, multipart_payload=False):
     rcvdstring = rcvd.strftime('%a, %d %b %Y %T %z (%Z)').strip()
 
     # make the Cryptographic Payload:
-    payload = make_payload(multipart_payload)
+    payload = make_payload(False)
 
     subj = 'BarCorp contract signed, let\'s go!'
 
-    # index by [legacy][multilayer]:
-    cfg = {False: {False: {'sk': b'8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2',
-                           'msgid': 'signed+encrypted' },
-                   True: {'sk': b'5e67165ed1516333daeba32044f88fd75d4a9485a563d14705e41d31fb61a9e9',
-                          'msgid': 'multilayer'}},
-           True: {False: {'sk': b'95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e',
-                          'msgid': 'signed+encrypted+legacy-display'},
-                  True: {'sk': b'b346a2a50fa0cf62895b74e8c0d2ad9e3ee1f02b5d564c77d879caaee7a0aa70',
-                         'msgid': 'multilayer+legacy-display'}}}
-
-    if legacy:
+    if params['legacy']:
         legacydisplay = email.message.MIMEPart()
         legacydisplay.set_content(f'Subject: {subj}\n')
         legacydisplay.set_type('text/rfc822-headers')
@@ -257,10 +275,10 @@ def signed_encrypted(legacy=False, multilayer=False, multipart_payload=False):
     payload['Date'] = whenstring
     payload['Subject'] = subj
 
-    sessionkey = codecs.decode(cfg[legacy][multilayer]['sk'], 'hex')
-    payload['Message-ID'] = f"<{cfg[legacy][multilayer]['msgid']}@protected-headers.example>"
+    sessionkey = codecs.decode(params['sk'], 'hex')
+    payload['Message-ID'] = f"<{msgid}@protected-headers.example>"
 
-    if multilayer:
+    if params['multilayer']:
         # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
         # in order for the signature creation time to match the message Date header:
         pgpsig = alice_key.sign(pgpy.PGPMessage.new(str(payload), cleartext=True), created=when)
@@ -328,16 +346,13 @@ if __name__ == '__main__':
         exit(1)
     if sys.argv[1] == 'help':
         usage()
-    elif sys.argv[1] == 'sign':
-        print(signed().as_string(maxheaderlen=MAXHEADERLEN))
-    elif sys.argv[1] == 'sign+encrypt':
-        print(signed_encrypted(False, False).as_string(maxheaderlen=MAXHEADERLEN))
-    elif sys.argv[1] == 'sign+encrypt+legacy':
-        print(signed_encrypted(True, False).as_string(maxheaderlen=MAXHEADERLEN))
-    elif sys.argv[1] == 'multilayer':
-        print(signed_encrypted(False, True).as_string(maxheaderlen=MAXHEADERLEN))
-    elif sys.argv[1] == 'multilayer+legacy':
-        print(signed_encrypted(True, True).as_string(maxheaderlen=MAXHEADERLEN))
+    elif sys.argv[1] in cfg:
+        params = cfg[sys.argv[1]]
+        if not params['encrypt']:
+            msg = signed()
+        else:
+            msg = signed_encrypted(sys.argv[1], params)
+        print(msg.as_string(maxheaderlen=MAXHEADERLEN))
     else:
         print(f'Unknown argument "{sys.argv[1]}"', file=sys.stderr)
         usage(to=sys.stderr)
