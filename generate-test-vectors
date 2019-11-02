@@ -26,25 +26,36 @@ cfg = {
         'encrypt': True,
         'multilayer': False,
         'legacy': False,
+        'multipart': False,
         'sk': b'8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2'
     },
     'multilayer': {
         'encrypt': True,
         'multilayer': True,
         'legacy': False,
+        'multipart': False,
         'sk': b'5e67165ed1516333daeba32044f88fd75d4a9485a563d14705e41d31fb61a9e9'
     },
     'signed+encrypted+legacy-display': {
         'encrypt': True,
         'multilayer': False,
         'legacy': True,
+        'multipart': False,
         'sk': b'95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e'
     },
     'multilayer+legacy-display': {
         'encrypt': True,
         'multilayer': True,
         'legacy': True,
+        'multipart': False,
         'sk': b'b346a2a50fa0cf62895b74e8c0d2ad9e3ee1f02b5d564c77d879caaee7a0aa70'
+    },
+    'unfortunately-complex': {
+        'encrypt': True,
+        'multilayer': True,
+        'legacy': True,
+        'multipart': True,
+        'sk': b'1c489cfad9f3c0bf3214bf34e6da42b7f64005e59726baa1b17ffdefe6ecbb52'
     },
 }
 
@@ -132,7 +143,7 @@ def getsigpart(pgpsig:pgpy.PGPSignature) -> email.message.MIMEPart:
     sigpart = email.message.MIMEPart()
     sigpart.set_content(str(pgpsig).strip())
     sigpart.set_type('application/pgp-signature')
-    sigpart.set_charset('us-ascii') # the test vector data is 7-bit clean
+    sigpart.set_charset(None) # the test vector data is 7-bit clean
     del sigpart['MIME-Version'] # MIME-Version on subparts is meaningless
     del sigpart['Content-Transfer-Encoding'] # ASCII-armored PGP Signature data is 7-bit clean
     return sigpart
@@ -197,6 +208,9 @@ OpenPGP Example Corp''')
                 msg[h] = payload[h]
     return msg
 
+def cleanpart(part:email.message.MIMEPart):
+    del part['MIME-Version'] # MIME-Version on subparts is meaningless
+    del part['Content-Transfer-Encoding'] # the test vector data is 7-bit clean
 
 def make_payload(multipart:bool=False):
     payload:email.message.MIMEPart = email.message.MIMEPart()
@@ -225,11 +239,73 @@ OpenPGP Example Corp'''
     if not multipart:
         payload.set_content(txt)
         payload.set_type('text/plain')
-        payload.set_charset('us-ascii') # the test vector data is 7-bit clean
-        del payload['MIME-Version'] # MIME-Version on subparts is meaningless
-        del payload['Content-Transfer-Encoding'] # the test vector data is 7-bit clean
+        payload.set_charset('us-ascii')
+        cleanpart(payload)
     else:
-        raise NotImplementedError("need to get to multipart")
+        html = f'''<html><head></head><body><p>Hi Bob!
+</p><p>
+I just signed the contract with BarCorp and they've set us up with an account on their system for testing.
+</p><p>
+The account information is:
+</p><dl>
+<dt>Site</dt><dd><a href="https://barcorp.example/">https://barcorp.example/</a></dd>
+<dt>Username</dt><dd><tt>examplecorptest</tt></dd>
+<dt>Password</dt><dd>correct-horse-battery-staple</dd>
+</dl><p>
+Please get the account set up and apply the test harness.
+</p><p>
+Let me know when you've got some results.
+</p><p>
+Thanks, Alice<br/>
+{dotsig_separator}<br/>
+Alice Lovelace<br/>
+President<br/>
+OpenPGP Example Corp<br/>
+</p></body></html>'''
+        attachment = f'''diff -ruN a/testharness.cfg b/testharness.cfg
+--- a/testharness.cfg	2019-10-21 06:51:43.732780407 -0700
++++ b/testharness.cfg	2019-10-21 06:51:39.016767239 -0700
+@@ -13,3 +13,8 @@
+ endpoint = https://openpgp.example/test/
+ username = testuser
+ password = MJVMZlHR75mILg
++
++[barcorp]
++endpoint = https://barcorp.example/
++username = examplecorptest
++password = correct-horse-battery-staple
+'''
+        txtpart:email.message.MIMEPart = email.message.MIMEPart()
+        txtpart.set_content(txt)
+        txtpart.set_type('text/plain')
+        txtpart.set_charset('us-ascii')
+        cleanpart(txtpart)
+
+        htmlpart:email.message.MIMEPart = email.message.MIMEPart()
+        htmlpart.set_content(html)
+        htmlpart.set_type('text/html')
+        htmlpart.set_charset('us-ascii')
+        cleanpart(htmlpart)
+
+        altpart:email.message.MIMEPart = email.message.MIMEPart()
+        altpart.set_type('multipart/alternative')
+        altpart.set_boundary(hashlib.sha256('multipart-alternative'.encode()).hexdigest()[:10])
+        cleanpart(altpart)
+        altpart.attach(txtpart)
+        altpart.attach(htmlpart)
+        
+        attachmentpart:email.message.MIMEPart = email.message.MIMEPart()
+        attachmentpart.set_content(attachment)
+        attachmentpart.set_type('text/x-diff')
+        attachmentpart.set_charset('us-ascii')
+        cleanpart(attachmentpart)
+        attachmentpart['Content-Disposition'] = 'inline; filename="testharness-config.diff"'
+        
+        payload.set_type('multipart/mixed')
+        payload.set_boundary(hashlib.sha256('multipart-mixed'.encode()).hexdigest()[:10])
+        cleanpart(payload)
+        payload.attach(altpart)
+        payload.attach(attachmentpart)
     return payload
 
 def signed_encrypted(msgid:str, params):
@@ -246,7 +322,7 @@ def signed_encrypted(msgid:str, params):
     rcvdstring = rcvd.strftime('%a, %d %b %Y %T %z (%Z)').strip()
 
     # make the Cryptographic Payload:
-    payload = make_payload(False)
+    payload = make_payload(params['multipart'])
 
     subj = 'BarCorp contract signed, let\'s go!'
 
@@ -309,14 +385,14 @@ def signed_encrypted(msgid:str, params):
     encpart = email.message.MIMEPart()
     encpart.set_content(str(encmsg))
     encpart.set_type('application/octet-stream')
-    encpart.set_charset('us-ascii') # encrypted body is ASCII-armored already
+    encpart.set_charset(None) # encrypted body is ASCII-armored already
     del encpart['MIME-Version'] # MIME-Version on subparts is meaningless
     del encpart['Content-Transfer-Encoding'] # ASCII-armored data is 7-bit clean
 
     cruft = email.message.MIMEPart()
     cruft.set_content('Version: 1')
     cruft.set_type('application/pgp-encrypted')
-    cruft.set_charset('us-ascii') # the cruft data is 7-bit clean by definition
+    cruft.set_charset(None) # the cruft data is 7-bit clean by definition
     del cruft['MIME-Version'] # MIME-Version on subparts is meaningless
     del cruft['Content-Transfer-Encoding'] # the cruft data is 7-bit clean by definition
     
