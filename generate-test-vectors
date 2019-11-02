@@ -65,6 +65,7 @@ def usage(to=sys.stdout):
     print(f'''Usage: {sys.argv[0]} SUBCMD
 where SUBCMD is one of:
   help
+  list-vectors
   {subcmds}''', file=to)
 
 # We want maxheaderlen=72 here so that the example fits nicely
@@ -429,6 +430,9 @@ if __name__ == '__main__':
         else:
             msg = signed_encrypted(sys.argv[1], params)
         print(msg.as_string(maxheaderlen=MAXHEADERLEN))
+    elif sys.argv[1] == 'list-vectors':
+        for vector in cfg:
+            print(vector)
     else:
         print(f'Unknown argument "{sys.argv[1]}"', file=sys.stderr)
         usage(to=sys.stderr)
