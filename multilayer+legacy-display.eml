@@ -1,0 +1,54 @@
+Received: from localhost (localhost [127.0.0.1]);
+ Mon, 21 Oct 2019 07:18:39 -0700 (UTC-07:00)
+MIME-Version: 1.0
+Content-Type: multipart/encrypted; boundary="750bb87f7c";
+ protocol="application/pgp-encrypted"
+From: Alice Lovelace <alice@openpgp.example>
+To: Bob Babbage <bob@openpgp.example>
+Date: Mon, 21 Oct 2019 07:18:11 -0700
+Message-ID: <multilayer+legacy-display@protected-headers.example>
+Subject: ...
+
+--750bb87f7c
+content-type: application/pgp-encrypted
+
+Version: 1
+
+--750bb87f7c
+content-type: application/octet-stream
+
+-----BEGIN PGP MESSAGE-----
+
+wV4DR2b2udXyHrYSAQdAQL6ivBlSduqtPTk/Y3+ijcQ+N5NYfDl+o474FT/BUBIw
+iZzmY+CQgrHf2iRPm2GuOoN+XuZtFYk4cIhwe0gAK7+p/44osZGipnzcw0NDbMC3
+wcDMA3wvqk35PDeyAQwAtPLguH2X/uqQupJWoF5bnpcxogM2hr+7W5FSFNCiTh6L
+ZWYY9B1M+qQqOsTSqpA9mhOoqlnUGiRWYFU164mla3KmMu4rDKSrP761E9ozQl4k
+o7+xjvWEBsVeU6KZLPpi9r5KDxwiGO8PT7qsNHv+OTSvJbOv1azLcSo4g67J03uU
+rSbMDjPD1BAZDyf7TwKpg4MXVmJtnuHURjzIQ/VtS6eZ0FYzvPZX0rMo00G4bNkR
+t1w06hEUemFRtEI/JhD8H3hDkx4Xo/XBWuiVD/UWrlXh1rGjTCfezd4p7F74/+t+
+VHxLWWkyeNXnQqFZX6nIclvoW/ZQr2RycA8j7L/BSYEeINxE4gau+Mh/9IN460G5
+Aabjok1FIv8D3inMDI9MgxHYOkAReCMJ4btObtLlzQy+f6aE3BPihIvAYlRzCBel
+9Cl604BDGmVug+UeYJ7+1S55HB5vbWzx88IwELw4FCFaYwiK2FOB53tXSc/sGkBQ
+Eh7hf2RLSq0c17fMBuNa0sKDAY5PKwukRG+RDz/TeM0e2Y42hPsVm6rOPKNIjygd
+oGHLfXw/vYtpxVcdipa9LRAnoJ4JNSaB3vOLz54yxeXuOJrg6nT9JvSRuQ1AlZHq
+7Sf2i0kbYkNYZOig54PVJ1/ESkzyrNlmxlRrmo/I9tCr7Wa5bMlgh0S7wm5wPUm4
+sEEf+WeqU9cAQKGz4gmY87/ErvPUnudcl21SKyFZ6SlgXdo1GEAUagf3YPL/eOaW
+KSG/c69L3K2nBr8NnsTH054AokKOEJKM0+Tu+z8dSRFfa8vJt+fbaV/wL3xK9yEQ
+KxJurGTCQ3uKyaeVEyyc5oscv005iaaS9cskkU2eArjAoXNcS7dFMuNXJBbn9WZc
+vDmlUSnpob6ZEVySNiQLKyVPsd50VQALv9ySsVT/LNx1N+QR4PSg7uX029itcXbp
+zuJgBg8hnpZxKD1vWPzWslmyaC6iS4Q0qiD4XL669NEmtrSpXjX1xFv5SGLWO7IE
+TQttUOUgH2tarrFESGOV+354h8kW/CewMO3yR/rTV19HsZfBbuzCLMiURPmK51gb
+diZCD9mxd+LPuMPKo0nnoKgloFMgiono9bimJonGNKdfwhoRFFP8tIHZhkue9zqb
+AnjZazfsI6YyfGsshfjQ2xHUuT8tTXtNCA/yhhld3yp1b2LfWdWdGxcGrVugFhy3
+fUBgeiL2cIf09cn10Y19cIISwa++LpkVWLWuINORu+d2z5Yi9E2I3Tqoi7kt3PvA
+GVfKK+Vpytf5f19vm53gfYPGHeF+V9fLZq2JrD4ewSzHSzbSf0Lo2uIUCRv9gTXV
+scKiRvA7O0tjQHKFQKcrZLcUd1YE3uRcLqL4GMlHZMdRIQ2SfEvZe8Ad5ZxoacTW
+nthYxDipYMheaLmXmePyTGXV0yo/btUe9q0vErhxIrWxnonhQxronVR2go9695Ia
+w/b1FdihjhBvVmymHdYXxCsbIKIPsE7MeAt0YXEmOly2MsqlbYv+XVwFpw9gYa6E
+QwMRS3Kd1bJgpuqZ4nOnHgZ1Qewhi1WbF9M3Kz6EryAgQJ6Sgy7syHqdYh4MzVOE
++VMThZ5Q92DIQcJsPpEKpDIfnbEYm7N6Icfmz6fj1L9s7X1oew==
+=KH2Q
+-----END PGP MESSAGE-----
+
+--750bb87f7c--
+
