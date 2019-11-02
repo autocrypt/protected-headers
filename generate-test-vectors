@@ -245,7 +245,7 @@ def signed_encrypted(legacy=False, multilayer=False, multipart_payload=False):
         innerpayload = payload
         payload = email.message.MIMEPart()
         payload.set_type('multipart/mixed')
-        del legacydisplay['MIME-Version'] # MIME-Version on subparts is meaningless
+        del payload['MIME-Version'] # MIME-Version on subparts is meaningless
         # arbitrary fixed boundary for replicability:
         payload.set_boundary(hashlib.sha256('legacy-wrapper'.encode()).hexdigest()[:10])
         payload.attach(legacydisplay)
