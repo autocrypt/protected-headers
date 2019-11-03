@@ -102,6 +102,26 @@ For the purposes of this document, we define the following concepts:
    * *Obscured Headers* are any Protected Headers which have been modified or removed from the set of Exposed Headers.
    * *Legacy Display Part* is a MIME construct which guarantees visibility of data from the Original Headers which may have been removed or obscured from the Unprotected Headers.
 
+
+Protected Headers Summary
+=========================
+
+The Protected Headers scheme relies on three backward-compatible changes to a cryptographically-protected e-mail message:
+
+ - Headers known to the composing MUA at message composition time are (in addition to their typical placement as Exposed Headers on the outside of the message) also present in the MIME header of the root of the Cryptographic Payload.
+   These Protected Headers share cryptographic properties with the rest of the Cryptographic Payload.
+ - When the Cryptographic Envelope includes encryption, any Exposed Header MAY be *obscured* by a transformation (including deletion).
+ - If the composing MUA intends to obscure any user-facing headers, it MAY add a decorative "Legacy Display" MIME part to the Cryptographic Payload which additionally duplicates the original values of the obscured user-facing headers.
+
+When a composing MUA encrypts a message, it SHOULD obscure the `Subject:` header, by using the literal string `...` (three U+002E FULL STOP characters) as the value of the exposed `Subject:` header.
+
+When a receiving MUA encounters a message with a Cryptographic Envelope, it treats the headers of the Cryptographic Payload as belonging to the message itself, not just the subpart.
+In particular, when rendering a header for any such message for display, the renderer SHOULD prefer the header's Protected value over its Exposed value.
+
+A receiving MUA that understands Protected Headers and discovers a Legacy Display part SHOULD hide the Legacy Display part when rendering the message.
+
+The following sections contain more detailed discussion.
+
 Cryptographic MIME Message Structure {#cryptographic-structure}
 ====================================
 
@@ -209,22 +229,6 @@ The Original Headers are considered to be outside of both.
 
 Message Composition
 ===================
-
-The Protected Headers scheme is summarized as follows:
-
-   1. All message headers known to the MUA at composition time MUST be copied verbatim into the first MIME header of the Cryptographic Payload.
-   2. When encrypting, Exposed Headers MAY be *obscured* by a transformation (including deletion).
-   3. When encrypting, if the MUA has obscured any user-facing header data, it SHOULD add a Legacy Display Part to the Cryptographic Payload which duplicates this information.
-
-*Note:* The above is not a description of a sequential algorithm.
-
-Details:
-
-   * Encryption SHOULD protect the Subject line
-   * When encrypting, the Subject line should be obscured (replaced) by the string `...`
-   * Step 3. may require adding a `multipart/mixed` MIME wrapper to the Cryptographic Payload, in turn influencing where to inject the headers from step 1.
-
-See below for a more detailed discussion.
 
 Message Composition Algorithm
 -----------------------------
