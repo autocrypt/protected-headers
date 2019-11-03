@@ -904,6 +904,40 @@ For this message, the session key is an AES-256 key with value `b346a2a50fa0cf62
 @@multilayer+legacy-display.eml@@
 ~~~
 
+An Unfortunately Complex Example
+--------------------------------
+
+For all of the potential complexity of the Cryptographic Envelope, the Cryptographic Payload itself can be complex.
+The Cryptographic Envelope in this example is the same as the previous example (multilayer signed encrypted).
+The Cryptographic Payload has protected headers and a legacy display part (also the same as the previous example), but in addition Alice's MUA composes a message with both plaintext and HTML variants, and Alice includes a single attachment as well.
+
+While this message is complex, a modern MUA could also plausibly generate such a structure based on reasonable commands from the user composing the message (e.g., Alice composes the message with a rich text editor, and attaches a file to the message).
+
+The key takeaway is that the complexity of the Cryptographic Payload (which may contain a Legacy Display part) is independent of and distinct from the complexity of the Cryptographic Envelope.
+
+This message has the following structure:
+
+~~~
+└┬╴multipart/encrypted
+ ├─╴application/pgp-encrypted
+ └─╴application/octet-stream
+  ↧ (decrypts to)
+  └┬╴multipart/signed
+   ├┬╴multipart/mixed
+   │├─╴text/rfc822-headers
+   │└┬╴multipart/mixed
+   │ ├┬╴multipart/alternative
+   │ │├─╴text/plain
+   │ │└─╴text/html
+   │ └─╴text/x-diff
+   └─╴application/pgp-signature
+~~~
+
+For this message, the session key is an AES-256 key with value `1c489cfad9f3c0bf3214bf34e6da42b7f64005e59726baa1b17ffdefe6ecbb52` (in hex).
+
+~~~
+@@unfortunately-complex.eml@@
+~~~
 
 IANA Considerations
 ===================
