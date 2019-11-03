@@ -226,38 +226,64 @@ Details:
 
 See below for a more detailed discussion.
 
-Message Composition Algorithm
------------------------------
+Message Composition without Protected Headers
+---------------------------------------------
 
-A reasonable sequential algorithm for composing a message with protected headers is:
+This section roughly describes the steps that a legacy MUA might use to composes a cryptographically-protected message *without* Protected Headers.
 
-- Let `orig` be the traditional unprotected message body as a MIME part.
-- Collect all desired message headers in a separate table `H` (so `H[Foo]` refers to the value of header `Foo:` from table `H`)
-- Drop any structural headers from `H` (those whose names start with `Content-`, like `Content-Type` or `Content-Transfer-Encoding`).
-- *Optional* If the message is going to be encrypted, and the MUA has no knowledge that the recipient understands protected headers, wrap `orig` in a structure that carries a Legacy Display part:
-  - Create a new MIME part `legacydisplay` with  `Content-Type: text/rfc822-headers; protected-headers="v1"`
-  - Identify the list of headers to be obscured in table `O`.  For example, this document recommends only obscuring the subject, so `O[Subject] = '...'`.  If obscured header `Foo` is to be struck entirely, `O[Foo]`  should be the special value `null`.
-  - For each obscured header name `oh` in `O`:
-     - If `oh` is typically visible (see {{typically-visible-headers}}):
-        - Add `oh: H[oh]` to the body of `legacydisplay`.  For example, if `H[Subject]` is `lunch plans?`, then add `Subject: lunch plans?` to the body of `legacydisplay`
-  - Construct a new MIME part `wrapper` with `Content-Type: multipart/mixed` 
-  - Give `wrapper` exactly two subarts: `legacydisplay` and `orig` 
+The message composition algorithm takes three parameters:
+
+- `origbody`: the traditional unprotected message body as a well-formed MIME tree (possibly just a single MIME leaf part).
+  As a well-formed MIME tree, `origbody` already has structural headers present.
+- `origheaders`: the intended non-structural headers for the message, represented here as a table mapping from header names to header values..
+  For example, `origheaders['From']` refers to the value of the `From` header that the composing MUA would typically place on the message before sending it.
+- `crypto`: The series of cryptographic protections to apply (for example, "sign with the secret key corresponding to OpenPGP certificate X, then encrypt to OpenPGP certificates X and Y").
+  This is a routine that accepts a MIME tree as input (the Cryptographic Payload), wraps the input in the appropriate Cryptographic Envelope, and returns the resultant MIME tree as output, 
+
+The algorithm returns a MIME object that is ready to be injected into the mail system:
+
+- Apply `crypto` to `origbody`, yielding MIME tree `output`
+- For header name `h` in `origheaders`:
+  - Set header `h` of `output` to `origheaders[h]`
+- Return `output`
+
+Message Composition with Protected Headers
+------------------------------------------
+
+A reasonable sequential algorithm for composing a message *with* protected headers takes two more parameters in addition to `origbody`, `origheaders`, and `crypto`:
+
+- `obscures`: a table of headers to be obscured during encryption, mapping header names to their obscuring values.
+  For example, this document recomends only obscuring the subject, so that would be represented by the single-entry table `obscures = {'Subject': '...'}`.
+  If header `Foo` is to be deleted entirely, `obscures['Foo']` should be set to the special value `null`.
+- `legacy`: a boolean value, indicating whether any recipient of the message is believed to have a legacy client (that is, a MUA that does not understand protected headers).
+
+The revised algorithm for applying cryptographic protection to a message is as follows:
+
+- if `crypto` contains encryption, and `legacy` is `true`, and `obscures` contains any typically visible headers (see {{typically-visible-headers}}), wrap `orig` in a structure that carries a Legacy Display part:
+  - Create a new MIME leaf part `legacydisplay` with header `Content-Type: text/rfc822-headers; protected-headers="v1"`
+  - For each obscured header name `obh` in `obscures`:
+     - If `obh` is typically visible:
+        - Add `obh: origheaders[ob]` to the body of `legacydisplay`.  For example, if `origheaders['Subject']` is `lunch plans?`, then add the line `Subject: lunch plans?` to the body of `legacydisplay`
+  - Construct a new MIME part `wrapper` with `Content-Type: multipart/mixed`
+  - Give `wrapper` exactly two subarts: `legacydisplay` and `origbody`, in that order.
   - Let `payload` be MIME part `wrapper`
 - Otherwise:
-  - Let `payload` be MIME part `orig`
-- For each header name `h` in `H`:
-  - Set header `h` of MIME part `payload` to `H[h]`
-- Wrap `payload` in the appropriate cryptographic layer or layers, producing candidate MIME part `cand`
-- If the cryptographic layers include an encryption layer:
-  - For each obscured header `oh` in `O`:
-    - If `O[oh]` is `null`:
-      - Drop `oh` from `H`
+  - Let `payload` be MIME part `origbody`
+- For each header name `h` in `origheaders`:
+  - Set header `h` of MIME part `payload` to `origheaders[h]`
+- Apply `crypto` to `payload`, producing MIME tree `output`
+- If `crypto` contains encryption:
+  - For each obscured header name `obh` in `obscures`:
+    - If `obscures[obh]` is `null`:
+      - Drop `obh` from `origheaders`
     - Else:
-      - Set `H[oh]` to `O[oh]`
-- For each header name `h` in `H`:
-  - Set header `h` of `cand` to `H[h]`
-  
-MIME part `cand` is now a complete message, ready for delivery.
+      - Set `origheaders[obh]` to `obscures[obh]`
+- For each header name `h` in `origheaders`:
+  - Set header `h` of `output` to `origheaders[h]`
+- return `output`
+
+Note that both new parameters, `obscured` and `legacy`, are effectively ignored if `crypto` does not contain encryption.
+This is by design, because they are irrelevant for signed-only cryptographic protections.
 
 Header Copying
 --------------
