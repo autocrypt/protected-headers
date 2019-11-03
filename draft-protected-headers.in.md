@@ -791,7 +791,7 @@ This shows a clearsigned message.  Its MIME message structure is:
 
 ~~~
 └┬╴multipart/signed
- ├─╴text/plain
+ ├─╴text/plain ← Cryptographic Payload
  └─╴application/pgp-signature
 ~~~
 
@@ -814,7 +814,7 @@ Its MIME message structure is:
  ├─╴application/pgp-encrypted
  └─╴application/octet-stream
    ↧ (decrypts to)
-   └─╴text/plain
+   └─╴text/plain ← Cryptographic Payload
 ~~~
 
 The `Subject:` header is successfully obscured.
@@ -844,8 +844,8 @@ This message is structured in the following way:
  ├─╴application/pgp-encrypted
  └─╴application/octet-stream
    ↧ (decrypts to)
-   └┬╴multipart/mixed
-    ├─╴text/rfc822-headers
+   └┬╴multipart/mixed ← Cryptographic Payload
+    ├─╴text/rfc822-headers ← Legacy Display Part
     └─╴text/plain
 ~~~
 
@@ -875,7 +875,7 @@ A typical message like this has the following structure:
  └─╴application/octet-stream
   ↧ (decrypts to)
   └┬╴multipart/signed
-   ├─╴text/plain
+   ├─╴text/plain ← Cryptographic Payload
    └─╴application/pgp-signature
 ~~~
 
@@ -898,8 +898,8 @@ Such a message might have the following structure:
  └─╴application/octet-stream
   ↧ (decrypts to)
   └┬╴multipart/signed
-   ├┬╴multipart/mixed
-   │├─╴text/rfc822-headers
+   ├┬╴multipart/mixed ← Cryptographic Payload
+   │├─╴text/rfc822-headers ← Legacy Display Part
    │└─╴text/plain
    └─╴application/pgp-signature
 ~~~
@@ -929,13 +929,13 @@ This message has the following structure:
  └─╴application/octet-stream
   ↧ (decrypts to)
   └┬╴multipart/signed
-   ├┬╴multipart/mixed
-   │├─╴text/rfc822-headers
+   ├┬╴multipart/mixed ← Cryptographic Payload
+   │├─╴text/rfc822-headers ← Legacy Display Part
    │└┬╴multipart/mixed
    │ ├┬╴multipart/alternative
    │ │├─╴text/plain
    │ │└─╴text/html
-   │ └─╴text/x-diff
+   │ └─╴text/x-diff ← attachment
    └─╴application/pgp-signature
 ~~~
 
