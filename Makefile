@@ -26,7 +26,7 @@ $(draft).md: $(draft).in.md assemble $(vectordata)
 	mv $@.tmp $@
 
 clean:
-	-rm -rf $(OUTPUT) .refcache/ metadata.min.js *.tmp
+	-rm -rf $(OUTPUT) metadata.min.js *.tmp
 
 .PHONY: clean all
 .SECONDARY: $(vectordata) draft-protected-headers.md
