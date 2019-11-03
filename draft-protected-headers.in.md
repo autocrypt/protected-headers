@@ -789,9 +789,11 @@ Signed Message with Protected Headers {#test-vector-signed-only}
 
 This shows a clearsigned message.  Its MIME message structure is:
 
-    └┬╴multipart/signed
-     ├─╴text/plain
-     └─╴application/pgp-signature
+~~~
+└┬╴multipart/signed
+ ├─╴text/plain
+ └─╴application/pgp-signature
+~~~
 
 Note that if this message had been generated without Protected Headers, then an attacker with access to it could modify the Subject without invalidating the signature.
 Such an attacker could cause Bob to think that Alice wanted to cancel the contract with BarCorp instead of FooCorp.
@@ -807,11 +809,13 @@ This shows a simple encrypted message with protected headers.
 The encryption also contains an signature in the OpenPGP Message structure.
 Its MIME message structure is:
 
-    └┬╴multipart/encrypted
-     ├─╴application/pgp-encrypted
-     └─╴application/octet-stream
-       ↧ (decrypts to)
-       └─╴text/plain
+~~~
+└┬╴multipart/encrypted
+ ├─╴application/pgp-encrypted
+ └─╴application/octet-stream
+   ↧ (decrypts to)
+   └─╴text/plain
+~~~
 
 The `Subject:` header is successfully obscured.
 
@@ -835,13 +839,15 @@ If Alice's MUA wasn't sure whether Bob's MUA would know to render the obscured `
 
 This message is structured in the following way:
 
-    └┬╴multipart/encrypted
-     ├─╴application/pgp-encrypted
-     └─╴application/octet-stream
-       ↧ (decrypts to)
-       └┬╴multipart/mixed
-        ├─╴text/rfc822-headers
-        └─╴text/plain
+~~~
+└┬╴multipart/encrypted
+ ├─╴application/pgp-encrypted
+ └─╴application/octet-stream
+   ↧ (decrypts to)
+   └┬╴multipart/mixed
+    ├─╴text/rfc822-headers
+    └─╴text/plain
+~~~
 
 The example below shows the same message as {{encryptedsigned}}.
 
