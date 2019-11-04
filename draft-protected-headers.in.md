@@ -895,3 +895,10 @@ The set of constructs and algorithms in this document has a previous working tit
 These ideas were tested and fine-tuned in part by the loose collaboration of MUA developers known as {{Autocrypt}}.
 
 Additional feedback and useful guidance was contributed by attendees of the OpenPGP e-mail summit ({{OpenPGP-Email-Summit-2019}}).
+
+The following people have contributed implementation experience, documentation, critique, and other feedback:
+
+- Holger Krekel
+- Patrick Brunschwig
+- Vincent Breitmoser
+ 
