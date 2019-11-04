@@ -896,7 +896,7 @@ This is a staging attack against message confidentiality -- it relies on followu
 For an encrypted message that is part of an ongoing discussion where users are accustomed to doing "reply all", such an insertion would cause the replying MUA to encrypt the replying message to the additional party, giving them access to the conversation.
 If the replying MUA quotes and attributes cleartext from the original message within the reply, then the attacker learns the contents of the encrypted message.
 
-As certificate discovery becomes more automated and less noticable, this is an increasing risk.
+As certificate discovery becomes more automated and less noticeable to the end user, this is an increasing risk.
 
 An MUA that rejects Exposed Headers in favor of Protected Headers should be able to avoid this attack when replying to a signed message.
 
