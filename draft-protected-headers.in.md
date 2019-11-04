@@ -398,6 +398,26 @@ A MUA SHOULD transform a Cryptographic Payload to include a Legacy Display part 
 Additionally, if the sender knows that the recipient's MUA is capable of interpreting Protected Headers, it SHOULD NOT attempt to include a Legacy Display part.
 (Signalling such a capability is out of scope for this document)
 
+Message Rendering: Omitting a Legacy Display Part {#no-render-legacy-display}
+-------------------------------------------------
+
+A MUA that understands Protected Headers may receive an encrypted message that contains a Legacy Display part.
+Such an MUA SHOULD avoid rendering the Legacy Display part to the user at all, since it is aware of and can render the actual Protected Headers.
+
+If a Legacy Display part is detected, the Protected Headers should still be pulled from the Cryptographic Payload (part `V` in the example above), but the body of message SHOULD be rendered as though it were only the original body (part `X` in the example above).
+
+### Legacy Display Detection Algorithm
+
+A receiving MUA acting on a message SHOULD detect the presence of a Legacy Display part and the corresponding "original body" with the following simple algorithm:
+
+ - Check that all of the following are true for the message:
+  - The Cryptographic Envelope must contain an encrypting Cryptographic Layer
+  - The Cryptographic Payload must have a `Content-Type` of `multipart/mixed`
+  - The Cryptographic Payload must have exactly two subparts
+  - The first subpart of the Cryptographic Payload must have a `Content-Type` of `text/rfc822-headers`
+  - The first subpart of the Cryptographic Payload's `Content-Type` must contain a property of `protected-headers`, and its value must be `v1`.
+ - If all of the above are true, then the first subpart is the Legacy Display part, and the second subpart is the "original body".  Otherwise, the message does not have a Legacy Display part.
+
 Legacy Display is Decorative and Transitional
 ---------------------------------------------
 
@@ -432,25 +452,10 @@ An alternate, complementary strategy for interpreting Protected Headers is to co
 
 This state should be presented to the user using the same interface as other signature verification failures.
 
-Message Rendering: Omitting a Legacy Display Part {#no-render-legacy-display}
--------------------------------------------------
+The Legacy Display Part
+-----------------------
 
-A MUA that understands Protected Headers may receive an encrypted message that contains a Legacy Display part.
-Such an MUA SHOULD avoid rendering the Legacy Display part to the user at all, since it is aware of and can render the actual Protected Headers.
-
-If a Legacy Display part is detected, the Protected Headers should still be pulled from the Cryptographic Payload (part `V` in the example above), but the body of message SHOULD be rendered as though it were only the original body (part `X` in the example above).
-
-### Legacy Display Detection Algorithm
-
-A receiving MUA acting on a message SHOULD detect the presence of a Legacy Display part and the corresponding "original body" with the following simple algorithm:
-
- - Check that all of the following are true for the message:
-  - The Cryptographic Envelope must contain an encrypting Cryptographic Layer
-  - The Cryptographic Payload must have a `Content-Type` of `multipart/mixed`
-  - The Cryptographic Payload must have exactly two subparts
-  - The first subpart of the Cryptographic Payload must have a `Content-Type` of `text/rfc822-headers`
-  - The first subpart of the Cryptographic Payload's `Content-Type` must contain a property of `protected-headers`, and its value must be `v1`.
- - If all of the above are true, then the first subpart is the Legacy Display part, and the second subpart is the "original body".  Otherwise, the message does not have a Legacy Display part.
+This part is purely decorative. See {{no-render-legacy-display}} for details and recommendations on how to handle the Legacy Display part.
 
 Replying to a Message with Obscured Headers
 -------------------------------------------
