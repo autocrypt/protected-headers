@@ -43,6 +43,14 @@ informative:
     target: https://autocrypt.org/level1.html
     title: Autocrypt Specification 1.1
     date: 2019-10-13
+ xkcd936:
+    target: https://www.xkcd.com/936/
+    title: "xkcd: Password Strength"
+    author: 
+      name: Randall Munroe
+      ins: R. Munroe
+      org: xkcd
+    date: 2011-08-10
  I-D.draft-bre-openpgp-samples-00:
  I-D.draft-luck-lamps-pep-header-protection-03:
  I-D.draft-ietf-lamps-header-protection-requirements-00:
@@ -934,3 +942,4 @@ The following people have contributed implementation experience, documentation, 
 - Patrick Brunschwig
 - Vincent Breitmoser
  
+The password example included in the test vectors comes from {{xkcd936}}.
