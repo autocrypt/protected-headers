@@ -446,7 +446,7 @@ A MUA implementing this strategy should pay special attention to any user facing
 If a user-facing header is among the Exposed Headers but missing from the Protected Headers, then an MUA implementing this strategy SHOULD delete the identified Exposed Header before presenting the message to the user.
 
 This strategy does not risk raising a false alarm about harmless deviations, but conversely it does nothing to inform the user if they are under attack.
-This strategy does successfully mitigate and thwart some attacks, including signature replay attacks ({{signature-replay}}).
+This strategy does successfully mitigate and thwart some attacks, including signature replay attacks ({{signature-replay}}) and participant modification attacks ({{participant-modification}}).
 
 Signature Invalidation
 ----------------------
@@ -881,6 +881,20 @@ Such an attack works by taking a message delivered in one context (e.g., to some
 A MUA that generates all its signed messages with Protected Headers gives recipients the opportunity to avoid falling victim to this attack.
 
 Guidance for how a message recipient can use Protected Headers to defend against a signature replay attack are out of scope for this document.
+
+Participant Modification {#participant-modification}
+------------------------
+
+A trivial (if detectable) attack by an active network adversary is to insert an additional e-mail address in a `To` or `Cc` or `Reply-To` or `From` header.
+This is a staging attack against message confidentiality -- it relies on followup action by the recipient.
+
+For an encrypted message that is part of an ongoing discussion where users are accustomed to doing "reply all", such an insertion would cause the replying MUA to encrypt the replying message to the additional party, giving them access to the conversation.
+If the replying MUA quotes and attributes cleartext from the original message within the reply, then the attacker learns the contents of the encrypted message.
+
+As certificate discovery becomes more automated and less noticable, this is an increasing risk.
+
+An MUA that rejects Exposed Headers in favor of Protected Headers should be able to avoid this attack.
+
 
 Privacy Considerations
 ======================
