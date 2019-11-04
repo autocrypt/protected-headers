@@ -603,7 +603,7 @@ Additionally, a message deliberately forwarded in its own right (without preambl
 
 The mechanism described here allows cryptographically-incapable legacy MUAs to read and handle cleartext signed messages without any modifications, and permits cryptographically-capable legacy MUAs to handle encrypted messages without any modifications.
 
-In particular, the Legacy Display part described in {#legacy-display} makes it feasible for a conformant MUA to generate messages with obscured Subject lines that nonetheless give access to the obscured Subject header for recipients with legacy MUAs.
+In particular, the Legacy Display part described in {{legacy-display}} makes it feasible for a conformant MUA to generate messages with obscured Subject lines that nonetheless give access to the obscured Subject header for recipients with legacy MUAs.
 
 The Content-Type Property "forwarded=no" {forwarded=no}
 ----------------------------------------
