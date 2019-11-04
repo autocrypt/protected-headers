@@ -1,7 +1,7 @@
 ---
 title: Protected Headers for Cryptographic E-mail
 docname: draft-autocrypt-protected-headers-00
-date: 2019-10-19
+date: 2019-11-04
 category: info
 
 ipr: trust200902
