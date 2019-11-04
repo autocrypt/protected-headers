@@ -76,8 +76,8 @@ Content-Type: text/x-diff; charset="us-ascii"
 Content-Disposition: inline; filename="testharness-config.diff"
 
 diff -ruN a/testharness.cfg b/testharness.cfg
---- a/testharness.cfg	2019-10-21 06:51:43.732780407 -0700
-+++ b/testharness.cfg	2019-10-21 06:51:39.016767239 -0700
+--- a/testharness.cfg
++++ b/testharness.cfg
 @@ -13,3 +13,8 @@
  endpoint = https://openpgp.example/test/
  username = testuser
@@ -98,9 +98,9 @@ content-type: application/pgp-signature
 -----BEGIN PGP SIGNATURE-----
 
 wnUEARYKAB0FAl2tviMWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
-js3lAPsEeJfnKB4idpNd1uqoqYEbrwViB67o5iXEjtAOg/lReQEAwxUQ3oRHbzsN
-mrwco/eqBo7wZmULBNNt6tp7ydj1/As=
-=6fHR
+juFdAQDjMySpe88yowVduslDi/IGFTGNn1d0ZxpA3IGW5Ss8ZQD9H2zbBtiKXtc7
+axmvtiKF4z1DdY/IgOKFfmyGX2WZrws=
+=Sv5w
 -----END PGP SIGNATURE-----
 
 --c72d4fa142--

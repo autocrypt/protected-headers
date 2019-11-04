@@ -264,8 +264,8 @@ President<br/>
 OpenPGP Example Corp<br/>
 </p></body></html>'''
         attachment = f'''diff -ruN a/testharness.cfg b/testharness.cfg
---- a/testharness.cfg	2019-10-21 06:51:43.732780407 -0700
-+++ b/testharness.cfg	2019-10-21 06:51:39.016767239 -0700
+--- a/testharness.cfg
++++ b/testharness.cfg
 @@ -13,3 +13,8 @@
  endpoint = https://openpgp.example/test/
  username = testuser
