@@ -134,6 +134,7 @@ This includes (but is not limited to):
 
 Note that no "user-facing" headers ({{user-facing-headers}}) are also "structural" headers.  Of course, many headers are neither "user-facing" nor "structural".
 
+FIXME: are there any non-`Content-*` headers we should consider as structural?
 
 Protected Headers Summary
 =========================
@@ -284,7 +285,7 @@ This value (`...`) was chosen because it is believed to be language agnostic and
 Obscured Headers
 ----------------
 
-Due to compatibility and usability concerns, a Mail User Agent SHOULD NOT obscure any of: `From`, `To`, `Cc`, `Message-ID`, `References`, `Reply-To`, `In-Reply-To`, unless the user has indicated they have security constraints which justify the potential downsides (see {{common-pitfalls}} for a more detailed discussion).
+Due to compatibility and usability concerns, a Mail User Agent SHOULD NOT obscure any of: `From`, `To`, `Cc`, `Message-ID`, `References`, `Reply-To`, `In-Reply-To`, (FIXME: MORE?) unless the user has indicated they have security constraints which justify the potential downsides (see {{common-pitfalls}} for a more detailed discussion).
 
 Aside from that limitation, this specification does not at this time define or limit the methods a MUA may use to convert Exposed Headers into Obscured Headers.
 
@@ -333,6 +334,7 @@ The revised algorithm for applying cryptographic protection to a message is as f
   - Let `payload` be MIME part `origbody`
 - For each header name `h` in `origheaders`:
   - Set header `h` of MIME part `payload` to `origheaders[h]`
+- FIXME: Enigmail adds `protected-headers="v1"` parameter to `payload` here.  Is this necessary?
 - Apply `crypto` to `payload`, producing MIME tree `output`
 - If `crypto` contains encryption:
   - For each obscured header name `obh` in `obscures`:
