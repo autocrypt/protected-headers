@@ -316,7 +316,7 @@ Message Composition with Protected Headers {#protected-header-composition}
 A reasonable sequential algorithm for composing a message *with* protected headers takes two more parameters in addition to `origbody`, `origheaders`, and `crypto`:
 
 - `obscures`: a table of headers to be obscured during encryption, mapping header names to their obscuring values.
-  For example, this document recomends only obscuring the subject, so that would be represented by the single-entry table `obscures = {'Subject': '...'}`.
+  For example, this document recommends only obscuring the subject, so that would be represented by the single-entry table `obscures = {'Subject': '...'}`.
   If header `Foo` is to be deleted entirely, `obscures['Foo']` should be set to the special value `null`.
 - `legacy`: a boolean value, indicating whether any recipient of the message is believed to have a legacy client (that is, a MUA that does not understand protected headers).
 
@@ -497,7 +497,7 @@ In contrast, using `...` as the obscured `Subject:` was less likely to be seen a
 Reply/Forward Losing Subjects
 -----------------------------
 
-When a user of a legacy MUA which does not support Protected Headers replies or forwards a message where the Subject has been obscured, it is likely that the new subject will be `Fwd: ...` or `Re: ...` (or the localized equivalent). This breaks an important feature and is especially unfortuante when new participants are added to a conversation who have never saw the original subject.
+When a user of a legacy MUA which does not support Protected Headers replies or forwards a message where the Subject has been obscured, it is likely that the new subject will be `Fwd: ...` or `Re: ...` (or the localized equivalent). This breaks an important feature and is especially unfortunate when new participants are added to a conversation who have never saw the original subject.
 
 At this time, there is no known workaround for this problem. The only solution is to upgrade the MUA to support Protected Headers.
 
@@ -547,7 +547,7 @@ Mailing List Header Modifications
 
 Some popular mailing-list implementations will modify the Exposed Headers of a message in specific, benign ways. In particular, it is common to add markers to the `Subject` line, and it is also common to modify either `From` or `Reply-To` in order to make sure replies go to the list instead of directly to the author of an individual post.
 
-Depending on how the MUA resolves discrepancies between the Protected Headers and the Exposed Headers of a recieved message, these mailing list "features" may either break or the MUA may incorrectly interpret them as a security breach.
+Depending on how the MUA resolves discrepancies between the Protected Headers and the Exposed Headers of a received message, these mailing list "features" may either break or the MUA may incorrectly interpret them as a security breach.
 
 Implementors may for this reason choose to implement slightly different strategies for resolving discrepancies, if a message is known to come from such a mailing list. MUAs should at the very least avoid presenting false alarms in such cases.
 
