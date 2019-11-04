@@ -1,0 +1,53 @@
+Received: from localhost (localhost [127.0.0.1]);
+ Mon, 21 Oct 2019 07:18:39 -0700 (UTC-07:00)
+MIME-Version: 1.0
+Content-Type: multipart/encrypted; boundary="15d01ebd43";
+ protocol="application/pgp-encrypted"
+From: Alice Lovelace <alice@openpgp.example>
+To: Bob Babbage <bob@openpgp.example>
+Date: Mon, 21 Oct 2019 07:18:11 -0700
+Message-ID: <multilayer@protected-headers.example>
+Subject: ...
+
+--15d01ebd43
+content-type: application/pgp-encrypted
+
+Version: 1
+
+--15d01ebd43
+content-type: application/octet-stream
+
+-----BEGIN PGP MESSAGE-----
+
+wV4DR2b2udXyHrYSAQdArQ8apKY0ciE47ZyBKgbOditGO6OBizW/VeQItRdCxA0w
+KaoRJewLgRnuvwaEisHWjiA0IHB9+0BSja+GFIh6gBWCFqzAfJQxoywAZMHznn6k
+wcDMA3wvqk35PDeyAQv/X3CYHUgNH81gAKZK/Cb7+WDbjmHcgskkvtceANQbEBEr
+/yVoou5BSlXsEni2wn1dtrIsrkhj6OF+B1mwGELw/3qcXdhT46iIrjn547b8Wycp
+saey8JqqX8FdfrxEYyOeBJn9CMDm0Dawfv+kNEdbfZtZ2IUONRgigKfcs+Pvrv3e
+hoY3KUe47cbiqKvw11VFTu2e4+rIPXW4sB3/95Epvo+RSo58p62kbvJDmBPt5E06
+mEykcvyd6GP0eyTTbtaHNcNWd8jvGUobfikwibADcmjXmbPwTJefMCBbsYov86bK
+72QOWbp39JcmwUWdo850+sU0XoCHmqditFfZqEdcKRFJOl+Rt+pMSrDixHb8Thdi
+WcxUXetpDvACrmjsipKHbxBZAgEU0K71zvbUPk930jOqJgsyXKX0WI8u32gNZDfc
+enHAAnALKvwoTGU3EM6do0XRMUKYL6+ON1F1L9S1Rm9Fa+WQKcO04ZvdeHbQXkt3
+Fx6ZvZT/Bn3fcIWBpHfs0sI0AfeSpGjSejaZvZQ8qoOTQkOqrjuRnpU8232/ngsC
+46mObydGJZ5qEMnmdDOfQB6L1LR9dQTCzA6swlG4U62MoO0n6yILCxLZTPVKYm7c
+6r4KnQcvrGk1pgozdW1QjFBOjiDXbitHnqGorxKUcVVorXSEU919wKm11tGGyZ7/
+2sta4WQq9ILVvPqB2I1hLfbteBUYWgB/rJcc6JsZyRItEKjSSXZoanYyuCPf0m5r
+rpzf18kz8gYk92RTLzefALgMiIuU9CXFtd673/MalsZ2DRYjnI3tC9AXEdV9yVVa
+KYX/ECbFPHNxxulu/HU7hL7QQbgxA1E41RM2KjEzmwUEA8EomuNN7eQ5AJjDP0qk
+EIjIxIsW8at8FB4vB4sxh95OiF3hHFZj8q6/VZW8K8LspERCdrKmtu46xt2g7uKx
+8ifdwqMT5OPu4VD5EPuOZLJRnSnYskTBwjZnX+ZqRdz/7z7XdUhvn4CjjiFt804a
+4uunVgTeVXQay97a7oz+SCrNc+Gvv7K0dt7oUt512+0hQAJ3W9J3Chlht4UKs759
+QymPx4smS8kY7c57OWpab481cqeQZLMIftBconhzSzAGl1LZhc5MVoc7l3dEABcx
+G+zcTIiRT+io8PwaBvnUg3nE0xP201s5vpK2vbBBMDh3O3titYMBDJp3riyp81AR
+Rm6tymUZaRMxq17T6BJ0b0fXyQ2fiz5vuudK5L/zDBvkOSIlhvaV2zxJqMhlSS54
+W2RrwNjxkgBCiz1u1Yzi/HQ+jUwO/p8uGn0hyyIEEDIX50gPe2IQjgEjGteIBrDF
+sfi9jCEhK/Y0xANG4Mt01Ukt6cgGQhrKuBnyy9KRG+US7aaPdMQuPLfOlhPZOjIQ
+Bytek3JyT/QCsKPSjcGiNinllYk+Za8gL6SCNfZam1y/E802xX4z30t7Z6EBSRLi
++qwzOCu7wTkJkoOPLfZFLY41OrVaR8lyBG1eZmtJXbER1GuuRv/7IC2xcDZv/2VO
+ahdnPLy7
+=rOD1
+-----END PGP MESSAGE-----
+
+--15d01ebd43--
+

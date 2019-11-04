@@ -1,0 +1,53 @@
+Received: from localhost (localhost [127.0.0.1]);
+ Mon, 21 Oct 2019 07:18:39 -0700 (UTC-07:00)
+MIME-Version: 1.0
+Content-Type: multipart/encrypted; boundary="73c8655345";
+ protocol="application/pgp-encrypted"
+From: Alice Lovelace <alice@openpgp.example>
+To: Bob Babbage <bob@openpgp.example>
+Date: Mon, 21 Oct 2019 07:18:11 -0700
+Message-ID: <signed+encrypted+legacy-display@protected-headers.example>
+Subject: ...
+
+--73c8655345
+content-type: application/pgp-encrypted
+
+Version: 1
+
+--73c8655345
+content-type: application/octet-stream
+
+-----BEGIN PGP MESSAGE-----
+
+wV4DR2b2udXyHrYSAQdAS0G0tRGi0cGe2INISDT7xS8b5e1iezXzXuFOrAa1fWgw
+JK32KLaTpnHegkEVB/cdMLMEEq56BkktxtC94YNSoeKJOTmNPhR+YWLruWRmZoAk
+wcDMA3wvqk35PDeyAQv6Ag30fne2jVFaH+oStUEoX/BEaclWJfpIgu9Ex5SYLmEg
+tNHJtLMbKWYKQHhpMiyONeVvfgkus8cPZMtpc+eZEP9FaEdQ69CqkB9Cmqt4Hs2q
+yNk14ec0KtL9/b5IPx4rVBrBuFSqxxiS0r0bMsTvKss1p4UGgPN9UPhJSj4dsmDP
+w+gLkxsUKL6i37QJIOmarMawS4iK7/MN+GbjzlMduw/VuLV80DYgIt4l96E9xJ+1
+u7S6/TKXyUSuxG1Wo+3tCEpy+hTKeS8mYnjD8OYVF5To+TCMnznCiEEwebd44ild
+54Bt4QS/G+x/s/aSFRM8pN2O8qz5D5sy+Mzp4dG6w/9fAhIt9mp8W/6Vn+Cgy8kD
+0dHy3pN5dVavmsBqzy0uaf4xAoLLJZQBzyR+0UWygUyfc2N6VHkXo+S30LhSfkJO
+BMNKqkCaUoLFlHQLstZXETfXMJzpuUySH99ZTeyVnfB/eiEr9CByQqTeN9Uqtu0R
+QYWEpTvvYei/vJCNDBqT0sIxAftxmF/H2K4hCW2qD3eE/zSe2PpabgStHmfdZrcx
+X1sdOYZ7nOE0L3J/zE3jASEyQUZHr5rdt/RI5qwD2a7zirp8RNAyvk93InQuseX7
+mgHADtk9LdNTWumiUd8pvm/ChXoRKvqjSV7mHpdBil0D4JKpZTGAQieP4fF71IYw
+4E+VwiZZKIDSiYMUEljA3U7+M9siELlvKRACrrPZKr6OE58JywlIgRdewzroMWIO
+HoNJ4EOzij5rJfd6fAF4A3lH3wRu8dcuqrKwK2DhL+as1Zc/AABZD9Ov8t97/A/t
+b6jWJqVAVWilgarv9wwI4icN6q9hdwPZF5OaLgvpskGAtG3z51vkJuAiMogWP2Iv
+T0GuamZb5177yH5ShtowlTZN6D5WR7ShYbdHAPKRWFcYz4S9b7UZiWH1Ts2lHglJ
+5mUbpTI1EvJFO1nwUcVLTuqB2N7lwVvD0oM9lSDcgUmrS04lqBDEax1V+PoKXYAi
+Q0z3eH6EDzw0xYWZhiBjgvor2qmGuIEqjBa+5qIOMrzBZK+7y0KOlkgaPik0BeYB
+jC/107Us+5i7c3EfQXj4K5XP72/SR0KC9cr//q9tRBOGki8yVicyOGbtSGsNgul/
+5T0VlrTecw+3ZOH4mQRGCJmxkes1amdDeklISfBeOe+LBx/tjkyixeXeh05i1doy
+n9VY/utOqu3Oo6XnTWktxajuhfvwSA2wNB/JnRFqu8QEVmqVzD/jwNvsvETQC83j
+GPKYo+P1PpAHeqRs4tMq18JQzzytXzr5llLp26qT4Sgul+8tqafkfS6zGL1xShMQ
+V1uMtoAt5KBfO4nfiGUAiZeR2RqRrT4YLHEZvpblIE8y7l3y8WV8gdiFfOXZ21mg
+gGntqnxU0hrC0IggGVBBY7zHVrcQxJOGsnAsqhQJpVBSnP0YgyrKCEVgDF4ibPBz
+y2bRxKP4es0advuEVKGAHULhzoV26Siz8h9MkeI6o+d28vestHng++2DsmCrdpSv
+EatA
+=MxXQ
+-----END PGP MESSAGE-----
+
+--73c8655345--
+

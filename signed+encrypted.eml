@@ -1,0 +1,51 @@
+Received: from localhost (localhost [127.0.0.1]);
+ Mon, 21 Oct 2019 07:18:39 -0700 (UTC-07:00)
+MIME-Version: 1.0
+Content-Type: multipart/encrypted; boundary="bcde3ce988";
+ protocol="application/pgp-encrypted"
+From: Alice Lovelace <alice@openpgp.example>
+To: Bob Babbage <bob@openpgp.example>
+Date: Mon, 21 Oct 2019 07:18:11 -0700
+Message-ID: <signed+encrypted@protected-headers.example>
+Subject: ...
+
+--bcde3ce988
+content-type: application/pgp-encrypted
+
+Version: 1
+
+--bcde3ce988
+content-type: application/octet-stream
+
+-----BEGIN PGP MESSAGE-----
+
+wV4DR2b2udXyHrYSAQdAk4rw/q9TK6dtIBm42jF6Z7z34KmNIDAKF4v4f09n5l0w
+OAgtdmIHyUu3ZOHSb8cFRbjAGQ3RcgIAe4DdsZIy/m9eLEDXEzf9yMSufBtap6xb
+wcDMA3wvqk35PDeyAQwAgFIzERxgt1aZlcA29Ds10pv0Y3oZ5yKvMNxd+WEEZNcT
+rJBOFNlhek5/9/nkATGiDBaKOsu5o9VyDfKMAV0TYwZxuMgUNtvVpf0XL21dghYt
+KVqEHeOTXzprUBdztG4Lp4e0vsG0jPZS+CvTLjbcvO+/lzb314mwN8s8vZiQ7Vlj
+DxubIqKypY3jL66U0Acwk85IsXdK4CB4nousr2JFK3Y3zv7cQBtPKHEG8HkmvT0R
+tl0QoAkdHfw0q4rpc6183FA9e8EUV88XRJrKIYn86IaTPuMkp8ULWSsboalkJH3J
+rSq8kzAFFd/A6G8wSj/hVpH6U+NBGW3Z/DQnRmwHqSJfu/Tnue6TFLdDN1EYzk/L
+Nlr4YsH6eIB8v3H4u6kY/SwhHCv/F0jItHYVSsIeJz81L0vh28H6hLIMvSDFofJP
+fBgIJfZIJ8nzgFpLphVpk0mcI7jHElxEPRg/M5Lmlav9srYHbKbJ0LT67Z9AFnZB
+LHRa/p1eZnjpTxrYU2qZ0sHaAS0MB1TwpiucDRH2VN1z8vSKb1qizJ6ZH3qT3zQ8
+EAf6Lar5B6l3v/WwhjMPgu/pLlvZgDAo0cWkBYqzWpOcwviAeC7OwqnZY9/BFm/F
+RefFysUIu7fWpvBbKtdch9lhb3baetWKI9uAwsaublwgSGZ4dBR2hfVaX72/8oDW
+3oJoUvlw59J1r5Ai1l1YtyU8ctNGT2CqbKp6OgVzqm8BOhyQS1ayjMNU0VJs0s3N
+BJ0B1rctk5QykDAu3rVf+sgyqzQ7ohFqlG0W/7haocAQqW++Wy9PW/n0oNAuwugv
+W4zisCSB916z7whso00e1Ee3Fl7xgubzrGCHU3JNO5X73+gQHZ+jzuyGdBM5NTxd
+UcT89ekkd9XqfR2kJrhgiUOe15znWks5JB6VGKWfz2kp2wu1AVxSkbii1Qk/tRhX
+PUpHGwkin41WCPlUFA6xMLk9RmLjer2Wkg9zYosnzEIHdPj+WisWY86NRSZ/tJiw
+qZvzNwIgkzvqs1T/8aU5Z5rUOqI1l0Kd+tVjlkPyLrZOrvEeYwOwbAzlCdLxsCdq
+pY4ckpU/kMbfXXk21YWYFKDCopT7iRkuzDYlyGN4w/LPKQCMZrQxSms9uPNU5XG7
+Au4yYdZVMkCLuLQ0kktuLe/CCX4bX82eF/AJ5DEFxWB3CT8FbVhdKrQ2RrLKwE7b
+0jBdmT3NoJMtCbq68TBJO3MmOu6AaW7cD4INREbiD+Vr8ukqsnWkFiJ3NigQiT/4
+PppJ2bAABRy9Gloa434PN3zgoWzmv80EfyNbZNfY7nGAOhAzBs8FqhrOY2WIBTp+
+YEkvEjS5YOwgEj1/zcHts1pOWczY/AfVi2sLkCT8FqsNlfPPebdR4Oq+CEav/M52
+A+CS0s7j1gklNfNd
+=87qA
+-----END PGP MESSAGE-----
+
+--bcde3ce988--
+
