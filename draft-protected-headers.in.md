@@ -439,23 +439,29 @@ Some common approaches are discussed below.
 Reverse-Copying
 ---------------
 
-One strategy for interpreting Protected Headers on an incoming message, is to simply ignore any Exposed Headers for which a Protected counterpart is available. This is often implemented as a copy operation (copying data back out of the protected payload into the main message header) within the code which takes care of parsing the message.
+One strategy for interpreting Protected Headers on an incoming message is to simply ignore any Exposed Header for which a Protected counterpart is available.
+This is often implemented as a copy operation (copying header back out of the Cryptographic Payload into the main message header) within the code which takes care of parsing the message.
 
-MUAs implementing this strategy should pay special attention to any user facing headers (as defined above). If user-facing headers are among the Exposed Headers, but missing from the Protected Header section then this strategy actually implies deleting such Exposed Headers before presenting the message to the user.
+A MUA implementing this strategy should pay special attention to any user facing headers ({{user-facing-headers}}).
+If a user-facing header is among the Exposed Headers but missing from the Protected Headers, then an MUA implementing this strategy SHOULD delete the identified Exposed Header before presenting the message to the user.
 
-This strategy does not risk raising false alarms about harmless deviations, but conversely it does nothing to inform the user if they are under attack. This strategy does successfully mitigate and thwart some attacks, including message replay attacks.
+This strategy does not risk raising a false alarm about harmless deviations, but conversely it does nothing to inform the user if they are under attack.
+This strategy does successfully mitigate and thwart some attacks, including signature replay attacks ({{signature-replay}}).
 
 Signature Invalidation
 ----------------------
 
-An alternate, complementary strategy for interpreting Protected Headers is to consider cryptographic signatures to be invalid, if the Exposed Headers deviate from their Protected counterparts.
+An alternate strategy for interpreting Protected Headers is to consider the cryptographic signature on a message to be invalid if the Exposed Headers deviate from their Protected counterparts.
 
 This state should be presented to the user using the same interface as other signature verification failures.
+
+A MUA implementing this strategy MAY want to make a special exception for the `Subject:` header, to avoid invalidating the signature on any signed and encrypted message with a confidential subject.
 
 The Legacy Display Part
 -----------------------
 
-This part is purely decorative. See {{no-render-legacy-display}} for details and recommendations on how to handle the Legacy Display part.
+This part is purely decorative, for the benefit of any recipient using a legacy decryption-capable MUA.
+See {{no-render-legacy-display}} for details and recommendations on how to handle the Legacy Display part.
 
 Replying to a Message with Obscured Headers
 -------------------------------------------
@@ -497,21 +503,25 @@ In contrast, using `...` as the obscured `Subject:` was less likely to be seen a
 Reply/Forward Losing Subjects
 -----------------------------
 
-When a user of a legacy MUA which does not support Protected Headers replies or forwards a message where the Subject has been obscured, it is likely that the new subject will be `Fwd: ...` or `Re: ...` (or the localized equivalent). This breaks an important feature and is especially unfortunate when new participants are added to a conversation who have never saw the original subject.
+When the user of a legacy MUA replies to or forwards a message where the Subject has been obscured, it is likely that the new subject will be `Fwd: ...` or `Re: ...` (or the localized equivalent).
+This breaks an important feature: people are used to continuity of subject within a thread.  It is especially unfortunate when a new participant is added to a conversation who never saw the original subject.
 
 At this time, there is no known workaround for this problem. The only solution is to upgrade the MUA to support Protected Headers.
 
-The authors consider this to be only a minor concern in cases where encryption is being used because confidentiality is important. However, in more opportunistic cases, where encryption is being used routinely regardless of the sensitivity of message contents, this cost becomes relatively higher. 
+The authors consider this to be only a minor concern in cases where encryption is being used because confidentiality is important.
+However, in more opportunistic cases, where encryption is being used routinely regardless of the sensitivity of message contents, this cost becomes higher. 
 
 
 Usability Impact of Reduced Metadata
 -------------------------------------
 
-Many mail user agents maintain an index of message metadata (including header data), which is used to rapidly construct mailbox overviews and search result listings. If the process which generates these indexes does not have access to the encrypted payload of a message, or does not implement Protected Headers, then the index will only contain the obscured versions Exposed Headers, in particular an obscured Subject of `...`.
+Many mail user agents maintain an index of message metadata (including header data), which is used to rapidly construct mailbox overviews and search result listings.
+If the process which generates this index does not have access to the encrypted payload of a message, or does not implement Protected Headers, then the index will only contain the obscured versions Exposed Headers, in particular an obscured Subject of `...`.
 
-For sensitive message content, especially in hosted MUA-as-a-service situations where the metadata index is maintained and stored by a third party, this may be considered a feature. However, for more routine communications, this harms usability and goes against user expectations.
+For sensitive message content, especially in a hosted MUA-as-a-service situation ("webmail") where the metadata index is maintained and stored by a third party, this may be considered a feature as the subject is protected from the provider.
+However, for more routine communications, this harms usability and goes against user expectations.
 
-It is possible to work around this problem in the following way:
+Two simple workarounds exist for this use case:
 
    1. If the metadata index is considered secure enough to handle confidential data,
       the protected content may be stored directly in the index once it has been decrypted.
@@ -519,8 +529,9 @@ It is possible to work around this problem in the following way:
       and encrypted versions stored in the index instead, which are then decrypted by
       the client at display time.
 
-In both cases, mechanisms must be in place which allow the process which decrypts the message and process the Protected Headers to update the metadata index.
+In both cases, the process which decrypts the message and processes the Protected Headers must be able to update the metadata index.
 
+FIXME: add notes about research topics and other non-simple workarounds, like oblivious server-side indexing.
 
 Usability Impact of Obscured Message-ID {#obscured-message-id}
 ---------------------------------------
@@ -628,7 +639,7 @@ Triple-Wrapping
 ---------------
 
 {{RFC2634}} defines "Triple Wrapping" as a means of providing cleartext signatures over signed and encrypted material.
-While this can be used in combination with the mechanism described in {{RFC7508}} to authenticate some headers for transport using S/MIME.
+This can be used in combination with the mechanism described in {{RFC7508}} to authenticate some headers for transport using S/MIME.
 
 But it does not offer confidentiality protection for the protected headers, and the signer of the outer layer of a triple-wrapped message may not be the originator of the message either.
 
@@ -763,6 +774,8 @@ Unwrapping the encryption Cryptographic Layer yields the following content:
 @@multilayer.inner@@
 ~~~
 
+Note the placement of the Protected Headers on the Cryptographic Payload specifically, which is not the immediate child of he encryption Cryptographic Layer.
+
 Multilayer Message with Protected Headers and Legacy Display Part
 -----------------------------------------------------------------
 
@@ -862,7 +875,7 @@ If the user's MUA uses Protected Headers and obscures the Subject header as desc
 Signature Replay {#signature-replay}
 ----------------
 
-Messages without Protected Headers may be subject to a signature replay attack.
+A message without Protected Headers may be subject to a signature replay attack, which attempts to violate the recipient's expectations about message authenticity and integrity.
 Such an attack works by taking a message delivered in one context (e.g., to someone else, at a different time, with a different subject, in reply to a different message), and replaying it with different message headers.
 
 A MUA that generates all its signed messages with Protected Headers gives recipients the opportunity to avoid falling victim to this attack.
