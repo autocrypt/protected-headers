@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 '''Deterministically generate test vectors for draft-protected-headers.
 
 We want each run to produce the same specific output, which means
