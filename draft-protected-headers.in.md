@@ -927,6 +927,13 @@ This document is currently edited as markdown.  Minor editorial changes can be s
 Document History
 ----------------
 
+Changes between version -00 and -01:
+
+ - Credit Randall for "correct horse battery staple".
+ - Adjust test vectors to ensure no line in the generated .txt format exceeds 72 chars.
+ - Minor formatting cleanup to appease idnits.
+ - Update references to more recent documents (RFC 2822 -> 5322, -00 to -01 of draft-ietf-lamps-header-protection-requirements).
+
 Acknowledgements
 ================
 
