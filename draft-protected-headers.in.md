@@ -658,7 +658,7 @@ But it does not offer confidentiality protection for the protected headers, and 
 In practice on today's Internet, DKIM ({{RFC6736}} provides a more widely-accepted cryptographic header-verification-for-transport mechanism  than triple-wrapped messages.
 
 
-Test Vectors
+Test Vectors {#test-vectors}
 ============
 
 The subsections below provide example messages that implement the Protected Header scheme.
@@ -949,4 +949,4 @@ The following people have contributed implementation experience, documentation, 
 - Patrick Brunschwig
 - Vincent Breitmoser
  
-The password example included in the test vectors comes from {{xkcd936}}.
+The password example used in {{test-vectors}} comes from {{xkcd936}}.
