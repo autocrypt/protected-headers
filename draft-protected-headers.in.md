@@ -61,9 +61,9 @@ informative:
  RFC8551:
 normative:
  RFC2119:
- RFC2822:
  RFC3156:
  RFC4880:
+ RFC5322:
  RFC8174:
 --- abstract
 
@@ -104,7 +104,7 @@ For the purposes of this document, we define the following concepts:
    * *MUA* is short for Mail User Agent; an e-mail client.
    * *Protection* of message data refers to cryptographic encryption and/or signatures, providing confidentiality, authenticity or both.
    * *Cryptographic Layer*, *Cryptographic Envelope* and *Cryptographic Payload* are defined in {{cryptographic-structure}}
-   * *Original Headers* are the {{RFC2822}} message headers as known to the sending MUA at the time of message composition.
+   * *Original Headers* are the {{RFC5322}} message headers as known to the sending MUA at the time of message composition.
    * *Protected Headers* are any headers protected by the scheme described in this document.
    * *Exposed Headers* are any headers outside the Cryptographic Payload (protected or not).
    * *Obscured Headers* are any Protected Headers which have been modified or removed from the set of Exposed Headers.
@@ -665,7 +665,7 @@ The subsections below provide example messages that implement the Protected Head
 
 The secret keys and OpenPGP certificates from {{I-D.draft-bre-openpgp-samples-00}} can be used to decrypt and verify them.
 
-They are provided in textual source form as {{RFC2822}} messages.
+They are provided in textual source form as {{RFC5322}} messages.
 
 Signed Message with Protected Headers {#test-vector-signed-only}
 -------------------------------------
@@ -913,7 +913,7 @@ Privacy Considerations
 ======================
 
 This document only explicitly contemplates confidentiality protection for the Subject header, but not for other headers which may leak associational metadata.
-For example, `From` and `To` and `Cc` and `Reply-To` and `Date` and `Message-Id` and `References` and `In-Reply-To` are not explicitly necessary for messages in transit, since the SMTP envelope carries all necessary routing information, but an encrypted {{RFC2822}} message as described in this document will contain all this associational metadata in the clear.
+For example, `From` and `To` and `Cc` and `Reply-To` and `Date` and `Message-Id` and `References` and `In-Reply-To` are not explicitly necessary for messages in transit, since the SMTP envelope carries all necessary routing information, but an encrypted {{RFC5322}} message as described in this document will contain all this associational metadata in the clear.
 
 Although this document does not provide guidance for protecting the privacy of this metadata directly, it offers a platform upon which thoughtful implementations may experiment with obscuring additional e-mail headers.
 
