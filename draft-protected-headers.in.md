@@ -115,6 +115,8 @@ The user-facing headers are:
  - `To`
  - `Cc`
  - `Date`
+ - `Reply-To`
+ - `Followup-To`
 
 The above is a complete list.  No other headers are considered "user-facing".
 
