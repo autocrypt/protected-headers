@@ -53,7 +53,7 @@ informative:
     date: 2011-08-10
  I-D.draft-bre-openpgp-samples-00:
  I-D.draft-luck-lamps-pep-header-protection-03:
- I-D.draft-ietf-lamps-header-protection-requirements-00:
+ I-D.draft-ietf-lamps-header-protection-requirements-01:
  RFC2634:
  RFC3851:
  RFC6736:
@@ -608,9 +608,9 @@ In particular, the Legacy Display part described in {#legacy-display} makes it f
 The Content-Type Property "forwarded=no" {forwarded=no}
 ----------------------------------------
 
-{{I-D.draft-ietf-lamps-header-protection-requirements-00}} contains a proposal that attempts to mitigate one of the drawbacks of the scheme described in S/MIME 3.1 ({{smime-31}}).
+Section A.1.2 of {{I-D.draft-ietf-lamps-header-protection-requirements-01}} refers to a proposal that attempts to mitigate one of the drawbacks of the scheme described in S/MIME 3.1 ({{smime-31}}).
 
-In particular, it allows *non-legacy* clients to distinguish between deliberately forwarded messages and those intended to use the defined structure for header protection.
+In particular, using the Content-Type property `forwarded="no"` allows *non-legacy* clients to distinguish between deliberately forwarded messages and those intended to use the defined structure for header protection.
 
 However, this fix has no impact on the confusion experienced by legacy clients.
 
