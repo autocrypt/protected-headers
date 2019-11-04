@@ -654,11 +654,22 @@ Note that this structure is the same as in the example signed message.
 Common Pitfalls and Guidelines {#common-pitfalls}
 ==============================
 
+Among the MUA authors who already implemented most of this specification,
+several alternative or more encompasing specifications were discussed and
+sometimes tried out in practise. We try to highlight a few "pitfalls" and
+guidelines based on these discussions. 
+
 Misunderstood Obscured Subjects {#misunderstood-obscured-subjects}
 -------------------------------
 
-(describe why Encrypted Message is a dangerous subject line)
-
+There were many discussions around what text phrase to put into the
+Obscured Subject. Text phrases such as "Encrypted Subject" were tried
+but resulted in localization problems. If two users write an english
+text but use non-english MUA localizations the subjects loose
+readability. If you then also have "Re:" prefixes in e-mail threads
+Subjects become practially useless.  At some point one or two MUA
+authors practially tried "..." as the Obscured Subject and met approval
+as a good mitigation of the localization problem. 
 
 Reply/Forward Losing Subjects
 -----------------------------
@@ -675,13 +686,20 @@ Usability Impact of Reduced Metadata
 Usability Impact of Obscured Message-ID
 ---------------------------------------
 
-(describe why we don't recommend this just yet)
-
+Current MUA implementations rely on the outermost Message-ID 
+for message processing and indexing purposes. This processing
+often happens before any decryption is even attempted. 
+Attempting to send messages with an obscured Message-ID header
+would result in several MUAs not correctly processing this mail,
+and would likely be seen as a degradation by users. 
 
 Usability Impact of Obscured From/To/Cc
 ---------------------------------------
 
-(describe why we don't recommend this just yet)
+The impact of obscuring From/To/Cc headers has similar issues
+as discussed with obscuring the Message-ID header, even if likely
+to a lesser degree. 
+
 
 Mailinglist munges From: or In-Reply-To: headers
 ------------------------------------------------
