@@ -227,9 +227,9 @@ It is possible to construct a Cryptographic Envelope consisting of multiple laye
     F    ├─╴[Cryptographic Payload]
     G    └─╴application/pgp-signature
 
-When handling such a message, the properties of the Cryptographic Envelope are derived from the series A, E.
+When handling such a message, the properties of the Cryptographic Envelope are derived from the series `A`, `E`.
 
-As noted in {{simple-cryptographic-payloads}}, PGP/MIME applications also have a simpler MIME construction available.
+As noted in {{simple-cryptographic-payloads}}, PGP/MIME applications also have a simpler MIME construction available with the same cryptographic properties.
 
 ### A Baroque Example {#baroque-example}
 
@@ -247,12 +247,12 @@ Consider a message with the following overcomplicated structure:
     Q    │└─╴text/plain
     R    └─╴application/pgp-signature
 
-The 3 Cryptographic Layers in such a message are rooted in parts H, L, and N.
-The Cryptographic Envelope of the message consists of the properties derived from the series H, L.
-The Cryptographic Payload of the message is part M.
+The 3 Cryptographic Layers in such a message are rooted in parts `H`, `L`, and `N`.
+But the Cryptographic Envelope of the message consists only of the properties derived from the series `H`, `L`.
+The Cryptographic Payload of the message is part `M`.
 
 It is NOT RECOMMENDED to generate messages with such complicated structures.
-Even if a receiving MUA can parse this structure properly, it is nearly impossible to render in a way that the user can reason about the cryptographic properties of part O compared to part Q.
+Even if a receiving MUA can parse this structure properly, it is nearly impossible to render in a way that the user can reason about the cryptographic properties of part `O` compared to part `Q`.
 
 
 Exposed Headers are Outside
@@ -320,7 +320,7 @@ A reasonable sequential algorithm for composing a message *with* protected heade
 - `obscures`: a table of headers to be obscured during encryption, mapping header names to their obscuring values.
   For example, this document recommends only obscuring the subject, so that would be represented by the single-entry table `obscures = {'Subject': '...'}`.
   If header `Foo` is to be deleted entirely, `obscures['Foo']` should be set to the special value `null`.
-- `legacy`: a boolean value, indicating whether any recipient of the message is believed to have a legacy client (that is, a MUA that does not understand protected headers).
+- `legacy`: a boolean value, indicating whether any recipient of the message is believed to have a legacy client (that is, a MUA that is capable of decryption, but does not understand protected headers).
 
 The revised algorithm for applying cryptographic protection to a message is as follows:
 
@@ -445,7 +445,7 @@ One strategy for interpreting Protected Headers on an incoming message is to sim
 This is often implemented as a copy operation (copying header back out of the Cryptographic Payload into the main message header) within the code which takes care of parsing the message.
 
 A MUA implementing this strategy should pay special attention to any user facing headers ({{user-facing-headers}}).
-If a user-facing header is among the Exposed Headers but missing from the Protected Headers, then an MUA implementing this strategy SHOULD delete the identified Exposed Header before presenting the message to the user.
+If a message has Protected Headers, and a user-facing header is among the Exposed Headers but missing from the Protected Headers, then an MUA implementing this strategy SHOULD delete the identified Exposed Header before presenting the message to the user.
 
 This strategy does not risk raising a false alarm about harmless deviations, but conversely it does nothing to inform the user if they are under attack.
 This strategy does successfully mitigate and thwart some attacks, including signature replay attacks ({{signature-replay}}) and participant modification attacks ({{participant-modification}}).
@@ -459,6 +459,8 @@ This state should be presented to the user using the same interface as other sig
 
 A MUA implementing this strategy MAY want to make a special exception for the `Subject:` header, to avoid invalidating the signature on any signed and encrypted message with a confidential subject.
 
+Note that simple signature invalidation may be insufficient to defend against a participant modification attack ({{participant-modification}}).
+
 The Legacy Display Part
 -----------------------
 
@@ -471,11 +473,11 @@ Replying to a Message with Obscured Headers
 When replying to a message, many MUAs copy headers from the original message into their reply.
 
 When replying to an encrypted message, users expect the replying MUA to generate an encrypted message if possible.
-If it is not possible, and the reply will be cleartext, users typically want the MUA to avoid leaking previously-encrypted content into the cleartext of the reply.
+If encryption is not possible, and the reply will be cleartext, users typically want the MUA to avoid leaking previously-encrypted content into the cleartext of the reply.
 
 For this reason, an MUA replying to an encrypted message with Obscured Headers SHOULD NOT leak the cleartext of any Obscured Headers into the cleartext of the reply, whether encrypted or not.
 
-In particular, the contents of any Obscured Header from the original message SHOULD NOT be placed in the Exposed Headers of the reply message.
+In particular, the contents of any Obscured Protected Header from the original message SHOULD NOT be placed in the Exposed Headers of the reply message.
 
 
 Common Pitfalls and Guidelines {#common-pitfalls}
@@ -520,7 +522,7 @@ Usability Impact of Reduced Metadata
 Many mail user agents maintain an index of message metadata (including header data), which is used to rapidly construct mailbox overviews and search result listings.
 If the process which generates this index does not have access to the encrypted payload of a message, or does not implement Protected Headers, then the index will only contain the obscured versions Exposed Headers, in particular an obscured Subject of `...`.
 
-For sensitive message content, especially in a hosted MUA-as-a-service situation ("webmail") where the metadata index is maintained and stored by a third party, this may be considered a feature as the subject is protected from the provider.
+For sensitive message content, especially in a hosted MUA-as-a-service situation ("webmail") where the metadata index is maintained and stored by a third party, this may be considered a feature as the subject is protected from the third-party.
 However, for more routine communications, this harms usability and goes against user expectations.
 
 Two simple workarounds exist for this use case:
@@ -533,7 +535,7 @@ Two simple workarounds exist for this use case:
 
 In both cases, the process which decrypts the message and processes the Protected Headers must be able to update the metadata index.
 
-FIXME: add notes about research topics and other non-simple workarounds, like oblivious server-side indexing.
+FIXME: add notes about research topics and other non-simple workarounds, like oblivious server-side indexing, or searching on encrypted data.
 
 Usability Impact of Obscured Message-ID {#obscured-message-id}
 ---------------------------------------
@@ -692,7 +694,7 @@ Its MIME message structure is:
 
 The `Subject:` header is successfully obscured.
 
-Note that if this message had been generated without Protected Headers, then an attacker with access to it could have read Subject.
+Note that if this message had been generated without Protected Headers, then an attacker with access to it could have read the Subject.
 Such an attacker would know details about Alice and Bob's business that they wanted to keep confidential.
 
 The protected headers also protect the authenticity of subject line as well.
@@ -750,7 +752,7 @@ Multilayer Message with Protected Headers
 -----------------------------------------
 
 Some mailers may generate signed and encrypted messages with a multilayer cryptographic envelope.
-We show here how such a mailer might generate the same message from Alice to Bob.
+We show here how such a mailer might generate the same message as {{encryptedsigned}}.
 
 A typical message like this has the following structure:
 
@@ -776,12 +778,13 @@ Unwrapping the encryption Cryptographic Layer yields the following content:
 @@multilayer.inner@@
 ~~~
 
-Note the placement of the Protected Headers on the Cryptographic Payload specifically, which is not the immediate child of he encryption Cryptographic Layer.
+Note the placement of the Protected Headers on the Cryptographic Payload specifically, which is not the immediate child of the encryption Cryptographic Layer.
 
-Multilayer Message with Protected Headers and Legacy Display Part
+Multilayer Message with Protected Headers and Legacy Display Part {#multilayer-legacy-display}
 -----------------------------------------------------------------
 
 And, a mailer that generates a multilayer cryptographic envelope might want to provide a Legacy Display part, if it is unsure of the capabilities of the recipient's MUA.
+We show here how sucha mailer might generate the same message as {{encryptedsigned}}.
 
 Such a message might have the following structure:
 
@@ -813,12 +816,12 @@ An Unfortunately Complex Example
 --------------------------------
 
 For all of the potential complexity of the Cryptographic Envelope, the Cryptographic Payload itself can be complex.
-The Cryptographic Envelope in this example is the same as the previous example (multilayer signed encrypted).
-The Cryptographic Payload has protected headers and a legacy display part (also the same as the previous example), but in addition Alice's MUA composes a message with both plaintext and HTML variants, and Alice includes a single attachment as well.
+The Cryptographic Envelope in this example is the same as the previous example ({{multilayer-legacy-display}}).
+The Cryptographic Payload has protected headers and a legacy display part (also the same as {{multilayer-legacy-display}}), but in addition Alice's MUA composes a message with both plaintext and HTML variants, and Alice includes a single attachment as well.
 
 While this message is complex, a modern MUA could also plausibly generate such a structure based on reasonable commands from the user composing the message (e.g., Alice composes the message with a rich text editor, and attaches a file to the message).
 
-The key takeaway is that the complexity of the Cryptographic Payload (which may contain a Legacy Display part) is independent of and distinct from the complexity of the Cryptographic Envelope.
+The key takeaway of this example is that the complexity of the Cryptographic Payload (which may contain a Legacy Display part) is independent of and distinct from the complexity of the Cryptographic Envelope.
 
 This message has the following structure:
 
@@ -854,9 +857,9 @@ Unwrapping the encryption Cryptographic Layer yields the following content:
 IANA Considerations
 ===================
 
-FIXME: register flag for legacy-display part
+FIXME: register content-type parameter for legacy-display part
 
-MAYBE: provide a list of user-facing headers, or a new "user-visible" column in some table of known RFC5322 headers?
+MAYBE: provide a list of user-facing headers, or a new "user-facing" column in some table of known RFC5322 headers?
 
 MAYBE: provide a comparable indicator for which headers are "structural" ?
 
@@ -895,7 +898,7 @@ If the replying MUA quotes and attributes cleartext from the original message wi
 
 As certificate discovery becomes more automated and less noticable, this is an increasing risk.
 
-An MUA that rejects Exposed Headers in favor of Protected Headers should be able to avoid this attack.
+An MUA that rejects Exposed Headers in favor of Protected Headers should be able to avoid this attack when replying to a signed message.
 
 
 Privacy Considerations
