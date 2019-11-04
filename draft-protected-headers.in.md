@@ -15,7 +15,7 @@ pi: [toc, sortrefs, symrefs]
 author:
  -
     ins: B. R. Einarsson
-    name: Bjarni Runar Einarsson
+    name: Bjarni Rúnar Einarsson
     org: Mailpile ehf
     street: Baronsstigur
     country: Iceland
@@ -133,8 +133,6 @@ This includes (but is not limited to):
  - `Content-Disposition`
 
 Note that no "user-facing" headers ({{user-facing-headers}}) are also "structural" headers.  Of course, many headers are neither "user-facing" nor "structural".
-
-FIXME: are there any non-`Content-*` headers we should consider as structural?
 
 
 Protected Headers Summary
@@ -286,7 +284,7 @@ This value (`...`) was chosen because it is believed to be language agnostic and
 Obscured Headers
 ----------------
 
-Due to compatibility and usability concerns, a Mail User Agent SHOULD NOT obscure any of: `From`, `To`, `Cc`, `Message-ID`, `References`, `Reply-To`, `In-Reply-To`, (FIXME: MORE?), unless the user has indicated they have security constraints which justify the potential downsides (see {{common-pitfalls}} for a more detailed discussion).
+Due to compatibility and usability concerns, a Mail User Agent SHOULD NOT obscure any of: `From`, `To`, `Cc`, `Message-ID`, `References`, `Reply-To`, `In-Reply-To`, unless the user has indicated they have security constraints which justify the potential downsides (see {{common-pitfalls}} for a more detailed discussion).
 
 Aside from that limitation, this specification does not at this time define or limit the methods a MUA may use to convert Exposed Headers into Obscured Headers.
 
@@ -335,7 +333,6 @@ The revised algorithm for applying cryptographic protection to a message is as f
   - Let `payload` be MIME part `origbody`
 - For each header name `h` in `origheaders`:
   - Set header `h` of MIME part `payload` to `origheaders[h]`
-- FIXME: Enigmail adds `protected-headers="v1"` parameter to `payload` here.  Is this necessary?
 - Apply `crypto` to `payload`, producing MIME tree `output`
 - If `crypto` contains encryption:
   - For each obscured header name `obh` in `obscures`:
@@ -399,6 +396,40 @@ A MUA SHOULD transform a Cryptographic Payload to include a Legacy Display part 
 Additionally, if the sender knows that the recipient's MUA is capable of interpreting Protected Headers, it SHOULD NOT attempt to include a Legacy Display part.
 (Signalling such a capability is out of scope for this document)
 
+Legacy Display is Decorative and Transitional
+---------------------------------------------
+
+As the above makes clear, the Legacy Display part is strictly decorative, for the benefit of legacy decryption-capable MUAs that may handle the message.
+As such, the existence of the Legacy Display part and its `multipart/mixed` wrapper are part of a transition plan.
+
+As the number of decryption-capable clients that understand Protected Headers grows in comparison to the number of legacy decryption-capable clients, it is expected that some senders will decide to stop generating Legacy Display parts entirely.
+
+A MUA developer concerned about accessiblity of the Subject header for their users of encrypted mail when Legacy Display parts are omitted SHOULD implement the Protected Headers scheme described in this document.
+
+
+Message Interpretation
+======================
+
+This document does not currently provide comprehensive recommendations on how to interpret Protected Headers. This is deliberate; research and development is still ongoing. We also recognize that the tolerance of different user groups for false positives (benign conditions misidentified as security risks), vs. their need for strong protections varies a great deal and different MUAs will take different approaches as a result.
+
+Some common approaches are discussed below.
+
+Reverse-Copying
+---------------
+
+One strategy for interpreting Protected Headers on an incoming message, is to simply ignore any Exposed Headers for which a Protected counterpart is available. This is often interpreted as a copy operation within the code which takes care of parsing the message.
+
+MUAs implementing this strategy should in pay special attention to any user facing headers (as defined above). If user-facing headers are among the Exposed Headers, but missing from the Protected Header section then the copy strategy actually implies deleting such Exposed Headers before presenting the message to the user.
+
+This strategy does not risk raising false alarms about harmless deviations, but conversely it does nothing to inform the user if they are under attack. This strategy does successfully mitigate and thwart some attacks, including message replay attacks.
+
+Signature Invalidation
+----------------------
+
+An alternate strategy for interpreting Protected Headers is to consider cryptographic signatures to be invalid, if the Exposed Headers deviate from their Protected counterparts.
+
+This state should be presented to the user using the same interface as other signature verification failures.
+
 Message Rendering: Omitting a Legacy Display Part {#no-render-legacy-display}
 -------------------------------------------------
 
@@ -418,21 +449,6 @@ A receiving MUA acting on a message SHOULD detect the presence of a Legacy Displ
   - The first subpart of the Cryptographic Payload must have a `Content-Type` of `text/rfc822-headers`
   - The first subpart of the Cryptographic Payload's `Content-Type` must contain a property of `protected-headers`, and its value must be `v1`.
  - If all of the above are true, then the first subpart is the Legacy Display part, and the second subpart is the "original body".  Otherwise, the message does not have a Legacy Display part.
-
-Legacy Display is Decorative and Transitional
----------------------------------------------
-
-As the above makes clear, the Legacy Display part is strictly decorative, for the benefit of legacy decryption-capable MUAs that may handle the message.
-As such, the existence of the Legacy Display part and its `multipart/mixed` wrapper are part of a transition plan.
-
-As the number of decryption-capable clients that understand Protected Headers grows in comparison to the number of legacy decryption-capable clients, it is expected that some senders will decide to stop generating Legacy Display parts entirely.
-
-A MUA developer concerned about accessiblity of the Subject header for their users of encrypted mail when Legacy Display parts are omitted SHOULD implement the Protected Headers scheme described in this document.
-
-Message Interpretation
-======================
-
-(Brief discussion about potential strategies to reverse the process above.)
 
 Replying to a Message with Obscured Headers
 -------------------------------------------
@@ -474,13 +490,29 @@ In contrast, using `...` as the obscured `Subject:` was less likely to be seen a
 Reply/Forward Losing Subjects
 -----------------------------
 
-(describe Re: `...`)
+When a user of a legacy MUA which does not support Protected Headers replies or forwards a message where the Subject has been obscured, it is likely that the new subject will be `Fwd: ...` or `Re: ...` (or the localized equivalent). This breaks an important feature and is especially unfortuante when new participants are added to a conversation who have never saw the original subject.
+
+At this time, there is no known workaround for this problem. The only solution is to upgrade the MUA to support Protected Headers.
+
+The authors consider this to be only a minor concern in cases where encryption is being used because confidentiality is important. However, in more opportunistic cases, where encryption is being used routinely regardless of the sensitivity of message contents, this cost becomes relatively higher. 
 
 
 Usability Impact of Reduced Metadata
 -------------------------------------
 
-(describe the problems ProtonMail/TutaNota have, discuss potential solutions)
+Many mail user agents maintain an index of message metadata (including header data), which is used to rapidly construct mailbox overviews and search result listings. If the process which generates these indexes does not have access to the encrypted payload of a message, or does not implement Protected Headers, then the index will only contain the obscured versions Exposed Headers, in particular an obscured Subject of `...`.
+
+For sensitive message content, especially in hosted MUA-as-a-service situations where the metadata index is maintained and stored by a third party, this may be considered a feature. However, for more routine communications, this harms usability and goes against user expectations.
+
+It is possible to work around this problem in the following way:
+
+   1. If the metadata index is considered secure enough to handle confidential data,
+      the protected content may be stored directly in the index once it has been decrypted.
+   2. If the metadata index is not trusted, the protected content could be re-encrypted
+      and encrypted versions stored in the index instead, which are then decrypted by
+      the client at display time.
+
+In both cases, mechanisms must be in place which allow the process which decrypts the message and process the Protected Headers to update the metadata index.
 
 
 Usability Impact of Obscured Message-ID {#obscured-message-id}
@@ -503,16 +535,14 @@ The impact of obscuring `From:`, `To:`, and `Cc:` headers has similar issues as 
 
 In addition, obscuring these headers is likely to cause difficulties for a legacy client attempting formulate a correct reply (or "reply all") to a given message.
 
+Mailing List Header Modifications
+---------------------------------
 
-Mailinglist munges From: or In-Reply-To: headers
-------------------------------------------------
+Some popular mailing-list implementations will modify the Exposed Headers of a message in specific, benign ways. In particular, it is common to add markers to the `Subject` line, and it is also common to modify either `From` or `Reply-To` in order to make sure replies go to the list instead of directly to the author of an individual post.
 
-(describe the issue, that some mailinglist softwares changes the `From:` line or `Reply-To:` in order to make sure that replies go to the list and not to the author.
-This is known as [header munging](https://www.unicom.com/pw/reply-to-harmful.html).
-Protected headers break this workaround.
-See https://cr.yp.to/proto/replyto.html how this should be fixed properly in a MUA)
+Depending on how the MUA resolves discrepancies between the Protected Headers and the Exposed Headers of a recieved message, these mailing list "features" may either break or the MUA may incorrectly interpret them as a security breach.
 
-FIXME: consider how to address this concern.
+Implementors may for this reason choose to implement slightly different strategies for resolving discrepancies, if a message is known to come from such a mailing list. Implementors should at the very least avoid "crying wolf" in such cases.
 
 Comparison with Other Header Protection Schemes
 ===============================================
@@ -545,7 +575,7 @@ The mechanism described here allows cryptographically-incapable legacy MUAs to r
 
 In particular, the Legacy Display part described in {#legacy-display} makes it feasible for a conformant MUA to generate messages with obscured Subject lines that nonetheless give access to the obscured Subject header for recipients with legacy MUAs.
 
-The Content-Type property "forwarded=no" {forwarded=no}
+The Content-Type Property "forwarded=no" {forwarded=no}
 ----------------------------------------
 
 {{I-D.draft-ietf-lamps-header-protection-requirements-00}} contains a proposal that attempts to mitigate one of the drawbacks of the scheme described in S/MIME 3.1 ({{smime-31}}).
@@ -554,7 +584,7 @@ In particular, it allows *non-legacy* clients to distinguish between deliberatel
 
 However, this fix has no impact on the confusion experienced by legacy clients.
 
-pEp Header protection
+pEp Header Protection
 ---------------------
 
 {{I-D.draft-luck-lamps-pep-header-protection-03}} is applicable only to signed+encrypted mail, and does not contemplate protection of signed-only mail.
@@ -587,7 +617,7 @@ That mechanism also does not propose a means to provide confidentiality protecti
 Finally, that mechanism offers no equivalent to the Legacy Display described in {{legacy-display}}.
 Instead, sender and receiver are expected to negotiate in some unspecified way to ensure that it is safe to remove or modify Exposed Headers in an encrypted message.
 
-Triple-wrapping
+Triple-Wrapping
 ---------------
 
 {{RFC2634}} defines "Triple Wrapping" as a means of providing cleartext signatures over signed and encrypted material.
