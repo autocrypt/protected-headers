@@ -688,20 +688,24 @@ Common Pitfalls and Guidelines {#common-pitfalls}
 
 Among the MUA authors who already implemented most of this specification,
 several alternative or more encompasing specifications were discussed and
-sometimes tried out in practise. We try to highlight a few "pitfalls" and
-guidelines based on these discussions. 
+sometimes tried out in practice. This section highlights a few "pitfalls" and
+guidelines based on these discussions and lessons learned. 
 
 Misunderstood Obscured Subjects {#misunderstood-obscured-subjects}
 -------------------------------
 
-There were many discussions around what text phrase to put into the
-Obscured Subject. Text phrases such as "Encrypted Subject" were tried
-but resulted in localization problems. If two users write an english
-text but use non-english MUA localizations the subjects loose
-readability. If you then also have "Re:" prefixes in e-mail threads
-Subjects become practially useless.  At some point one or two MUA
-authors practially tried "..." as the Obscured Subject and met approval
-as a good mitigation of the localization problem. 
+There were many discussions around what text phrase to use to obscure the `Subject:`.
+Text phrases such as `Encrypted Message` were tried but resulted in both localization problems and user confusion. 
+
+If the natural language phrase for the obscured `Subject:` is not localized (e.g. just English `Encrypted Message`), then it may be incomprehensible to a non-English-speaking recipient who uses a legacy MUA that renders the obscured `Subject:` directly.
+
+On the other hand, if it is localized based on the sender's MUA language settings, there is no guarantee that the recipient prefers the same language as the sender (consider a German speaker sending English text to an Anglophone).
+There is no standard way for a sending MUA to infer the language preferred by the recipient (aside from statistical inference of language based on the composed message, which would in turn leak information about the supposedly-confidential message body).
+
+Furthermore, implementors found that the phrase `Encrypted Message` in the subject line was sometimes understood by users to be an indication from the MUA that the message was actually encrypted.
+In practice, when some MUA failed to encrypt a message in a thread that started off with an obscured `Subject:`, the value `Re: Encrypted Message` was retained even on those cleartext replies, resulting in user confusion.
+
+In contrast, using `...` as the obscured `Subject:` was less likely to be seen as an indicator from the MUA of message encryption, and it also neatly sidesteps the localization problems. 
 
 Reply/Forward Losing Subjects
 -----------------------------
@@ -715,22 +719,25 @@ Usability Impact of Reduced Metadata
 (describe the problems ProtonMail/TutaNota have, discuss potential solutions)
 
 
-Usability Impact of Obscured Message-ID
+Usability Impact of Obscured Message-ID {#obscured-message-id}
 ---------------------------------------
 
 Current MUA implementations rely on the outermost Message-ID 
 for message processing and indexing purposes. This processing
 often happens before any decryption is even attempted. 
-Attempting to send messages with an obscured Message-ID header
-would result in several MUAs not correctly processing this mail,
+Attempting to send a message with an obscured Message-ID header
+would result in several MUAs not correctly processing the message,
 and would likely be seen as a degradation by users. 
+
+Furthermore, a legacy MUA replying to a message with an obscured `Message-ID:` would be likely to produce threading information (`References:`, `In-Reply-To:`) that would be misunderstood by the original sender.
+Implementors generally disapprove of breaking threads.
 
 Usability Impact of Obscured From/To/Cc
 ---------------------------------------
 
-The impact of obscuring From/To/Cc headers has similar issues
-as discussed with obscuring the Message-ID header, even if likely
-to a lesser degree. 
+The impact of obscuring `From:`, `To:`, and `Cc:` headers has similar issues as discussed with obscuring the `Message-ID:` header in {{obscured-message-id}}.
+
+In addition, obscuring these headers is likely to cause difficulties for a legacy client attempting formulate a correct reply (or "reply all") to a given message.
 
 
 Mailinglist munges From: or In-Reply-To: headers
