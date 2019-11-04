@@ -313,6 +313,7 @@ The revised algorithm for applying cryptographic protection to a message is as f
   - Let `payload` be MIME part `origbody`
 - For each header name `h` in `origheaders`:
   - Set header `h` of MIME part `payload` to `origheaders[h]`
+- FIXME: Enigmail adds `protected-headers="v1"` parameter to `payload` here.  Is this necessary?
 - Apply `crypto` to `payload`, producing MIME tree `output`
 - If `crypto` contains encryption:
   - For each obscured header name `obh` in `obscures`:
