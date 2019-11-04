@@ -747,13 +747,13 @@ But if Bob's MUA is capable of decryption but is unaware of protected headers, i
 For this message, the session key is an AES-256 key with value `95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e` (in hex).
 
 ~~~
-@@signed+encrypted+legacy-display.eml@@
+@@sign+enc+legacy-display.eml@@
 ~~~
 
 Unwrapping the Cryptographic Layer yields the following content:
 
 ~~~
-@@signed+encrypted+legacy-display.inner@@
+@@sign+enc+legacy-display.inner@@
 ~~~
 
 Multilayer Message with Protected Headers

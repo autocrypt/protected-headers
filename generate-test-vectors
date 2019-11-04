@@ -36,7 +36,7 @@ cfg = {
         'multipart': False,
         'sk': b'5e67165ed1516333daeba32044f88fd75d4a9485a563d14705e41d31fb61a9e9'
     },
-    'signed+encrypted+legacy-display': {
+    'sign+enc+legacy-display': {
         'encrypt': True,
         'multilayer': False,
         'legacy': True,
@@ -218,8 +218,8 @@ def make_payload(multipart:bool=False):
     dotsig_separator = '-- ' # this is a totally different kind of "signature"
     txt = f'''Hi Bob!
 
-I just signed the contract with BarCorp and they've set us up with an account
-on their system for testing.
+I just signed the contract with BarCorp and they've set us up with
+an account on their system for testing.
 
 The account information is:
 
@@ -245,11 +245,14 @@ OpenPGP Example Corp'''
     else:
         html = f'''<html><head></head><body><p>Hi Bob!
 </p><p>
-I just signed the contract with BarCorp and they've set us up with an account on their system for testing.
+I just signed the contract with BarCorp and they've set us up with
+ an account on their system for testing.
 </p><p>
 The account information is:
 </p><dl>
-<dt>Site</dt><dd><a href="https://barcorp.example/">https://barcorp.example/</a></dd>
+<dt>Site</dt><dd>
+<a href="https://barcorp.example/">https://barcorp.example/</a>
+</dd>
 <dt>Username</dt><dd><tt>examplecorptest</tt></dd>
 <dt>Password</dt><dd>correct-horse-battery-staple</dd>
 </dl><p>
@@ -332,7 +335,7 @@ def signed_encrypted(msgid:str, params):
         legacydisplay.set_content(f'Subject: {subj}\n')
         legacydisplay.set_type('text/rfc822-headers')
         legacydisplay.set_param('protected-headers', 'v1')
-        legacydisplay.set_charset('us-ascii') # header data is always 7-bit clean
+        legacydisplay.set_charset(None) # header data is always 7-bit clean
         del legacydisplay['MIME-Version'] # MIME-Version on subparts is meaningless
         del legacydisplay['Content-Transfer-Encoding'] # header data is always 7-bit clean
         legacydisplay['Content-Disposition'] = 'inline'

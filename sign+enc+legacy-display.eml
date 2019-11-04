@@ -1,0 +1,53 @@
+Received: from localhost (localhost [127.0.0.1]);
+ Mon, 21 Oct 2019 07:18:39 -0700 (UTC-07:00)
+MIME-Version: 1.0
+Content-Type: multipart/encrypted; boundary="8f1c37571f";
+ protocol="application/pgp-encrypted"
+From: Alice Lovelace <alice@openpgp.example>
+To: Bob Babbage <bob@openpgp.example>
+Date: Mon, 21 Oct 2019 07:18:11 -0700
+Message-ID: <sign+enc+legacy-display@protected-headers.example>
+Subject: ...
+
+--8f1c37571f
+content-type: application/pgp-encrypted
+
+Version: 1
+
+--8f1c37571f
+content-type: application/octet-stream
+
+-----BEGIN PGP MESSAGE-----
+
+wV4DR2b2udXyHrYSAQdARLfz+1WBB1rOgBFbyrPQXZkCoiK/aA7SpG8mY39S8Tow
+cuEVQ1/a4B0VfwiKMyXomehg4GMo7akIAd7nh1LIG26eW+JeEjOJLhjrcg4x5Cg/
+wcDMA3wvqk35PDeyAQv9Hu30CZtCMGeHCVyvPeZZuYUWtHDADt4Wo3rg5va5bUu1
+nZCV/7vo9worPUvhN+qqLP0t4l0KbdklNofLKggJt/+LgJ/IvJv4KhwK6PR10Cba
+Lu2uyzUJK33WKCnvPzqsgEuE4OmbGcIZki3Bo+hKLgr0wS1sNi5okybM5JMmrqTw
+GXEmHdtohx4/YFsAJ++b4WEWb26jflBbj7NwyXdAESb/lcxi5ZKqXerRJiaN2X/x
+O/CiwZwSw3LA7VlCwN8Jb9AR4KjjFHIi6pUOp5S7Iz0Hs0juA6862gsuOrfGN8q8
+1KkTUPwAw0lQSnSpMxsnRS3+zv1aeWnm8K+bt1Q0E/Nl1E0GYtwiEBLVWX1ZQYCr
+DgrgFBl3/kvx8e+L+b6bEF9GVckZSGrkzJJeMx1JzGaR5MtkEJThsZAlyrJVpMuf
+un4N1Xy11G3IWNMCl8SfvPdnaSrytVej2s3ItL+0sxy3wi4hhCXle/YJuFwPTbEP
+G8jkjJknuVd/6kxf85mT0sI1AfS//hCeieoyi9cjeBVGh39z7bonD2bSp5RfYKI5
+ANj5ANV+hWeB8TGmI7Ka6OOU/43MuilIRAu79M+XnFjMqDQWmRLhydgkThdc63+l
+LTt4jZRnUI2IjxsZ5Bgc13agpWzsStJcjRYz8QWOoANc+A74MCX75gsFn8NbQknR
+xa/rXpMEF6TulvgCtV/tDCXOv2hnpu+JhIqwLgKIspJih60R8oSIr5qzX3B4AAcc
+8Lr3cGrlohVtMDUYUkQF81+KsBWKJZWEvhZdQZC2nSzJSx5hgmw0D6ybYSGuCh9Z
+MyZbH38HJnwkZQWUYPyg4ui8XFi0PVY1WignaF6l0D0DhklzgkzO0Ey1BvEu4Zdg
+jkfUjYD4VnXNd4UyIwycfo8myrx3fqd5WcZRJmX9Njhlwn3a4l0adZlTIG9S0ytP
+VW9jijjGQ+IhizH+Q4jErcEuHJhNDCD0xOIpjQz68/NDm94BDmI2dyr07YOrQEQa
+ahDl7vMfMFQVncGp4zY0kYmNDOPSG3djCU5OhKA6dRz8cmigxvW0/CzMrOArMso3
+oW+EjldvkQIgeDwodARO8OLKKdQBQhcWIV4G3R8oaLXDxbP/3XAx7eU53jPi0ahW
+PbcD7IfHdrVVTyKLcolb0MqnP12gtnCmOwqWSA3D0aeuRGxIKCLnMVMID3I7OVjb
+1PMpXs4EsgIuVxWbm0qibVrw9yYd/4xRKKdZqYP+PCSo4aQEMzW7U+mWiZUmDE07
+4xzZlTd1qBRUgBKdteNjOcZ859hPZGREuG++JKBrL5Yr/kVBf8UFGLPES+8vslg3
+zMQ9K2FO50o4LxYyaKZEW9ihk2BbGB60+hiimtbpWjqZ79qZZ3PJqzd2Au7da7x4
+jKhOSvFAoLyze+8l2m+8uzGAQTh/1k6e3O6UcwdrV5Z4i41LZp2qdD7WBSfZD1tv
+IdvtbwnZ7YlLr/X0ESERPW4WWrDlHq4SDt5H16hgAbXVfYwmHxgAPawnIRLYVqZ6
+ViIf7Hfaqg==
+=QAR/
+-----END PGP MESSAGE-----
+
+--8f1c37571f--
+

@@ -10,7 +10,7 @@ Subject: BarCorp contract signed, let's go!
 Message-ID: <multilayer+legacy-display@protected-headers.example>
 
 --6ae0cc9247
-Content-Type: text/rfc822-headers; charset="us-ascii"; protected-headers="v1"
+content-type: text/rfc822-headers; protected-headers="v1"
 Content-Disposition: inline
 
 Subject: BarCorp contract signed, let's go!
@@ -20,8 +20,8 @@ Content-Type: text/plain; charset="us-ascii"
 
 Hi Bob!
 
-I just signed the contract with BarCorp and they've set us up with an account
-on their system for testing.
+I just signed the contract with BarCorp and they've set us up with
+an account on their system for testing.
 
 The account information is:
 
@@ -47,9 +47,9 @@ content-type: application/pgp-signature
 -----BEGIN PGP SIGNATURE-----
 
 wnUEARYKAB0FAl2tviMWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
-jgzVAQCXwrEyApDaRBeUX1kQOCbb3RVpXcSO+BdROF1T5K3FxAEAs4hYWZXJD1lp
-UBe7D64qKa+fyQE1akkIWgoqoaTSlgk=
-=zdtG
+jj/AAQDqeRa+AaS9dHoYHE4sSGhnXfuTlB9WPbtI/3uLmpX4wgD/boo2TFUJ4VYs
+KPDOt/ekjp079bvvfcSjpLNEI1sfSwA=
+=Otfk
 -----END PGP SIGNATURE-----
 
 --4e3b9ccaba--

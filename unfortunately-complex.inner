@@ -10,7 +10,7 @@ Subject: BarCorp contract signed, let's go!
 Message-ID: <unfortunately-complex@protected-headers.example>
 
 --6ae0cc9247
-Content-Type: text/rfc822-headers; charset="us-ascii"; protected-headers="v1"
+content-type: text/rfc822-headers; protected-headers="v1"
 Content-Disposition: inline
 
 Subject: BarCorp contract signed, let's go!
@@ -26,8 +26,8 @@ Content-Type: text/plain; charset="us-ascii"
 
 Hi Bob!
 
-I just signed the contract with BarCorp and they've set us up with an account
-on their system for testing.
+I just signed the contract with BarCorp and they've set us up with
+an account on their system for testing.
 
 The account information is:
 
@@ -50,11 +50,14 @@ Content-Type: text/html; charset="us-ascii"
 
 <html><head></head><body><p>Hi Bob!
 </p><p>
-I just signed the contract with BarCorp and they've set us up with an account on their system for testing.
+I just signed the contract with BarCorp and they've set us up with
+ an account on their system for testing.
 </p><p>
 The account information is:
 </p><dl>
-<dt>Site</dt><dd><a href="https://barcorp.example/">https://barcorp.example/</a></dd>
+<dt>Site</dt><dd>
+<a href="https://barcorp.example/">https://barcorp.example/</a>
+</dd>
 <dt>Username</dt><dd><tt>examplecorptest</tt></dd>
 <dt>Password</dt><dd>correct-horse-battery-staple</dd>
 </dl><p>
@@ -98,9 +101,9 @@ content-type: application/pgp-signature
 -----BEGIN PGP SIGNATURE-----
 
 wnUEARYKAB0FAl2tviMWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
-juFdAQDjMySpe88yowVduslDi/IGFTGNn1d0ZxpA3IGW5Ss8ZQD9H2zbBtiKXtc7
-axmvtiKF4z1DdY/IgOKFfmyGX2WZrws=
-=Sv5w
+jrR3AP9H2o1HBGLwkz5qzBgGmXsXLrc2xbluWtYmiDQcnq3e9QEA+DaBG1gEXasg
+7OfAEqT4DrOivtNo18CxpIPrskgOXws=
+=Ul2/
 -----END PGP SIGNATURE-----
 
 --c72d4fa142--
