@@ -264,11 +264,33 @@ The Exposed Headers are considered to be outside of both.
 Message Composition
 ===================
 
-This section describes composition of cryptographically-protected messages with Protected Headers.
+This section describes the composition of a cryptographically-protected message with Protected Headers.
 
-We start with a description of legacy composition of cryptographically-protected messages.
+We document legacy composition of cryptographically-protected messages (without protected headers) in {{legacy-composition}}, and then describe a revised version of that algorithm in {{protected-header-composition}} that produces conformant Protected Headers.
 
-Message Composition without Protected Headers
+Copying All Headers
+-------------------
+
+All non-structural headers known to the composing MUA are copied to the MIME header of the Cryptographic Payload.
+The composing MUA SHOULD protect all known non-structural headers in this way.
+
+If the composing MUA omits protection for some of the headers, the receiving MUA will have difficulty reasoning about the integrity of the headers (see {{signature-replay}}).
+
+Confidential Subject {#confidential-subject}
+--------------------
+
+When a message is encrypted, the Subject should be obscured by replacing the Exposed Subject with three periods: `...`
+
+This value (`...`) was chosen because it is believed to be language agnostic and avoids communicating any potentially misleading information to the recipient (see {{misunderstood-obscured-subjects}} for a more detailed discussion).
+
+Obscured Headers
+----------------
+
+Due to compatibility and usability concerns, a Mail User Agent SHOULD NOT obscure any of: `From`, `To`, `Cc`, `Message-ID`, `References`, `Reply-To`, `In-Reply-To`, (FIXME: MORE?), unless the user has indicated they have security constraints which justify the potential downsides (see {{common-pitfalls}} for a more detailed discussion).
+
+Aside from that limitation, this specification does not at this time define or limit the methods a MUA may use to convert Exposed Headers into Obscured Headers.
+
+Message Composition without Protected Headers {#legacy-composition}
 ---------------------------------------------
 
 This section roughly describes the steps that a legacy MUA might use to compose a cryptographically-protected message *without* Protected Headers.
@@ -289,7 +311,7 @@ The algorithm returns a MIME object that is ready to be injected into the mail s
   - Set header `h` of `output` to `origheaders[h]`
 - Return `output`
 
-Message Composition with Protected Headers
+Message Composition with Protected Headers {#protected-header-composition}
 ------------------------------------------
 
 A reasonable sequential algorithm for composing a message *with* protected headers takes two more parameters in addition to `origbody`, `origheaders`, and `crypto`:
@@ -327,28 +349,6 @@ The revised algorithm for applying cryptographic protection to a message is as f
 
 Note that both new parameters, `obscured` and `legacy`, are effectively ignored if `crypto` does not contain encryption.
 This is by design, because they are irrelevant for signed-only cryptographic protections.
-
-Copying All Headers
--------------------
-
-All non-structural headers known to the composing MUA are copied to the MIME header of the Cryptographic Payload.
-The composing MUA SHOULD protect all known non-structural headers in this way.
-
-If the composing MUA omits protection for some of the headers, the receiving MUA will have difficulty reasoning about the integrity of the headers (see {{signature-replay}}).
-
-Confidential Subject {#confidential-subject}
---------------------
-
-When a message is encrypted, the Subject should be obscured by replacing the Exposed Subject with three periods: `...`
-
-This value (`...`) was chosen because it is believed to be language agnostic and avoids communicating any potentially misleading information to the recipient (see {{misunderstood-obscured-subjects}} for a more detailed discussion).
-
-Obscured Headers
-----------------
-
-Due to compatibility and usability concerns, a Mail User Agent SHOULD NOT obscure any of: `From`, `To`, `Cc`, `Message-ID`, `References`, `Reply-To`, `In-Reply-To`, (FIXME: MORE?), unless the user has indicated they have security constraints which justify the potential downsides (see {{common-pitfalls}} for a more detailed discussion).
-
-Aside from that limitation, this specification does not at this time define or limit the methods a MUA may use to convert Exposed Headers into Obscured Headers.
 
 Legacy Display {#legacy-display}
 ==============
