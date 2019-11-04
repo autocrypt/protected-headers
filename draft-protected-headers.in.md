@@ -1,6 +1,6 @@
 ---
 title: Protected Headers for Cryptographic E-mail
-docname: draft-autocrypt-lamps-protected-headers-01
+docname: draft-autocrypt-lamps-protected-headers-02
 date: 2019-11-04
 category: info
 
