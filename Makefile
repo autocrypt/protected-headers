@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 draft = draft-protected-headers
-OUTPUT = $(draft).txt $(draft).html $(draft).xml
+OUTPUT = $(draft).txt $(draft).html $(draft).xml $(draft).pdf
 vectors = $(shell ./generate-test-vectors list-vectors)
 vectordata = $(foreach x,$(vectors), $(x).eml)
 innerdata = $(foreach x, $(shell ./generate-test-vectors list-vectors | grep -vx signed), $(x).inner)
@@ -14,6 +14,9 @@ all: $(OUTPUT)
 
 %.html: %.xml
 	xml2rfc $< --html --v3
+
+%.pdf: %.xml
+	xml2rfc $< --pdf --v3
 
 %.txt: %.xml
 	xml2rfc $< --text --v3
