@@ -102,6 +102,7 @@ For the purposes of this document, we define the following concepts:
    * *Obscured Headers* are any Protected Headers which have been modified or removed from the set of Exposed Headers.
    * *Legacy Display Part* is a MIME construct which guarantees visibility of data from the Original Headers which may have been removed or obscured from the Unprotected Headers.
    * *User-Facing Headers* are explained and enumerated in {{user-facing-headers}}.
+   * *Structural Headers* are documented in {{structural-headers}}.
 
 
 ### User-Facing Headers {#user-facing-headers}
@@ -118,6 +119,22 @@ The user-facing headers are:
 The above is a complete list.  No other headers are considered "user-facing".
 
 Other headers may affect the visible rendering of the message (e.g., `References` and `In-Reply-To` may affect the placement of a message in a threaded discussion), but they are not directly displayed to the user and so are not considered "user-facing" for the purposes of this document.
+
+### Structural Headers {#structural-headers}
+
+A message header whose name begins with `Content-` is referred to in this document as a "structural" header.
+
+These headers indicate something about the specific MIME part they are attached to, and cannot be transferred or copied to other parts without endangering the readability of the message.
+
+This includes (but is not limited to):
+
+ - `Content-Type`
+ - `Content-Transfer-Encoding`
+ - `Content-Disposition`
+
+Note that no "user-facing" headers ({{user-facing-headers}}) are also "structural" headers.  Of course, many headers are neither "user-facing" nor "structural".
+
+FIXME: are there any non-`Content-*` headers we should consider as structural?
 
 
 Protected Headers Summary
@@ -255,7 +272,7 @@ This section roughly describes the steps that a legacy MUA might use to composes
 The message composition algorithm takes three parameters:
 
 - `origbody`: the traditional unprotected message body as a well-formed MIME tree (possibly just a single MIME leaf part).
-  As a well-formed MIME tree, `origbody` already has structural headers present.
+  As a well-formed MIME tree, `origbody` already has structural headers present (see {{structural-headers}}).
 - `origheaders`: the intended non-structural headers for the message, represented here as a table mapping from header names to header values..
   For example, `origheaders['From']` refers to the value of the `From` header that the composing MUA would typically place on the message before sending it.
 - `crypto`: The series of cryptographic protections to apply (for example, "sign with the secret key corresponding to OpenPGP certificate X, then encrypt to OpenPGP certificates X and Y").
@@ -1039,6 +1056,8 @@ IANA Considerations
 FIXME: register flag for legacy-display part
 
 MAYBE: provide a list of user-facing headers, or a new "user-visible" column in some table of known RFC5322 headers?
+
+MAYBE: provide a comparable indicator for which headers are "structural" ?
 
 Security Considerations
 =======================
