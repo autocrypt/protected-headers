@@ -101,6 +101,23 @@ For the purposes of this document, we define the following concepts:
    * *Exposed Headers* are any headers outside the Cryptographic Payload (protected or not).
    * *Obscured Headers* are any Protected Headers which have been modified or removed from the set of Exposed Headers.
    * *Legacy Display Part* is a MIME construct which guarantees visibility of data from the Original Headers which may have been removed or obscured from the Unprotected Headers.
+   * *User-Facing Headers* are explained and enumerated in {{user-facing-headers}}.
+
+
+### User-Facing Headers {#user-facing-headers}
+
+Of all the headers that an e-mail message may contain, only a handful are typically presented directly to the user.
+The user-facing headers are:
+
+ - `Subject`
+ - `From`
+ - `To`
+ - `Cc`
+ - `Date`
+
+The above is a complete list.  No other headers are considered "user-facing".
+
+Other headers may affect the visible rendering of the message (e.g., `References` and `In-Reply-To` may affect the placement of a message in a threaded discussion), but they are not directly displayed to the user and so are not considered "user-facing" for the purposes of this document.
 
 
 Protected Headers Summary
@@ -263,10 +280,10 @@ A reasonable sequential algorithm for composing a message *with* protected heade
 
 The revised algorithm for applying cryptographic protection to a message is as follows:
 
-- if `crypto` contains encryption, and `legacy` is `true`, and `obscures` contains any typically visible headers (see {{typically-visible-headers}}), wrap `orig` in a structure that carries a Legacy Display part:
+- if `crypto` contains encryption, and `legacy` is `true`, and `obscures` contains any user-facing headers (see {{user-facing-headers}}), wrap `orig` in a structure that carries a Legacy Display part:
   - Create a new MIME leaf part `legacydisplay` with header `Content-Type: text/rfc822-headers; protected-headers="v1"`
   - For each obscured header name `obh` in `obscures`:
-     - If `obh` is typically visible:
+     - If `obh` is user-facing:
         - Add `obh: origheaders[ob]` to the body of `legacydisplay`.  For example, if `origheaders['Subject']` is `lunch plans?`, then add the line `Subject: lunch plans?` to the body of `legacydisplay`
   - Construct a new MIME part `wrapper` with `Content-Type: multipart/mixed`
   - Give `wrapper` exactly two subarts: `legacydisplay` and `origbody`, in that order.
@@ -315,37 +332,21 @@ Aside from that limitation, this specification does not at this time define or l
 Legacy Display {#legacy-display}
 ==============
 
-MUAs typically display some headers directly to the user.
-An encrypted message may be read by an decryption-capable MUA that is unaware of this standard.
+MUAs typically display user-facing headers ({{user-facing-headers}})directly to the user.
+An encrypted message may be read by a decryption-capable legacy MUA that is unaware of this standard.
 The user of such a legacy client risks losing access to any obscured headers.
 
 This section presents a workaround to mitigate this risk by restructuring the Cryptographic Payload before encrypting to include a "Legacy Display" part.
 
-Typically Visible Headers {#typically-visible-headers}
--------------------------
-
-Of all the headers that an e-mail message may contain, only a handful are typically presented directly to the user.
-The typically visible headers are:
-
- - `Subject`
- - `From`
- - `To`
- - `Cc`
- - `Date`
-
-The above is a complete list.  No other headers are considered "typically visible".
-
-Other headers may affect the visible rendering of the message (e.g., `References` and `In-Reply-To` may affect the placement of a message in a threaded discussion), but they are not directly displayed to the user and so are not considered "typically visible" for the purposes of this document.
-
 Message Generation: Including a Legacy Display Part
 ---------------------------------------------------
 
-A generating MUA that wants to make an Obscured Subject (or any other typically visible header) visible to a recipient using a legacy MUA SHOULD modify the Cryptographic Payload by wrapping the intended body of the message in a `multipart/mixed` MIME part that prefixes the intended body with a Legacy Display part.
+A generating MUA that wants to make an Obscured Subject (or any other user-facing header) visible to a recipient using a legacy MUA SHOULD modify the Cryptographic Payload by wrapping the intended body of the message in a `multipart/mixed` MIME part that prefixes the intended body with a Legacy Display part.
 
 The Legacy Display part MUST be of Content-Type `text/rfc822-headers`, and MUST contain a `protected-headers` parameter whose value is `v1`.
 It SHOULD be marked with `Content-Disposition: inline` to encourage recipients to render it.
 
-The contents of the Legacy Display part MUST be only the typically visible headers that the sending MUA intends to obscure after encryption.
+The contents of the Legacy Display part MUST be only the user-facing headers that the sending MUA intends to obscure after encryption.
 
 The original body (now a subpart) SHOULD also be marked with `Content-Disposition: inline` to discourage legacy clients from presenting it as an attachment.
 
@@ -372,7 +373,7 @@ Note that with the inclusion of the Legacy Display part, the Cryptographic Paylo
 A MUA SHOULD transform a Cryptographic Payload to include a Legacy Display part only when:
 
  - The message is going to be encrypted, and
- - At least one typically visible header (see {{typically-visible-headers}}) is going to be obscured
+ - At least one user-facing header (see {{user-facing-headers}}) is going to be obscured
 
 Additionally, if the sender knows that the recipient's MUA is capable of interpreting Protected Headers, it SHOULD NOT attempt to include a Legacy Display part.
 (Signalling such a capability is out of scope for this document)
@@ -1036,6 +1037,8 @@ IANA Considerations
 ===================
 
 FIXME: register flag for legacy-display part
+
+MAYBE: provide a list of user-facing headers, or a new "user-visible" column in some table of known RFC5322 headers?
 
 Security Considerations
 =======================
