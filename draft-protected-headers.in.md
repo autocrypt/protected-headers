@@ -417,16 +417,16 @@ Some common approaches are discussed below.
 Reverse-Copying
 ---------------
 
-One strategy for interpreting Protected Headers on an incoming message, is to simply ignore any Exposed Headers for which a Protected counterpart is available. This is often interpreted as a copy operation within the code which takes care of parsing the message.
+One strategy for interpreting Protected Headers on an incoming message, is to simply ignore any Exposed Headers for which a Protected counterpart is available. This is often implemented as a copy operation (copying data back out of the protected payload into the main message header) within the code which takes care of parsing the message.
 
-MUAs implementing this strategy should in pay special attention to any user facing headers (as defined above). If user-facing headers are among the Exposed Headers, but missing from the Protected Header section then the copy strategy actually implies deleting such Exposed Headers before presenting the message to the user.
+MUAs implementing this strategy should pay special attention to any user facing headers (as defined above). If user-facing headers are among the Exposed Headers, but missing from the Protected Header section then this strategy actually implies deleting such Exposed Headers before presenting the message to the user.
 
 This strategy does not risk raising false alarms about harmless deviations, but conversely it does nothing to inform the user if they are under attack. This strategy does successfully mitigate and thwart some attacks, including message replay attacks.
 
 Signature Invalidation
 ----------------------
 
-An alternate strategy for interpreting Protected Headers is to consider cryptographic signatures to be invalid, if the Exposed Headers deviate from their Protected counterparts.
+An alternate, complementary strategy for interpreting Protected Headers is to consider cryptographic signatures to be invalid, if the Exposed Headers deviate from their Protected counterparts.
 
 This state should be presented to the user using the same interface as other signature verification failures.
 
@@ -542,7 +542,7 @@ Some popular mailing-list implementations will modify the Exposed Headers of a m
 
 Depending on how the MUA resolves discrepancies between the Protected Headers and the Exposed Headers of a recieved message, these mailing list "features" may either break or the MUA may incorrectly interpret them as a security breach.
 
-Implementors may for this reason choose to implement slightly different strategies for resolving discrepancies, if a message is known to come from such a mailing list. Implementors should at the very least avoid "crying wolf" in such cases.
+Implementors may for this reason choose to implement slightly different strategies for resolving discrepancies, if a message is known to come from such a mailing list. MUAs should at the very least avoid presenting false alarms in such cases.
 
 Comparison with Other Header Protection Schemes
 ===============================================
