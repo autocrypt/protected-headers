@@ -821,54 +821,17 @@ Signed Message with Protected Headers {#test-vector-signed-only}
 
 This shows a clearsigned message.  Its MIME message structure is:
 
-    └┬╴multipart/signed
-     ├─╴text/plain
-     └─╴application/pgp-signature
+~~~
+└┬╴multipart/signed
+ ├─╴text/plain ← Cryptographic Payload
+ └─╴application/pgp-signature
+~~~
 
 Note that if this message had been generated without Protected Headers, then an attacker with access to it could modify the Subject without invalidating the signature.
 Such an attacker could cause Bob to think that Alice wanted to cancel the contract with BarCorp instead of FooCorp.
 
 ~~~
-Received: from localhost (localhost [127.0.0.1]);
- Sun, 20 Oct 2019 09:18:28 -0400 (UTC-04:00)
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="904b809781";
- protocol="application/pgp-signature"; micalg="pgp-sha512"
-From: Alice Lovelace <alice@openpgp.example>
-To: Bob Babbage <bob@openpgp.example>
-Date: Sun, 20 Oct 2019 09:18:11 -0400
-Subject: The FooCorp contract
-Message-ID: <signed-only@protected-headers.example>
-
---904b809781
-Content-Type: text/plain; charset="us-ascii"
-From: Alice Lovelace <alice@openpgp.example>
-To: Bob Babbage <bob@openpgp.example>
-Date: Sun, 20 Oct 2019 09:18:11 -0400
-Subject: The FooCorp contract
-Message-ID: <signed-only@protected-headers.example>
-
-Bob, we need to cancel this contract.
-
-Please start the necessary processes to make that happen today.
-
-Thanks, Alice
--- 
-Alice Lovelace
-President
-OpenPGP Example Corp
-
---904b809781
-Content-Type: application/pgp-signature; charset="us-ascii"
-
------BEGIN PGP SIGNATURE-----
-
-wl4EARYKAAYFAl2sXpMACgkQ8jFVDE9H444uYwD/TpkvOT+KNMAzk00kkFM0/W/n
-noY9JG+8I1rxMH5CpskA+wXacRQ/xoDjwEBL671CDDXYTi/QiOK5vA64gUxDbE0L
-=1tUZ
------END PGP SIGNATURE-----
-
---904b809781--
+@@signed.eml@@
 ~~~
 
 Signed and Encrypted Message with Protected Headers {#encryptedsigned}
@@ -878,11 +841,13 @@ This shows a simple encrypted message with protected headers.
 The encryption also contains an signature in the OpenPGP Message structure.
 Its MIME message structure is:
 
-    └┬╴multipart/encrypted
-     ├─╴application/pgp-encrypted
-     └─╴application/octet-stream
-       ↧ (decrypts to)
-       └─╴text/plain
+~~~
+└┬╴multipart/encrypted
+ ├─╴application/pgp-encrypted
+ └─╴application/octet-stream
+   ↧ (decrypts to)
+   └─╴text/plain ← Cryptographic Payload
+~~~
 
 The `Subject:` header is successfully obscured.
 
@@ -896,55 +861,7 @@ The session key for this message's crypto layer is an AES-256 key with value `8d
 If Bob's MUA is capable of interpreting these protected headers, it should render the `Subject:` of this message as `BarCorp contract signed, let's go!`.
 
 ~~~
-Received: from localhost (localhost [127.0.0.1]);
- Mon, 21 Oct 2019 07:18:39 -0700 (UTC-07:00)
-MIME-Version: 1.0
-Content-Type: multipart/encrypted; boundary="bcde3ce988";
- protocol="application/pgp-encrypted"
-From: Alice Lovelace <alice@openpgp.example>
-To: Bob Babbage <bob@openpgp.example>
-Date: Mon, 21 Oct 2019 07:18:11 -0700
-Message-ID: <signed+encrypted@protected-headers.example>
-Subject: ...
-
---bcde3ce988
-Content-Type: application/pgp-encrypted; charset="us-ascii"
-
-Version: 1
-
---bcde3ce988
-Content-Type: application/octet-stream; charset="us-ascii"
-
------BEGIN PGP MESSAGE-----
-
-wV4DR2b2udXyHrYSAQdA8sJB4yKldNgJl9n0ETWERq8xapTZNCECEIdT8rU62Wgw
-zxU9dwhuamBCF81fXDf/qlLd+gi6xYxhqNpnEJU48vaoq8iyUymU1eKowQ/pnKA5
-wcDMA3wvqk35PDeyAQv/a7KZ3aMmf4tqk4VlKPd6l5+JTx8Mb2cu7E++xXqAjMdr
-vAOzpvAj4qzPwWyVe+ygIqcJYg0EAMiPkD/zMhWtn3rAh3/iAHRKcMIMblS4EEnR
-ykG04jfQ73bpX4J/YLTFBNnUMF/+t3tt2xJzo5YX5jUby01J9qMz8GA2SWuNSiN/
-LWtPXp13ShqHwX5DDtE+M7Od2ApEzSBo6Uj2lqIdCs+i4u/35HRPGIrTefED5ecB
-eL4ybuZdxwta+F0QFBQ0HO8R8uio1u7xCyx/KTRejpllG8FVRkiRD3QRf0N+7d7U
-T/etRm0VhR2zYhQPEfGVr8hQ/ZSWme5QEsFkMZRJIB+/KDXn/8wdcE/Jqs+yj+hr
-XwAoxGuiN6JagrQDe9RWEZt4cmAwSQzDY8ai/4WLd8sJOssx5LwUEW92ZclLd82X
-CLR1RoOLNOxfArwoPiTJiXxgUfIZjmOAlamIGUPtZCFkYeItYFnCiDaalfCwrJX8
-j4kzAX3p/qPEdK4QWBxS0sHHASVlm4xktQ1Z2IzB7GX2h3oVK8NdzrUZEYc80+ed
-pL8mEGerujQHTtCNFPU9A2NqcriLwYg9kMDMtyk/o8tL3LHIXolOod7kVGCCAWJ8
-tPRggmVi5Ly0tPNRDU5HJDHz0kINhd3InBvUZpoiNTZrtAnmIhKgE/Fn/4bGrY0H
-UGoAGyVbs5SifNmqP9GNXEqov+h4MchzWs5hn2Vj5jnjc8+cXXJhHU/b84QHPLmN
-vLFZLq71+3gC8XM1QktYctPhI4oesD9kuCCaEbKZbqs6Cagyl8lSslMB0VyNiAVp
-niJ2AL1+bHOUjO1SFn8EQyKjKHD1Wsbc7wwuSRi1ukzTaO3g6PHmwyhoxE/RZp0D
-OZkV3rdKEtPjh0d57SW6cIPm72UX6c2HjWKHEakX9dLTc3OS8vDtBRfUGOwcrlcN
-w/Q4qte1daqUTEpcldEY03pe+VbWtprCuM192clHqvTY0UNFfaEP+ZiJrj9toaGZ
-lqo6eZS/DOdywgOFuZkfsLcAYk/PhBLTle9t5R7jMd4PflX59uGQCytQsiat/nJl
-KAd7zF8cXrxEzAISt/WKlsbGaZo371BQc2JuAr3zFUdR9HWu1knlJsUFgm4x65RK
-pqryozyQy2zUt61lisMvm6qmo6TWzrDqCK1PDHaNRO2WRFOGxAAGc1Ypa/UPCXrL
-jfpU13eh1fiNwmhWlT3/0IH0JXY5wSjCXiHTBRjMr/5pN70wXX14xDOirOoj45ef
-j2eVi38yIkT6m/vrYJxUoahQZTl0gK+hExIYXftR9BXf50I23vAspwRCE5c+RRnt
-ACZcaqsLro8SNaJdSCrFVxmuqN+h4JO8ppso5wRwPLErVPpIlC5RpDM=
-=CatE
------END PGP MESSAGE-----
-
---bcde3ce988--
+@@signed+encrypted.eml@@
 ~~~
 
 Signed and Encrypted Message with Protected Headers and Legacy Display Part
@@ -954,13 +871,15 @@ If Alice's MUA wasn't sure whether Bob's MUA would know to render the obscured `
 
 This message is structured in the following way:
 
-    └┬╴multipart/encrypted
-     ├─╴application/pgp-encrypted
-     └─╴application/octet-stream
-       ↧ (decrypts to)
-       └┬╴multipart/mixed
-        ├─╴text/rfc822-headers
-        └─╴text/plain
+~~~
+└┬╴multipart/encrypted
+ ├─╴application/pgp-encrypted
+ └─╴application/octet-stream
+   ↧ (decrypts to)
+   └┬╴multipart/mixed ← Cryptographic Payload
+    ├─╴text/rfc822-headers ← Legacy Display Part
+    └─╴text/plain
+~~~
 
 The example below shows the same message as {{encryptedsigned}}.
 
@@ -971,57 +890,91 @@ But if Bob's MUA is capable of decryption but is unaware of protected headers, i
 For this message, the session key is an AES-256 key with value `95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e` (in hex).
 
 ~~~
-Received: from localhost (localhost [127.0.0.1]);
- Mon, 21 Oct 2019 07:18:39 -0700 (UTC-07:00)
-MIME-Version: 1.0
-Content-Type: multipart/encrypted; boundary="73c8655345";
- protocol="application/pgp-encrypted"
-From: Alice Lovelace <alice@openpgp.example>
-To: Bob Babbage <bob@openpgp.example>
-Date: Mon, 21 Oct 2019 07:18:11 -0700
-Message-ID: <signed+encrypted+legacy-display@protected-headers.example>
-Subject: ...
+@@signed+encrypted+legacy-display.eml@@
+~~~
 
---73c8655345
-Content-Type: application/pgp-encrypted; charset="us-ascii"
+Multilayer Message with Protected Headers
+-----------------------------------------
 
-Version: 1
+Some mailers may generate signed and encrypted messages with a multilayer cryptographic envelope.
+We show here how such a mailer might generate the same message from Alice to Bob.
 
---73c8655345
-Content-Type: application/octet-stream; charset="us-ascii"
+A typical message like this has the following structure:
 
------BEGIN PGP MESSAGE-----
+~~~
+└┬╴multipart/encrypted
+ ├─╴application/pgp-encrypted
+ └─╴application/octet-stream
+  ↧ (decrypts to)
+  └┬╴multipart/signed
+   ├─╴text/plain ← Cryptographic Payload
+   └─╴application/pgp-signature
+~~~
 
-wV4DR2b2udXyHrYSAQdAHI4CaIxAXy7Iv16FZmMd/p+T+KWEwxDrllVS8jkNCWcw
-HTyfe2pnyOw3NPuwEDXcvLKTl/LC6MonWW1t91MqRnnzpUN3Kdb7gAMrmN5RMstH
-wcDMA3wvqk35PDeyAQv+NwDQfyY5BFZRI99aphwLI1lfKTg8Tx6Y8ajVHD0x4Ton
-hXnBwwMLO5BSn5/cgqFt/mhNVmILNiv4IrK+alwOLkBw6M0+F0iUiu1w1KrB+PdJ
-a8N038mKIAH3SdMTi7ryTyUq2+Hl44AVNWKmFdwesAE7b3cA1g1ZztGE1GV+WD8B
-qGd2IsB09CnkxGgoRb71xjV3ZJ3X7qvWP6B9W7eaM0vLyxA0ap2cJdkv1pGEZhch
-iEtVxmsJrXaQqjf2TJeV4bD8hfdCUpoiE07eFwWN2xBRh0lcN45QXWgpfOBsvLQ9
-Cn6vLb4IQStrhe+oNN90bzNZtAv+odvWLDW0hKP/7TkxncK4MHg/uZO45yLKpdis
-azNgAp8IbLjZ9mPodzZB035OZ+iS6KEEwo/zI/miqX4QtEpuCXIYnTsERoTTNUw7
-EJSZ+RpO0L1jGOQgqlFh+h1zLlvlnphdH72hhPHRcyY4hqQG5gGTWCHl0OA8LMlv
-0s+nYNcbIbJdV4b6s/GL0sIpAcA5Bo/Eu0hC8eXQDJMoQYk3sXhzU5LYu/V5Gn51
-BKPWzTkz+mfvTRkTb/LC8QKifm+kOg/D/IUKT87Ep1yb2on8pj789QkQUSUqO5Hc
-Hp3IElZXSKTUdvpzlQi6UzBRhTV6FqZJtzifQL3HuGPYbv3UwXrQIsA3Cqhm6KL+
-u7BVmXFlhk1Liul59zQs4RfMMHZww8Ios5r7Aib/Trp/Oyyu4erJnLjaip14+amJ
-oDF7L2sln/l9t9YtkkXKwhjsLWnfb/6JL6+MixCrTxGUG/N8TT0O8MvzeLRUiPm0
-GLHcTT9R6kO1+1BDsKpBlzChzSeHkH30lkQ6dPkv/C5D7if5f9r+UcIUuO//SEH8
-XYFjAyhi/HSZONgshmWebZxhN5AVR6qbl84/wowJf9xOpfbiW1Vdg+7gQ3m7RFPh
-/1AoC2NDkOWKo70ctEzDtnbRPUNa9aaptjJYKWKvURDhaQ5yVz/A7Wr/cmks+FMp
-S8HAdBH8+I//5OPVJHgeuO004b8YzADawajm4u7rL7nccaPCFbAZXIoX/78XNqRw
-TJGwE8MPu5w3b8d4fKk++PDHVnvIyofo7n2ST+SAS4/KI+VOlAhXmNdkxhKIEHKk
-HUPB2zeEoGVFecRIdMm5dVLtf9EOBE8QZvQnxiYN05TQ9ECaJ0ONWRjYCC8EiRme
-gzIOpjIlw81JG+m9yGDp0S7iN5UJCCiolLJy2rPIBxWpJSwALRHy2u46VGyHONfX
-VRfKSZuBwu/kkfDHmw/I7aN8JNWiIrYhaPZ3vuGZ1ZWGtxbgvUlD9lZWG6+UM9+k
-6RF3YLZKXGkJzzh9ipKZFgnWgyOSvRQzMtWSj8GSdKAXRQgQUdYg82jCe2IKYQdf
-UGy7MjEvOJTTHKvMkIuBFrQpPWklWAN4XFAf4m2iciHw/f2WxJ/Nj2HET+OxmFMD
-mZ/z90MZ2jBxCO4Rug18yFC5CsHlt6SeaPPw9GtER7J2YAcE7SXb3iXXqw==
-=9CTX
------END PGP MESSAGE-----
+For this message, the session key is an AES-256 key with value `5e67165ed1516333daeba32044f88fd75d4a9485a563d14705e41d31fb61a9e9` (in hex).
 
---73c8655345--
+~~~
+@@multilayer.eml@@
+~~~
+
+Multilayer Message with Protected Headers and Legacy Display Part
+-----------------------------------------------------------------
+
+And, a mailer that generates a multilayer cryptographic envelope might want to provide a Legacy Display part, if it is unsure of the capabilities of the recipient's MUA.
+
+Such a message might have the following structure:
+
+~~~
+└┬╴multipart/encrypted
+ ├─╴application/pgp-encrypted
+ └─╴application/octet-stream
+  ↧ (decrypts to)
+  └┬╴multipart/signed
+   ├┬╴multipart/mixed ← Cryptographic Payload
+   │├─╴text/rfc822-headers ← Legacy Display Part
+   │└─╴text/plain
+   └─╴application/pgp-signature
+~~~
+
+For this message, the session key is an AES-256 key with value `b346a2a50fa0cf62895b74e8c0d2ad9e3ee1f02b5d564c77d879caaee7a0aa70` (in hex).
+
+~~~
+@@multilayer+legacy-display.eml@@
+~~~
+
+An Unfortunately Complex Example
+--------------------------------
+
+For all of the potential complexity of the Cryptographic Envelope, the Cryptographic Payload itself can be complex.
+The Cryptographic Envelope in this example is the same as the previous example (multilayer signed encrypted).
+The Cryptographic Payload has protected headers and a legacy display part (also the same as the previous example), but in addition Alice's MUA composes a message with both plaintext and HTML variants, and Alice includes a single attachment as well.
+
+While this message is complex, a modern MUA could also plausibly generate such a structure based on reasonable commands from the user composing the message (e.g., Alice composes the message with a rich text editor, and attaches a file to the message).
+
+The key takeaway is that the complexity of the Cryptographic Payload (which may contain a Legacy Display part) is independent of and distinct from the complexity of the Cryptographic Envelope.
+
+This message has the following structure:
+
+~~~
+└┬╴multipart/encrypted
+ ├─╴application/pgp-encrypted
+ └─╴application/octet-stream
+  ↧ (decrypts to)
+  └┬╴multipart/signed
+   ├┬╴multipart/mixed ← Cryptographic Payload
+   │├─╴text/rfc822-headers ← Legacy Display Part
+   │└┬╴multipart/mixed
+   │ ├┬╴multipart/alternative
+   │ │├─╴text/plain
+   │ │└─╴text/html
+   │ └─╴text/x-diff ← attachment
+   └─╴application/pgp-signature
+~~~
+
+For this message, the session key is an AES-256 key with value `1c489cfad9f3c0bf3214bf34e6da42b7f64005e59726baa1b17ffdefe6ecbb52` (in hex).
+
+~~~
+@@unfortunately-complex.eml@@
 ~~~
 
 IANA Considerations
