@@ -133,17 +133,15 @@ gpg --quiet --batch --no-tty --pinentry-mode=loopback --passphrase '' --quick-ge
 gpg --quiet --batch --no-tty --yes --lsign alice@openpgp.example
 notmuch new --quiet
 notmuch config set index.decrypt true
-./generate-test-vectors sign | notmuch insert
-./generate-test-vectors sign+encrypt | notmuch insert
-./generate-test-vectors sign+encrypt+legacy | notmuch insert
+for x in $(./generate-test-vectors list-vectors); do
+    echo "inserting $x"
+    ./generate-test-vectors "$x" | notmuch insert
+done
 notmuch count
-notmuch show --format=json --entire-thread=false --verify=true id:signed-only@protected-headers.example \
-    | python3 -c 'import json,sys; json.dump(json.load(sys.stdin)[0][0][0]["crypto"], sys.stdout, indent=1)'
-echo
-notmuch show --format=json --entire-thread=false --verify=true id:signed+encrypted@protected-headers.example \
-    | python3 -c 'import json,sys; json.dump(json.load(sys.stdin)[0][0][0]["crypto"], sys.stdout, indent=1)'
-echo
-notmuch show --format=json --entire-thread=false --verify=true id:signed+encrypted+legacy-display@protected-headers.example \
-    | python3 -c 'import json,sys; json.dump(json.load(sys.stdin)[0][0][0]["crypto"], sys.stdout, indent=1)'
-echo
+for x in $(./generate-test-vectors list-vectors); do
+    echo "extracting crypto for $x"
+    notmuch show --format=json --entire-thread=false --verify=true "id:$x@protected-headers.example" \
+        | python3 -c 'import json,sys; json.dump(json.load(sys.stdin)[0][0][0]["crypto"], sys.stdout, indent=1)'
+    echo
+done
 notmuch dump
