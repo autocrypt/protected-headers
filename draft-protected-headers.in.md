@@ -271,7 +271,7 @@ We start with a description of legacy composition of cryptographically-protected
 Message Composition without Protected Headers
 ---------------------------------------------
 
-This section roughly describes the steps that a legacy MUA might use to composes a cryptographically-protected message *without* Protected Headers.
+This section roughly describes the steps that a legacy MUA might use to compose a cryptographically-protected message *without* Protected Headers.
 
 The message composition algorithm takes three parameters:
 
