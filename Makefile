@@ -36,5 +36,10 @@ $(draft).md: $(draft).in.md assemble $(vectordata) $(innerdata)
 clean:
 	-rm -rf $(OUTPUT) metadata.min.js *.tmp
 
-.PHONY: clean all
+check: draft-protected-headers.txt
+	echo "checking for overlong lines..."
+	! egrep '.{73,}' < draft-protected-headers.txt
+	./test-notmuch
+
+.PHONY: clean all check
 .SECONDARY: $(vectordata) draft-protected-headers.md $(innerdata)
