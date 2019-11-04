@@ -1,0 +1,38 @@
+Content-Type: multipart/mixed; boundary="6ae0cc9247"
+From: Alice Lovelace <alice@openpgp.example>
+To: Bob Babbage <bob@openpgp.example>
+Date: Mon, 21 Oct 2019 07:18:11 -0700
+Subject: BarCorp contract signed, let's go!
+Message-ID: <signed+encrypted+legacy-display@protected-headers.example>
+
+--6ae0cc9247
+Content-Type: text/rfc822-headers; charset="us-ascii"; protected-headers="v1"
+Content-Disposition: inline
+
+Subject: BarCorp contract signed, let's go!
+
+--6ae0cc9247
+Content-Type: text/plain; charset="us-ascii"
+
+Hi Bob!
+
+I just signed the contract with BarCorp and they've set us up with an account
+on their system for testing.
+
+The account information is:
+
+        Site: https://barcorp.example/
+    Username: examplecorptest
+    Password: correct-horse-battery-staple
+
+Please get the account set up and apply the test harness.
+
+Let me know when you've got some results.
+
+Thanks, Alice
+-- 
+Alice Lovelace
+President
+OpenPGP Example Corp
+
+--6ae0cc9247--

@@ -4,6 +4,7 @@ draft = draft-protected-headers
 OUTPUT = $(draft).txt $(draft).html $(draft).xml
 vectors = $(shell ./generate-test-vectors list-vectors)
 vectordata = $(foreach x,$(vectors), $(x).eml)
+innerdata = $(foreach x, $(shell ./generate-test-vectors list-vectors | grep -vx signed), $(x).inner)
 
 all: $(OUTPUT)
 
@@ -17,7 +18,7 @@ all: $(OUTPUT)
 %.txt: %.xml
 	xml2rfc $< --text --v3
 
-$(draft).md: $(draft).in.md assemble $(vectordata)
+$(draft).md: $(draft).in.md assemble $(vectordata) $(innerdata)
 	./assemble < $< >$@.tmp
 	mv $@.tmp $@
 
@@ -25,8 +26,12 @@ $(draft).md: $(draft).in.md assemble $(vectordata)
 	./generate-test-vectors $* >$@.tmp
 	mv $@.tmp $@
 
+%.inner: %.eml
+	./extract-inner < $< > $@.tmp
+	mv $@.tmp $@
+
 clean:
 	-rm -rf $(OUTPUT) metadata.min.js *.tmp
 
 .PHONY: clean all
-.SECONDARY: $(vectordata) draft-protected-headers.md
+.SECONDARY: $(vectordata) draft-protected-headers.md $(innerdata)

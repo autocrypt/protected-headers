@@ -1,0 +1,106 @@
+Content-Type: multipart/signed; boundary="c72d4fa142";
+ protocol="application/pgp-signature"; micalg="pgp-sha512"
+
+--c72d4fa142
+Content-Type: multipart/mixed; boundary="6ae0cc9247"
+From: Alice Lovelace <alice@openpgp.example>
+To: Bob Babbage <bob@openpgp.example>
+Date: Mon, 21 Oct 2019 07:18:11 -0700
+Subject: BarCorp contract signed, let's go!
+Message-ID: <unfortunately-complex@protected-headers.example>
+
+--6ae0cc9247
+Content-Type: text/rfc822-headers; charset="us-ascii"; protected-headers="v1"
+Content-Disposition: inline
+
+Subject: BarCorp contract signed, let's go!
+
+--6ae0cc9247
+Content-Type: multipart/mixed; boundary="8dfc0e9ecf"
+
+--8dfc0e9ecf
+Content-Type: multipart/alternative; boundary="32c4d5a901"
+
+--32c4d5a901
+Content-Type: text/plain; charset="us-ascii"
+
+Hi Bob!
+
+I just signed the contract with BarCorp and they've set us up with an account
+on their system for testing.
+
+The account information is:
+
+        Site: https://barcorp.example/
+    Username: examplecorptest
+    Password: correct-horse-battery-staple
+
+Please get the account set up and apply the test harness.
+
+Let me know when you've got some results.
+
+Thanks, Alice
+-- 
+Alice Lovelace
+President
+OpenPGP Example Corp
+
+--32c4d5a901
+Content-Type: text/html; charset="us-ascii"
+
+<html><head></head><body><p>Hi Bob!
+</p><p>
+I just signed the contract with BarCorp and they've set us up with an account on their system for testing.
+</p><p>
+The account information is:
+</p><dl>
+<dt>Site</dt><dd><a href="https://barcorp.example/">https://barcorp.example/</a></dd>
+<dt>Username</dt><dd><tt>examplecorptest</tt></dd>
+<dt>Password</dt><dd>correct-horse-battery-staple</dd>
+</dl><p>
+Please get the account set up and apply the test harness.
+</p><p>
+Let me know when you've got some results.
+</p><p>
+Thanks, Alice<br/>
+-- <br/>
+Alice Lovelace<br/>
+President<br/>
+OpenPGP Example Corp<br/>
+</p></body></html>
+
+--32c4d5a901--
+
+--8dfc0e9ecf
+Content-Type: text/x-diff; charset="us-ascii"
+Content-Disposition: inline; filename="testharness-config.diff"
+
+diff -ruN a/testharness.cfg b/testharness.cfg
+--- a/testharness.cfg	2019-10-21 06:51:43.732780407 -0700
++++ b/testharness.cfg	2019-10-21 06:51:39.016767239 -0700
+@@ -13,3 +13,8 @@
+ endpoint = https://openpgp.example/test/
+ username = testuser
+ password = MJVMZlHR75mILg
++
++[barcorp]
++endpoint = https://barcorp.example/
++username = examplecorptest
++password = correct-horse-battery-staple
+
+--8dfc0e9ecf--
+
+--6ae0cc9247--
+
+--c72d4fa142
+content-type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+
+wnUEARYKAB0FAl2tviMWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
+js3lAPsEeJfnKB4idpNd1uqoqYEbrwViB67o5iXEjtAOg/lReQEAwxUQ3oRHbzsN
+mrwco/eqBo7wZmULBNNt6tp7ydj1/As=
+=6fHR
+-----END PGP SIGNATURE-----
+
+--c72d4fa142--

@@ -940,6 +940,12 @@ If Bob's MUA is capable of interpreting these protected headers, it should rende
 @@signed+encrypted.eml@@
 ~~~
 
+Unwrapping the Cryptographic Layer yields the following content:
+
+~~~
+@@signed+encrypted.inner@@
+~~~
+
 Signed and Encrypted Message with Protected Headers and Legacy Display Part
 ---------------------------------------------------------------------------
 
@@ -969,6 +975,12 @@ For this message, the session key is an AES-256 key with value `95a71b0e344cce43
 @@signed+encrypted+legacy-display.eml@@
 ~~~
 
+Unwrapping the Cryptographic Layer yields the following content:
+
+~~~
+@@signed+encrypted+legacy-display.inner@@
+~~~
+
 Multilayer Message with Protected Headers
 -----------------------------------------
 
@@ -991,6 +1003,12 @@ For this message, the session key is an AES-256 key with value `5e67165ed1516333
 
 ~~~
 @@multilayer.eml@@
+~~~
+
+Unwrapping the encryption Cryptographic Layer yields the following content:
+
+~~~
+@@multilayer.inner@@
 ~~~
 
 Multilayer Message with Protected Headers and Legacy Display Part
@@ -1016,6 +1034,12 @@ For this message, the session key is an AES-256 key with value `b346a2a50fa0cf62
 
 ~~~
 @@multilayer+legacy-display.eml@@
+~~~
+
+Unwrapping the encryption Cryptographic Layer yields the following content:
+
+~~~
+@@multilayer+legacy-display.inner@@
 ~~~
 
 An Unfortunately Complex Example
@@ -1052,6 +1076,13 @@ For this message, the session key is an AES-256 key with value `1c489cfad9f3c0bf
 ~~~
 @@unfortunately-complex.eml@@
 ~~~
+
+Unwrapping the encryption Cryptographic Layer yields the following content:
+
+~~~
+@@unfortunately-complex.inner@@
+~~~
+
 
 IANA Considerations
 ===================
