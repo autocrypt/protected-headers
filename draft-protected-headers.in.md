@@ -179,7 +179,7 @@ The internal subtree is known as the "protected part" though of course it may it
 
 For PGP/MIME {{RFC3156}} there are two forms of Cryptographic Layers, signing and encryption.
 
-In the diagrams below, <u>↧</u> is used to indicate "decrypts to".
+In the diagrams below, <u>↧</u> indicates "decrypts to".
 
 ### PGP/MIME Signing Cryptographic Layer (multipart/signed) {#multipart-signed}
 
