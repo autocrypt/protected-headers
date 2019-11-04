@@ -338,7 +338,7 @@ The revised algorithm for applying cryptographic protection to a message is as f
      - If `obh` is user-facing:
         - Add `obh: origheaders[ob]` to the body of `legacydisplay`.  For example, if `origheaders['Subject']` is `lunch plans?`, then add the line `Subject: lunch plans?` to the body of `legacydisplay`
   - Construct a new MIME part `wrapper` with `Content-Type: multipart/mixed`
-  - Give `wrapper` exactly two subarts: `legacydisplay` and `origbody`, in that order.
+  - Give `wrapper` exactly two subparts: `legacydisplay` and `origbody`, in that order.
   - Let `payload` be MIME part `wrapper`
 - Otherwise:
   - Let `payload` be MIME part `origbody`
