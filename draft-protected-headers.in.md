@@ -948,5 +948,6 @@ The following people have contributed implementation experience, documentation, 
 - Holger Krekel
 - Patrick Brunschwig
 - Vincent Breitmoser
+- Edwin Taylor
  
 The password example used in {{test-vectors}} comes from {{xkcd936}}.
