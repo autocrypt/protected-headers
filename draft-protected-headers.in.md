@@ -492,7 +492,7 @@ Common Pitfalls and Guidelines {#common-pitfalls}
 ==============================
 
 Among the MUA authors who already implemented most of this specification,
-several alternative or more encompasing specifications were discussed and
+several alternative or more encompassing specifications were discussed and
 sometimes tried out in practice. This section highlights a few "pitfalls" and
 guidelines based on these discussions and lessons learned. 
 
@@ -597,7 +597,7 @@ For signed messages, this is particularly problematic -- a message that would ot
 
 For encrypted messages, whose interpretation only matters on the smaller set of cryptographically-capable legacy clients, the resulting message rendering is awkward at best.
 
-Furthermore, Formulating a reply to such a message on a legacy client can also leave the user with badly-structured quoted and attributed content.
+Furthermore, formulating a reply to such a message on a legacy client can also leave the user with badly-structured quoted and attributed content.
 
 Additionally, a message deliberately forwarded in its own right (without preamble or adjacent explanatory notes) could potentially be confused with a message using the declared structure.
 
@@ -689,7 +689,7 @@ Signed and Encrypted Message with Protected Headers {#encryptedsigned}
 ---------------------------------------------------
 
 This shows a simple encrypted message with protected headers.
-The encryption also contains an signature in the OpenPGP Message structure.
+The encryption also contains a signature in the OpenPGP Message structure.
 Its MIME message structure is:
 
 ~~~
@@ -707,7 +707,7 @@ Such an attacker would know details about Alice and Bob's business that they wan
 
 The protected headers also protect the authenticity of subject line as well.
 
-The session key for this message's crypto layer is an AES-256 key with value `8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2` (in hex).
+The session key for this message's Cryptographic Layer is an AES-256 key with value `8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2` (in hex).
 
 If Bob's MUA is capable of interpreting these protected headers, it should render the `Subject:` of this message as `BarCorp contract signed, let's go!`.
 
@@ -792,7 +792,7 @@ Multilayer Message with Protected Headers and Legacy Display Part {#multilayer-l
 -----------------------------------------------------------------
 
 And, a mailer that generates a multilayer cryptographic envelope might want to provide a Legacy Display part, if it is unsure of the capabilities of the recipient's MUA.
-We show here how sucha mailer might generate the same message as {{encryptedsigned}}.
+We show here how such a mailer might generate the same message as {{encryptedsigned}}.
 
 Such a message might have the following structure:
 
