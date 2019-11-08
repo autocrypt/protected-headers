@@ -8,18 +8,21 @@ innerdata = $(foreach x, $(shell ./generate-test-vectors list-vectors | grep -vx
 
 all: $(OUTPUT)
 
-%.xml: %.md
+%.xmlv2: %.md
 	kramdown-rfc2629 < $< > $@.tmp
 	mv $@.tmp $@
 
+%.xml: %.xmlv2
+	xml2rfc --v2v3 -o $@ $<
+
 %.html: %.xml
-	xml2rfc $< --html --v3
+	xml2rfc $< --html
 
 %.pdf: %.xml
-	xml2rfc $< --pdf --v3
+	xml2rfc $< --pdf
 
 %.txt: %.xml
-	xml2rfc $< --text --v3
+	xml2rfc $< --text
 
 $(draft).md: $(draft).in.md assemble $(vectordata) $(innerdata)
 	./assemble < $< >$@.tmp
