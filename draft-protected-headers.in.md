@@ -55,6 +55,7 @@ informative:
  I-D.draft-luck-lamps-pep-header-protection-03:
  I-D.draft-ietf-lamps-header-protection-requirements-01:
  RFC2634:
+ RFC3274:
  RFC3851:
  RFC6736:
  RFC7508:
@@ -80,6 +81,7 @@ However, PGP/MIME ({{RFC3156}}) alone does not protect message headers.
 And the structure to protect headers defined in S/MIME 3.1 ({{RFC3851}}) has not seen widespread adoption.
 
 This document defines a scheme, "Protected Headers for Cryptographic E-mail", which has been adopted by multiple existing e-mail clients in order to extend the cryptographic protections provided by PGP/MIME to also protect the message headers.
+This scheme is also applicable to S/MIME {{RFC8551}}.
 
 This document describes how these protections can be applied to cryptographically signed messages, and also discusses some of the challenges of encrypting many transit-oriented headers.
 
@@ -87,7 +89,7 @@ It offers guidance for protecting the confidentiality of non-transit-oriented he
 
 The document also discusses some of the compatibility constraints and usability concerns which motivated the design of the scheme, as well as limitations and a comparison with other proposals.
 
-While the document (and the authors') focus is primarily PGP/MIME, we believe the technique is broadly applicable and would also apply to other MIME-compatible cryptographic e-mail systems, including S/MIME ({{RFC8551}}).  Furthermore, this technique has already proven itself as a useful building block for other improvements to cryptographic e-mail, such as the Autocrypt Level 1.1 ({{Autocrypt}}) "Gossip" mechanism.
+This technique has already proven itself as a useful building block for other improvements to cryptographic e-mail, such as the Autocrypt Level 1.1 ({{Autocrypt}}) "Gossip" mechanism.
 
 
 Requirements Language
@@ -177,23 +179,65 @@ Cryptographic Layers {#cryptographic-layer}
 "Cryptographic Layer" refers to a MIME substructure that supplies some cryptographic protections to an internal MIME subtree.
 The internal subtree is known as the "protected part" though of course it may itself be a multipart object.
 
+In the diagrams below, <u>↧</u> indicates "decrypts to", and <u>⇩</u> indicates "unwraps to".
+
+### PGP/MIME Cryptographic Layers
+
 For PGP/MIME {{RFC3156}} there are two forms of Cryptographic Layers, signing and encryption.
 
-In the diagrams below, <u>↧</u> indicates "decrypts to".
+#### PGP/MIME Signing Cryptographic Layer (multipart/signed) {#pgpmime-multipart-signed}
 
-### PGP/MIME Signing Cryptographic Layer (multipart/signed) {#multipart-signed}
-
-    └┬╴multipart/signed
+    └┬╴multipart/signed; protocol="application/pgp-signature"
      ├─╴[protected part]
      └─╴application/pgp-signature
 
-### PGP/MIME Encryption Cryptographic Layer (multipart/encrypted) {#multipart-encrypted}
+#### PGP/MIME Encryption Cryptographic Layer (multipart/encrypted) {#pgpmime-multipart-encrypted}
 
     └┬╴multipart/encrypted
      ├─╴application/pgp-encrypted
      └─╴application/octet-stream
       ↧ (decrypts to)
       └─╴[protected part]
+
+### S/MIME Cryptographic Layers
+
+For S/MIME {{RFC8551}}, there are four forms of Cryptographic Layers: multipart/signed, PKCS#7 signed-data, PKCS7 enveloped-data, PKCS7 authEnveloped-data.
+
+#### S/MIME Multipart Signed Cryptographic Layer {#smime-multipart-signed}
+
+    └┬╴multipart/signed; protocol="application/pkcs7-signature"
+     ├─╴[protected part]
+     └─╴application/pkcs7-signature
+
+#### S/MIME PKCS7 signed-data Cryptographic Layer {#smime-pkcs7-signed-data}
+
+    └─╴application/pkcs7-mime; smime-type="signed-data"
+     ⇩ (unwraps to)
+     └─╴[protected part]
+     
+#### S/MIME PKCS7 enveloped-data Cryptographic Layer {#smime-pkcs7-enveloped-data}
+
+    └─╴application/pkcs7-mime; smime-type="enveloped-data"
+     ↧ (decrypts to)
+     └─╴[protected part]
+     
+#### S/MIME PKCS7 authEnveloped-data Cryptographic Layer {#smime-pkcs7-authenveloped-data}
+
+    └─╴application/pkcs7-mime; smime-type="authEnveloped-data"
+     ↧ (decrypts to)
+     └─╴[protected part]
+
+
+Note that `enveloped-data` ({{smime-pkcs7-enveloped-data}}) and `authEnveloped-data` ({{smime-pkcs7-authenveloped-data}}) have identical message structure and semantics.
+The only difference between the two is ciphertext malleability.
+
+The examples in this document only include `enveloped-data`, but the implications for that layer apply to `authEnveloped-data` as well.
+
+#### PKCS7 Compression is NOT a Cryptographic Layer
+
+The Cryptographic Message Syntax (CMS) provides a MIME compression layer (`smime-type="compressed-data"`), as defined in {{RFC3274}}.
+While the compression layer is technically a part of CMS, it is not considered a Cryptographic Layer for the purposes of this document.
+
 
 Cryptographic Envelope
 ----------------------
@@ -219,9 +263,9 @@ Protected headers are placed on (and read from) the Cryptographic Payload, and s
 
 ### Simple Cryptographic Payloads {#simple-cryptographic-payloads}
 
-As described above, if the "protected part" identified in {{multipart-signed}} or {{multipart-encrypted}} is not itself a Cryptographic Layer, that part *is* the Cryptographic Payload.
+As described above, if the "protected part" identified in {{pgpmime-multipart-signed}} or {{pgpmime-multipart-encrypted}} is not itself a Cryptographic Layer, that part *is* the Cryptographic Payload.
 
-If the application wants to generate a message that is both encrypted and signed, it MAY use the simple MIME structure from {{multipart-encrypted}} by ensuring that the {{RFC4880}} Encrypted Message within the `application/octet-stream` part contains an {{RFC4880}} Signed Message.
+If the application wants to generate a message that is both encrypted and signed, it MAY use the simple MIME structure from {{pgpmime-multipart-encrypted}} by ensuring that the {{RFC4880}} Encrypted Message within the `application/octet-stream` part contains an {{RFC4880}} Signed Message.
 
 ### Multilayer Cryptographic Envelopes {#multilayer-cryptographic-envelopes}
 
@@ -667,10 +711,10 @@ The secret keys and OpenPGP certificates from {{I-D.draft-bre-openpgp-samples-00
 
 They are provided in textual source form as {{RFC5322}} messages.
 
-Signed Message with Protected Headers {#test-vector-signed-only}
--------------------------------------
+Signed PGP/MIME Message with Protected Headers {#test-vector-pgp-signed-only}
+----------------------------------------------
 
-This shows a clearsigned message.  Its MIME message structure is:
+This shows a clearsigned PGP/MIME message.  Its MIME message structure is:
 
 ~~~
 └┬╴multipart/signed
@@ -685,10 +729,10 @@ Such an attacker could cause Bob to think that Alice wanted to cancel the contra
 @@signed.eml@@
 ~~~
 
-Signed and Encrypted Message with Protected Headers {#encryptedsigned}
----------------------------------------------------
+Signed and Encrypted PGP/MIME Message with Protected Headers {#pgp-encryptedsigned}
+------------------------------------------------------------
 
-This shows a simple encrypted message with protected headers.
+This shows a simple encrypted PGP/MIME message with protected headers.
 The encryption also contains a signature in the OpenPGP Message structure.
 Its MIME message structure is:
 
@@ -721,12 +765,12 @@ Unwrapping the Cryptographic Layer yields the following content:
 @@signed+encrypted.inner@@
 ~~~
 
-Signed and Encrypted Message with Protected Headers and Legacy Display Part
----------------------------------------------------------------------------
+Signed and Encrypted PGP/MIME  Message with Protected Headers and Legacy Display Part
+-------------------------------------------------------------------------------------
 
 If Alice's MUA wasn't sure whether Bob's MUA would know to render the obscured `Subject:` header correctly, it might include a legacy display part in the cryptographic payload.
 
-This message is structured in the following way:
+This PGP/MIME message is structured in the following way:
 
 ~~~
 └┬╴multipart/encrypted
@@ -738,9 +782,9 @@ This message is structured in the following way:
     └─╴text/plain
 ~~~
 
-The example below shows the same message as {{encryptedsigned}}.
+The example below shows the same message as {{pgp-encryptedsigned}}.
 
-If Bob's MUA is capable of handling protected headers, the two messages should render in the same way as the message in {{encryptedsigned}}, because it will know to omit the Legacy Display part as documented in {{no-render-legacy-display}}.
+If Bob's MUA is capable of handling protected headers, the two messages should render in the same way as the message in {{pgp-encryptedsigned}}, because it will know to omit the Legacy Display part as documented in {{no-render-legacy-display}}.
 
 But if Bob's MUA is capable of decryption but is unaware of protected headers, it will likely render the Legacy Display part for him so that he can at least see the originally-intended `Subject:` line.
 
@@ -750,19 +794,19 @@ For this message, the session key is an AES-256 key with value `95a71b0e344cce43
 @@sign+enc+legacy-display.eml@@
 ~~~
 
-Unwrapping the Cryptographic Layer yields the following content:
+Decrypting the Cryptographic Layer yields the following content:
 
 ~~~
 @@sign+enc+legacy-display.inner@@
 ~~~
 
-Multilayer Message with Protected Headers
------------------------------------------
+Multilayer PGP/MIME Message with Protected Headers
+--------------------------------------------------
 
 Some mailers may generate signed and encrypted messages with a multilayer cryptographic envelope.
-We show here how such a mailer might generate the same message as {{encryptedsigned}}.
+We show here how such a mailer might generate the same message as {{pgp-encryptedsigned}}.
 
-A typical message like this has the following structure:
+A typical PGP/MIME message like this has the following structure:
 
 ~~~
 └┬╴multipart/encrypted
@@ -780,7 +824,7 @@ For this message, the session key is an AES-256 key with value `5e67165ed1516333
 @@multilayer.eml@@
 ~~~
 
-Unwrapping the encryption Cryptographic Layer yields the following content:
+Decrypting the encryption Cryptographic Layer yields the following content:
 
 ~~~
 @@multilayer.inner@@
@@ -788,13 +832,13 @@ Unwrapping the encryption Cryptographic Layer yields the following content:
 
 Note the placement of the Protected Headers on the Cryptographic Payload specifically, which is not the immediate child of the encryption Cryptographic Layer.
 
-Multilayer Message with Protected Headers and Legacy Display Part {#multilayer-legacy-display}
------------------------------------------------------------------
+Multilayer PGP/MIME Message with Protected Headers and Legacy Display Part {#pgp-multilayer-legacy-display}
+--------------------------------------------------------------------------
 
 And, a mailer that generates a multilayer cryptographic envelope might want to provide a Legacy Display part, if it is unsure of the capabilities of the recipient's MUA.
-We show here how such a mailer might generate the same message as {{encryptedsigned}}.
+We show here how such a mailer might generate the same message as {{pgp-encryptedsigned}}.
 
-Such a message might have the following structure:
+Such a PGP/MIME message might have the following structure:
 
 ~~~
 └┬╴multipart/encrypted
@@ -824,10 +868,10 @@ An Unfortunately Complex Example
 --------------------------------
 
 For all of the potential complexity of the Cryptographic Envelope, the Cryptographic Payload itself can be complex.
-The Cryptographic Envelope in this example is the same as the previous example ({{multilayer-legacy-display}}).
-The Cryptographic Payload has protected headers and a legacy display part (also the same as {{multilayer-legacy-display}}), but in addition Alice's MUA composes a message with both plaintext and HTML variants, and Alice includes a single attachment as well.
+The Cryptographic Envelope in this example is the same as ({{pgp-multilayer-legacy-display}}).
+The Cryptographic Payload has protected headers and a legacy display part (also the same as {{pgp-multilayer-legacy-display}}), but in addition Alice's MUA composes a message with both plaintext and HTML variants, and Alice includes a single attachment as well.
 
-While this message is complex, a modern MUA could also plausibly generate such a structure based on reasonable commands from the user composing the message (e.g., Alice composes the message with a rich text editor, and attaches a file to the message).
+While this PGP/MIME message is complex, a modern MUA could also plausibly generate such a structure based on reasonable commands from the user composing the message (e.g., Alice composes the message with a rich text editor, and attaches a file to the message).
 
 The key takeaway of this example is that the complexity of the Cryptographic Payload (which may contain a Legacy Display part) is independent of and distinct from the complexity of the Cryptographic Envelope.
 
