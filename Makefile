@@ -43,6 +43,7 @@ check: draft-protected-headers.txt
 	echo "checking for overlong lines..."
 	! egrep '.{73,}' < draft-protected-headers.txt
 	./test-notmuch
+	mypy --strict generate-test-vectors
 
 .PHONY: clean all check
 .SECONDARY: $(vectordata) draft-protected-headers.md $(innerdata)

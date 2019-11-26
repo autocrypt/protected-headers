@@ -9,16 +9,18 @@ Pains are taken to minimize the total amount of output, while still
 preserving a plausible, minimal, correctly-formed message.
 '''
 
-import datetime
-import email.message
-import email.policy
-import hashlib
 import sys
 import codecs
+import hashlib
+import datetime
+import email.policy
+import email.message
 
-import pgpy
+import pgpy #type: ignore
 
-cfg = {
+from typing import Dict, Union, TextIO
+
+cfg:Dict[str,Dict[str,Union[bool,bytes]]] = {
     'signed': {
         'encrypt': False,
     },
@@ -60,7 +62,7 @@ cfg = {
 }
 
 
-def usage(to=sys.stdout):
+def usage(to:TextIO=sys.stdout) -> None:
     subcmds = '\n  '.join(list(cfg.keys()))
     print(f'''Usage: {sys.argv[0]} SUBCMD
 where SUBCMD is one of:
@@ -149,7 +151,7 @@ def getsigpart(pgpsig:pgpy.PGPSignature) -> email.message.MIMEPart:
     del sigpart['Content-Transfer-Encoding'] # ASCII-armored PGP Signature data is 7-bit clean
     return sigpart
 
-def signed():
+def signed(params:Dict[str,Union[bool,bytes]]) -> email.message.Message:
     # seconds since the unix epoch
     posixtime = 1571577491
     # America/New_York during DST:
@@ -209,11 +211,11 @@ OpenPGP Example Corp''')
                 msg[h] = payload[h]
     return msg
 
-def cleanpart(part:email.message.MIMEPart):
+def cleanpart(part:email.message.MIMEPart) -> None:
     del part['MIME-Version'] # MIME-Version on subparts is meaningless
     del part['Content-Transfer-Encoding'] # the test vector data is 7-bit clean
 
-def make_payload(multipart:bool=False):
+def make_payload(multipart:bool=False) -> email.message.MIMEPart:
     payload:email.message.MIMEPart = email.message.MIMEPart()
     dotsig_separator = '-- ' # this is a totally different kind of "signature"
     txt = f'''Hi Bob!
@@ -312,7 +314,7 @@ OpenPGP Example Corp<br/>
         payload.attach(attachmentpart)
     return payload
 
-def signed_encrypted(msgid:str, params):
+def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes]]) -> email.message.Message:
     # seconds since the unix epoch
     posixtime = 1571667491
     # America/Los_Angeles during DST:
@@ -326,6 +328,8 @@ def signed_encrypted(msgid:str, params):
     rcvdstring = rcvd.strftime('%a, %d %b %Y %T %z (%Z)').strip()
 
     # make the Cryptographic Payload:
+    if not isinstance(params['multipart'], bool):
+        raise TypeError('multipart is not a bool')
     payload = make_payload(params['multipart'])
 
     subj = 'BarCorp contract signed, let\'s go!'
@@ -355,6 +359,8 @@ def signed_encrypted(msgid:str, params):
     payload['Date'] = whenstring
     payload['Subject'] = subj
 
+    if not isinstance(params['sk'], bytes):
+        raise TypeError('sk is not bytes')
     sessionkey = codecs.decode(params['sk'], 'hex')
     payload['Message-ID'] = f"<{msgid}@protected-headers.example>"
 
@@ -429,7 +435,7 @@ if __name__ == '__main__':
     elif sys.argv[1] in cfg:
         params = cfg[sys.argv[1]]
         if not params['encrypt']:
-            msg = signed()
+            msg = signed(params)
         else:
             msg = signed_encrypted(sys.argv[1], params)
         print(msg.as_string(maxheaderlen=MAXHEADERLEN))
