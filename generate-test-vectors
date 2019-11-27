@@ -31,6 +31,10 @@ cfg:Dict[str,Dict[str,Union[bool,bytes]]] = {
     'signed': {
         'encrypt': False,
     },
+    'smime-multipart-signed': {
+        'encrypt': False,
+        'smime': True,
+    },
     'signed+encrypted': {
         'encrypt': True,
         'multilayer': False,
@@ -293,7 +297,11 @@ def get_pgp_sigpart(pgpsig:pgpy.PGPSignature) -> email.message.MIMEPart:
 
 def signed(params:Dict[str,Union[bool,bytes]]) -> email.message.Message:
     # seconds since the unix epoch
-    posixtime = 1571577491
+    if params.get('smime', False):
+        # smime signatures are later because the certs are later
+        posixtime = 1574813489
+    else:
+        posixtime = 1571577491
     # America/New_York during DST:
     tz = datetime.timezone(datetime.timedelta(hours=-4))
     # 2019-10-20T09:18:11-0400
@@ -321,18 +329,27 @@ OpenPGP Example Corp''')
     del payload['MIME-Version'] # MIME-Version on subparts is meaningless
     del payload['Content-Transfer-Encoding'] # the test vector data is 7-bit clean
     # place intended headers on the payload:
-    payload['From'] = f'{alice_key.userids[0].name} <{alice_key.userids[0].email}>'
-    payload['To'] = f'{bob_key.userids[0].name} <{bob_key.userids[0].email}>'
-    msgidlhs = 'signed'
+    if params.get('smime', False):
+        payload['From'] = f'{alice_x509.name} <{alice_x509.mailaddr}>'
+        payload['To'] = f'{bob_x509.name} <{bob_x509.mailaddr}>'
+        msgidlhs = 'smime-multipart-signed'
+    else:
+        payload['From'] = f'{alice_key.userids[0].name} <{alice_key.userids[0].email}>'
+        payload['To'] = f'{bob_key.userids[0].name} <{bob_key.userids[0].email}>'
+        msgidlhs = 'signed'
     payload['Date'] = whenstring
     payload['Subject'] = 'The FooCorp contract'
     payload['Message-ID'] = f'<{msgidlhs}@protected-headers.example>'
 
-    # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
-    # in order for the signature creation time to match the message Date header:
-    pgpsig = alice_key.sign(pgpy.PGPMessage.new(str(payload), cleartext=True), created=when)
-    sigpart = get_pgp_sigpart(pgpsig)
-    micalg = f'pgp-{pgpsig.hash_algorithm.name.lower()}'
+    if params.get('smime', False):
+        sigpart = alice_x509.detached_sig(bytes(payload), when)
+        micalg = 'sha-256'
+    else:
+        # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
+        # in order for the signature creation time to match the message Date header:
+        pgpsig = alice_key.sign(pgpy.PGPMessage.new(str(payload), cleartext=True), created=when)
+        sigpart = get_pgp_sigpart(pgpsig)
+        micalg = f'pgp-{pgpsig.hash_algorithm.name.lower()}'
 
     msg = email.message.Message()
     # Example transit header that is not part of the protected headers:
