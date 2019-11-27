@@ -142,7 +142,7 @@ NEJd3XZRzaXZE2aAMQ==
 '''
 (bob_key, _) = pgpy.PGPKey.from_blob(bob_pub)
 
-def getsigpart(pgpsig:pgpy.PGPSignature) -> email.message.MIMEPart:
+def get_pgp_sigpart(pgpsig:pgpy.PGPSignature) -> email.message.MIMEPart:
     sigpart = email.message.MIMEPart()
     sigpart.set_content(str(pgpsig).strip())
     sigpart.set_type('application/pgp-signature')
@@ -190,7 +190,7 @@ OpenPGP Example Corp''')
     # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
     # in order for the signature creation time to match the message Date header:
     pgpsig = alice_key.sign(pgpy.PGPMessage.new(str(payload), cleartext=True), created=when)
-    sigpart = getsigpart(pgpsig)
+    sigpart = get_pgp_sigpart(pgpsig)
 
     msg = email.message.Message()
     # Example transit header that is not part of the protected headers:
@@ -368,7 +368,7 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes]]) -> email.mes
         # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
         # in order for the signature creation time to match the message Date header:
         pgpsig = alice_key.sign(pgpy.PGPMessage.new(str(payload), cleartext=True), created=when)
-        sigpart = getsigpart(pgpsig)
+        sigpart = get_pgp_sigpart(pgpsig)
 
         sigwrapper = email.message.MIMEPart()
         sigwrapper.set_type('multipart/signed')
