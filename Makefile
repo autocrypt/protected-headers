@@ -4,7 +4,7 @@ draft = draft-protected-headers
 OUTPUT = $(draft).txt $(draft).html $(draft).xml $(draft).pdf
 vectors = $(shell ./generate-test-vectors list-vectors)
 vectordata = $(foreach x,$(vectors), $(x).eml)
-innerdata = $(foreach x, $(shell ./generate-test-vectors list-vectors | grep -vx signed), $(x).inner)
+innerdata = $(foreach x, $(shell ./generate-test-vectors list-vectors | grep -vx -e signed -e smime-multipart-signed), $(x).inner)
 
 all: $(OUTPUT)
 
