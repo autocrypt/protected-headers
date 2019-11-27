@@ -177,6 +177,13 @@ class IdX509:
         return str(self._x509.extensions.get_extension_for_oid(ExtensionOID.SUBJECT_ALTERNATIVE_NAME).value.get_values_for_type(x509.general_name.RFC822Name)[0])
 
     def detached_sig(self, data:bytes, when:datetime.datetime) -> email.message.MIMEPart:
+        out = self._sign(data, when, '--p7-detached-sign')
+        sigpart = email.message.MIMEPart(email.policy.EmailPolicy(max_line_length=64))
+        sigpart.set_content(out, 'application', 'pkcs7-signature')
+        sigpart.set_param('name','smime.p7s')
+        return sigpart
+
+    def _sign(self, data:bytes, when:datetime.datetime, subcmd:str) -> bytes:
         if self._key is None:
             raise AttributeError('no key, cannot sign')
         keyf = NamedTemporaryFile()
@@ -190,7 +197,7 @@ class IdX509:
             outf.write(data)
         out:subprocess.CompletedProcess[bytes]
         cmd = ['faketime', datetime.datetime.utcfromtimestamp(when.timestamp()).strftime('%Y-%m-%d %H:%M:%S'),
-               'certtool', '--p7-detached-sign',
+               'certtool', subcmd,
                '--p7-time', '--outraw',
                '--hash', 'SHA256',
                '--load-privkey', keyf.name,
@@ -200,10 +207,7 @@ class IdX509:
             logging.warning(cmd)
             logging.warning(out.stderr)
             raise Exception(f'certtool --p7-detached-sign failed with {out.returncode}')
-        sigpart = email.message.MIMEPart(email.policy.EmailPolicy(max_line_length=64))
-        sigpart.set_content(out.stdout, 'application', 'pkcs7-signature')
-        sigpart.set_param('name','smime.p7s')
-        return sigpart
+        return out.stdout
 
 # from https://www.ietf.org/id/draft-dkg-lamps-samples-01.html#name-alices-private-key-material
 alice_smime_key = '''-----BEGIN RSA PRIVATE KEY-----
