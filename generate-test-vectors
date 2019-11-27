@@ -189,13 +189,13 @@ class IdX509:
         with open(outp, 'wb') as outf:
             outf.write(data)
         out:subprocess.CompletedProcess[bytes]
-        cmd = ['faketime', when.strftime('%Y-%m-%d %H:%M:%S'),
+        cmd = ['faketime', datetime.datetime.utcfromtimestamp(when.timestamp()).strftime('%Y-%m-%d %H:%M:%S'),
                'certtool', '--p7-detached-sign',
                '--p7-time', '--outraw',
                '--hash', 'SHA256',
                '--load-privkey', keyf.name,
                '--load-certificate', certf.name]
-        out = subprocess.run(cmd, stdin=inp, capture_output=True)
+        out = subprocess.run(cmd, stdin=inp, capture_output=True, env={'TZ': 'UTC'})
         if out.returncode != 0:
             logging.warning(cmd)
             logging.warning(out.stderr)
