@@ -183,9 +183,10 @@ OpenPGP Example Corp''')
     # place intended headers on the payload:
     payload['From'] = f'{alice_key.userids[0].name} <{alice_key.userids[0].email}>'
     payload['To'] = f'{bob_key.userids[0].name} <{bob_key.userids[0].email}>'
+    msgidlhs = 'signed'
     payload['Date'] = whenstring
     payload['Subject'] = 'The FooCorp contract'
-    payload['Message-ID'] = '<signed@protected-headers.example>'
+    payload['Message-ID'] = f'<{msgidlhs}@protected-headers.example>'
 
     # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
     # in order for the signature creation time to match the message Date header:
