@@ -9,16 +9,23 @@ Pains are taken to minimize the total amount of output, while still
 preserving a plausible, minimal, correctly-formed message.
 '''
 
+import os
 import sys
 import codecs
 import hashlib
+import logging
 import datetime
+import subprocess
 import email.policy
 import email.message
 
 import pgpy #type: ignore
+from cryptography.hazmat.backends import default_backend
+from cryptography import x509
+from cryptography.x509.oid import NameOID, ExtensionOID
 
-from typing import Dict, Union, TextIO
+from typing import Dict, Union, TextIO, Optional
+from tempfile import NamedTemporaryFile
 
 cfg:Dict[str,Dict[str,Union[bool,bytes]]] = {
     'signed': {
@@ -141,6 +148,58 @@ NEJd3XZRzaXZE2aAMQ==
 -----END PGP PUBLIC KEY BLOCK-----
 '''
 (bob_key, _) = pgpy.PGPKey.from_blob(bob_pub)
+
+class IdX509:
+    def __init__(self, cert:Union[bytes,str], key:Union[bytes,str,None]=None):
+        self._cert:bytes
+        self._key:Optional[bytes] = None
+        if isinstance(cert, str):
+            self._cert = cert.encode()
+        else:
+            self._cert = cert
+        if isinstance(key, str):
+            self._key = key.encode()
+        elif isinstance(key, bytes):
+            self._key = key
+
+        self._x509:x509 = x509.load_pem_x509_certificate(self._cert, default_backend())
+
+    @property
+    def name(self) -> str:
+        return str(self._x509.subject.get_attributes_for_oid(NameOID.COMMON_NAME)[0].value)
+
+    @property
+    def mailaddr(self) -> str:
+        return str(self._x509.extensions.get_extension_for_oid(ExtensionOID.SUBJECT_ALTERNATIVE_NAME).value.get_values_for_type(x509.general_name.RFC822Name)[0])
+
+    def detached_sig(self, data:bytes, when:datetime.datetime) -> email.message.MIMEPart:
+        if self._key is None:
+            raise AttributeError('no key, cannot sign')
+        keyf = NamedTemporaryFile()
+        keyf.write(self._key)
+        certf = NamedTemporaryFile()
+        certf.write(self._cert)
+        keyf.flush()
+        certf.flush()
+        inp, outp = os.pipe()
+        with open(outp, 'wb') as outf:
+            outf.write(data)
+        out:subprocess.CompletedProcess[bytes]
+        cmd = ['faketime', when.strftime('%Y-%m-%d %H:%M:%S'),
+               'certtool', '--p7-detached-sign',
+               '--p7-time', '--outraw',
+               '--hash', 'SHA256',
+               '--load-privkey', keyf.name,
+               '--load-certificate', certf.name]
+        out = subprocess.run(cmd, stdin=inp, capture_output=True)
+        if out.returncode != 0:
+            logging.warning(cmd)
+            logging.warning(out.stderr)
+            raise Exception(f'certtool --p7-detached-sign failed with {out.returncode}')
+        sigpart = email.message.MIMEPart()
+        sigpart.set_content(out.stdout, 'application', 'pkcs7-signature')
+        sigpart.set_param('name','smime.p7s')
+        return sigpart
 
 def get_pgp_sigpart(pgpsig:pgpy.PGPSignature) -> email.message.MIMEPart:
     sigpart = email.message.MIMEPart()
