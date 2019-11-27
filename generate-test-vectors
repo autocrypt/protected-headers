@@ -200,7 +200,7 @@ class IdX509:
             logging.warning(cmd)
             logging.warning(out.stderr)
             raise Exception(f'certtool --p7-detached-sign failed with {out.returncode}')
-        sigpart = email.message.MIMEPart()
+        sigpart = email.message.MIMEPart(email.policy.EmailPolicy(max_line_length=64))
         sigpart.set_content(out.stdout, 'application', 'pkcs7-signature')
         sigpart.set_param('name','smime.p7s')
         return sigpart
