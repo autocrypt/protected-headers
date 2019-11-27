@@ -196,7 +196,8 @@ class IdX509:
         with open(outp, 'wb') as outf:
             outf.write(data)
         out:subprocess.CompletedProcess[bytes]
-        cmd = ['faketime', datetime.datetime.utcfromtimestamp(when.timestamp()).strftime('%Y-%m-%d %H:%M:%S'),
+        utcwhen:datetime.datetime = datetime.datetime.utcfromtimestamp(when.timestamp())
+        cmd = ['faketime', utcwhen.strftime('%Y-%m-%d %H:%M:%S'),
                'certtool', subcmd,
                '--p7-time', '--outraw',
                '--hash', 'SHA256',
