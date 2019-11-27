@@ -191,6 +191,7 @@ OpenPGP Example Corp''')
     # in order for the signature creation time to match the message Date header:
     pgpsig = alice_key.sign(pgpy.PGPMessage.new(str(payload), cleartext=True), created=when)
     sigpart = get_pgp_sigpart(pgpsig)
+    micalg = f'pgp-{pgpsig.hash_algorithm.name.lower()}'
 
     msg = email.message.Message()
     # Example transit header that is not part of the protected headers:
@@ -198,8 +199,8 @@ OpenPGP Example Corp''')
     msg.set_type('multipart/signed')
     # making up an arbitrary MIME boundary based on the Message-ID:
     msg.set_boundary(hashlib.sha256(payload['Message-ID'].encode()).hexdigest()[:10])
-    msg.set_param('protocol', 'application/pgp-signature')
-    msg.set_param('micalg', f'pgp-{pgpsig.hash_algorithm.name.lower()}')
+    msg.set_param('protocol', sigpart.get_content_type())
+    msg.set_param('micalg', micalg)
     msg.attach(payload)
     msg.attach(sigpart)
 
@@ -369,14 +370,15 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes]]) -> email.mes
         # in order for the signature creation time to match the message Date header:
         pgpsig = alice_key.sign(pgpy.PGPMessage.new(str(payload), cleartext=True), created=when)
         sigpart = get_pgp_sigpart(pgpsig)
+        micalg = f'pgp-{pgpsig.hash_algorithm.name.lower()}'
 
         sigwrapper = email.message.MIMEPart()
         sigwrapper.set_type('multipart/signed')
         del sigwrapper['MIME-Version'] # MIME-Version on subparts is meaningless
         del sigwrapper['Content-Transfer-Encoding'] # test data is all 7-bit clean
         sigwrapper.set_boundary(hashlib.sha256(f"inner{payload['Message-ID']}".encode()).hexdigest()[:10])
-        sigwrapper.set_param('protocol', 'application/pgp-signature')
-        sigwrapper.set_param('micalg', f'pgp-{pgpsig.hash_algorithm.name.lower()}')
+        sigwrapper.set_param('protocol', sigpart.get_content_type())
+        sigwrapper.set_param('micalg', micalg)
         sigwrapper.attach(payload)
         sigwrapper.attach(sigpart)
 
