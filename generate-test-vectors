@@ -181,15 +181,17 @@ class IdX509:
     def mailaddr(self) -> str:
         return str(self._x509.extensions.get_extension_for_oid(ExtensionOID.SUBJECT_ALTERNATIVE_NAME).value.get_values_for_type(x509.general_name.RFC822Name)[0])
 
-    def detached_sig(self, data:bytes, when:datetime.datetime) -> email.message.MIMEPart:
-        out = self._sign(data, when, '--p7-detached-sign')
+    def detached_sig(self, data:email.message.MIMEPart, when:datetime.datetime) -> email.message.MIMEPart:
+        txt:str = data.as_string(policy=email.policy.EmailPolicy(linesep='\r\n'))
+        out = self._sign(txt.encode(), when, '--p7-detached-sign')
         sigpart = email.message.MIMEPart(email.policy.EmailPolicy(max_line_length=64))
         sigpart.set_content(out, 'application', 'pkcs7-signature')
         sigpart.set_param('name','smime.p7s')
         return sigpart
 
-    def onepart_sig(self, data:bytes, when:datetime.datetime, msg:email.message.MIMEPart) -> email.message.MIMEPart:
-        out = self._sign(data, when, '--p7-sign')
+    def onepart_sig(self, data:email.message.MIMEPart, when:datetime.datetime, msg:email.message.MIMEPart) -> email.message.MIMEPart:
+        txt:str = data.as_string(policy=email.policy.EmailPolicy(linesep='\r\n'))
+        out = self._sign(txt.encode(), when, '--p7-sign')
         msg.set_content(out, 'application', 'pkcs7-mime')
         msg.set_param('name','smime.p7m')
         msg.set_param('smime-type','signed-data')
@@ -367,10 +369,10 @@ OpenPGP Example Corp''')
 
     if params.get('smime', False):
         if params.get('multipart', True):
-            sigpart = alice_x509.detached_sig(bytes(payload), when)
+            sigpart = alice_x509.detached_sig(payload, when)
             micalg = 'sha-256'
         else:
-            msg = alice_x509.onepart_sig(bytes(payload), when, msg)
+            msg = alice_x509.onepart_sig(payload, when, msg)
             msg['MIME-Version'] = '1.0'
     else:
         # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
