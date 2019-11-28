@@ -346,6 +346,10 @@ OpenPGP Example Corp''')
     payload['Subject'] = 'The FooCorp contract'
     payload['Message-ID'] = f'<{msgidlhs}@protected-headers.example>'
 
+    msg = email.message.MIMEPart(policy=email.policy.EmailPolicy(max_line_length=64))
+    # Example transit header that is not part of the protected headers:
+    msg['Received'] = f'from localhost (localhost [127.0.0.1]); {rcvdstring}'
+
     if params.get('smime', False):
         sigpart = alice_x509.detached_sig(bytes(payload), when)
         micalg = 'sha-256'
@@ -356,9 +360,6 @@ OpenPGP Example Corp''')
         sigpart = get_pgp_sigpart(pgpsig)
         micalg = f'pgp-{pgpsig.hash_algorithm.name.lower()}'
 
-    msg = email.message.Message()
-    # Example transit header that is not part of the protected headers:
-    msg['Received'] = f'from localhost (localhost [127.0.0.1]); {rcvdstring}'
     msg.set_type('multipart/signed')
     # making up an arbitrary MIME boundary based on the Message-ID:
     msg.set_boundary(hashlib.sha256(payload['Message-ID'].encode()).hexdigest()[:10])

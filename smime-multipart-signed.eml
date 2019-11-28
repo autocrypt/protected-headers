@@ -1,5 +1,5 @@
-Received: from localhost (localhost [127.0.0.1]);
- Tue, 26 Nov 2019 20:11:46 -0400 (UTC-04:00)
+Received: from localhost (localhost [127.0.0.1]); Tue, 26 Nov 2019
+ 20:11:46 -0400 (UTC-04:00)
 MIME-Version: 1.0
 Content-Type: multipart/signed; boundary="179455ac56";
  protocol="application/pkcs7-signature"; micalg="sha-256"

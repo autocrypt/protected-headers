@@ -1,5 +1,5 @@
-Received: from localhost (localhost [127.0.0.1]);
- Sun, 20 Oct 2019 09:18:28 -0400 (UTC-04:00)
+Received: from localhost (localhost [127.0.0.1]); Sun, 20 Oct 2019
+ 09:18:28 -0400 (UTC-04:00)
 MIME-Version: 1.0
 Content-Type: multipart/signed; boundary="1790868a14";
  protocol="application/pgp-signature"; micalg="pgp-sha512"
