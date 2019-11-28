@@ -6,6 +6,8 @@ vectors = $(shell ./generate-test-vectors list-vectors)
 vectordata = $(foreach x,$(vectors), $(x).eml)
 innerdata = $(foreach x, $(shell ./generate-test-vectors list-vectors | grep -vx -e signed -e smime-multipart-signed), $(x).inner)
 
+email_body = awk '{ if (body) print $$0 } /^$$/{ body=1 }'
+
 all: $(OUTPUT)
 
 %.xmlv2: %.md
@@ -34,6 +36,10 @@ $(draft).md: $(draft).in.md assemble $(vectordata) $(innerdata)
 
 %.inner: %.eml
 	./extract-inner < $< > $@.tmp
+	mv $@.tmp $@
+
+smime-onepart-signed.inner: smime-onepart-signed.eml
+	$(email_body) < $< | base64 -d | certtool --p7-info --p7-show-data --inraw | fromdos > $@.tmp
 	mv $@.tmp $@
 
 clean:

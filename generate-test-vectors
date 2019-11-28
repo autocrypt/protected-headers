@@ -35,6 +35,11 @@ cfg:Dict[str,Dict[str,Union[bool,bytes]]] = {
         'encrypt': False,
         'smime': True,
     },
+    'smime-onepart-signed': {
+        'encrypt': False,
+        'smime': True,
+        'multipart': False,
+    },
     'signed+encrypted': {
         'encrypt': True,
         'multilayer': False,
@@ -182,6 +187,13 @@ class IdX509:
         sigpart.set_content(out, 'application', 'pkcs7-signature')
         sigpart.set_param('name','smime.p7s')
         return sigpart
+
+    def onepart_sig(self, data:bytes, when:datetime.datetime, msg:email.message.MIMEPart) -> email.message.MIMEPart:
+        out = self._sign(data, when, '--p7-sign')
+        msg.set_content(out, 'application', 'pkcs7-mime')
+        msg.set_param('name','smime.p7m')
+        msg.set_param('smime-type','signed-data')
+        return msg
 
     def _sign(self, data:bytes, when:datetime.datetime, subcmd:str) -> bytes:
         if self._key is None:
@@ -337,7 +349,10 @@ OpenPGP Example Corp''')
     if params.get('smime', False):
         payload['From'] = f'{alice_x509.name} <{alice_x509.mailaddr}>'
         payload['To'] = f'{bob_x509.name} <{bob_x509.mailaddr}>'
-        msgidlhs = 'smime-multipart-signed'
+        if params.get('multipart', True):
+            msgidlhs = 'smime-multipart-signed'
+        else:
+            msgidlhs = 'smime-onepart-signed'
     else:
         payload['From'] = f'{alice_key.userids[0].name} <{alice_key.userids[0].email}>'
         payload['To'] = f'{bob_key.userids[0].name} <{bob_key.userids[0].email}>'
@@ -351,8 +366,12 @@ OpenPGP Example Corp''')
     msg['Received'] = f'from localhost (localhost [127.0.0.1]); {rcvdstring}'
 
     if params.get('smime', False):
-        sigpart = alice_x509.detached_sig(bytes(payload), when)
-        micalg = 'sha-256'
+        if params.get('multipart', True):
+            sigpart = alice_x509.detached_sig(bytes(payload), when)
+            micalg = 'sha-256'
+        else:
+            msg = alice_x509.onepart_sig(bytes(payload), when, msg)
+            msg['MIME-Version'] = '1.0'
     else:
         # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
         # in order for the signature creation time to match the message Date header:
@@ -360,13 +379,14 @@ OpenPGP Example Corp''')
         sigpart = get_pgp_sigpart(pgpsig)
         micalg = f'pgp-{pgpsig.hash_algorithm.name.lower()}'
 
-    msg.set_type('multipart/signed')
-    # making up an arbitrary MIME boundary based on the Message-ID:
-    msg.set_boundary(hashlib.sha256(payload['Message-ID'].encode()).hexdigest()[:10])
-    msg.set_param('protocol', sigpart.get_content_type())
-    msg.set_param('micalg', micalg)
-    msg.attach(payload)
-    msg.attach(sigpart)
+    if params.get('multipart', True):
+        msg.set_type('multipart/signed')
+        # making up an arbitrary MIME boundary based on the Message-ID:
+        msg.set_boundary(hashlib.sha256(payload['Message-ID'].encode()).hexdigest()[:10])
+        msg.set_param('protocol', sigpart.get_content_type())
+        msg.set_param('micalg', micalg)
+        msg.attach(payload)
+        msg.attach(sigpart)
 
     # ensure that all non-Content headers from the payload are also on
     # the message:

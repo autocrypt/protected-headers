@@ -747,6 +747,30 @@ Such an attacker could cause Bob to think that Alice wanted to cancel the contra
 @@smime-multipart-signed.eml@@
 ~~~
 
+S/MIME application/pkcs7-mime SignedData Message with Protected Headers {#test-vector-smime-onepart-signed}
+-----------------------------------------------------------------------
+
+This shows a signed-only S/MIME message using the `multipart/pkcs7-mime` style (see Section 3.5.2 of {{RFC8551}}).  Its MIME message structure is:
+
+~~~
+└─╴application/pkcs7-mime smime-type="signed-data"
+ ⇩ (unwraps to)
+ └─╴text/plain ← Cryptographic Payload
+~~~
+
+Note that if this message had been generated without Protected Headers, then an attacker with access to it could modify the Subject without invalidating the signature.
+Such an attacker could cause Bob to think that Alice wanted to cancel the contract with BarCorp instead of FooCorp.
+
+~~~
+@@smime-onepart-signed.eml@@
+~~~
+
+Unwrapping the PKCS7 SignedData yields the following internal message:
+
+~~~
+@@smime-onepart-signed.inner@@
+~~~
+
 Signed and Encrypted PGP/MIME Message with Protected Headers {#pgp-encryptedsigned}
 ------------------------------------------------------------
 
