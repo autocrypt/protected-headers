@@ -24,7 +24,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography import x509
 from cryptography.x509.oid import NameOID, ExtensionOID
 
-from typing import Dict, Union, TextIO, Optional
+from typing import Dict, Union, TextIO, Optional, List
 from tempfile import NamedTemporaryFile
 
 cfg:Dict[str,Dict[str,Union[bool,bytes]]] = {
@@ -180,6 +180,38 @@ class IdX509:
     @property
     def mailaddr(self) -> str:
         return str(self._x509.extensions.get_extension_for_oid(ExtensionOID.SUBJECT_ALTERNATIVE_NAME).value.get_values_for_type(x509.general_name.RFC822Name)[0])
+
+    def encrypt(self, data:email.message.MIMEPart, when:datetime.datetime, others:List[object], msg:email.message.Message) -> email.message.Message:
+        txt:str = data.as_string(policy=email.policy.EmailPolicy(linesep='\r\n'))
+        recips:List[NamedTemporaryFile] = []
+        me = NamedTemporaryFile()
+        me.write(self._cert)
+        me.flush()
+        recips.append(me)
+        for other in others:
+            o = NamedTemporaryFile()
+            o.write(other._cert)
+            o.flush()
+            recips.append(o)
+        inp, outp = os.pipe()
+        with open(outp, 'wb') as outf:
+            outf.write(txt.encode())
+        out:subprocess.CompletedProcess[bytes]
+        utcwhen:datetime.datetime = datetime.datetime.utcfromtimestamp(when.timestamp())
+        cmd = ['faketime', utcwhen.strftime('%Y-%m-%d %H:%M:%S'),
+               'openssl', 'smime', '-encrypt',
+               '-outform', 'DER']
+        for recip in recips:
+            cmd.append(recip.name)
+        out = subprocess.run(cmd, stdin=inp, capture_output=True, env={'TZ': 'UTC'})
+        if out.returncode != 0:
+            logging.warning(cmd)
+            logging.warning(out.stderr)
+            raise Exception(f'certtool --p7-detached-sign failed with {out.returncode}')
+        msg.set_content(out.stdout, 'application', 'pkcs7-mime')
+        msg.set_param('name','smime.p7m')
+        msg.set_param('smime-type','enveloped-data')
+        return msg
 
     def detached_sig(self, data:email.message.MIMEPart, when:datetime.datetime) -> email.message.MIMEPart:
         txt:str = data.as_string(policy=email.policy.EmailPolicy(linesep='\r\n'))
