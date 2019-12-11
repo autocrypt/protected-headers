@@ -46,7 +46,7 @@ smime-onepart-signed.inner: smime-onepart-signed.eml
 gpghome: bob.p12
 	mkdir -p $@.tmp
 	touch $@.tmp/passwd
-	gpgsm --batch --homedir $@.tmp --import --pinentry-mode loopback --passphrase-fd 4 4<$@.tmp/passwd bob.p12
+	gpgsm --batch --disable-dirmngr --quiet --homedir $@.tmp --import --pinentry-mode loopback --passphrase-fd 4 4<$@.tmp/passwd bob.p12
 	mv $@.tmp $@
 
 clean:
