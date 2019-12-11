@@ -39,7 +39,8 @@ $(draft).md: $(draft).in.md assemble $(vectordata) $(innerdata)
 	mv $@.tmp $@
 
 smime-onepart-signed.inner: smime-onepart-signed.eml
-	$(email_body) < $< | base64 -d | certtool --p7-info --p7-show-data --inraw | fromdos > $@.tmp
+	$(email_body) < $< | base64 -d | certtool --p7-info --p7-show-data --inraw > $@.tmp
+	fromdos $@.tmp
 	mv $@.tmp $@
 
 clean:
