@@ -43,8 +43,14 @@ smime-onepart-signed.inner: smime-onepart-signed.eml
 	fromdos $@.tmp
 	mv $@.tmp $@
 
+gpghome: bob.p12
+	mkdir -p $@.tmp
+	touch $@.tmp/passwd
+	gpgsm --batch --homedir $@.tmp --import --pinentry-mode loopback --passphrase-fd 4 4<$@.tmp/passwd bob.p12
+	mv $@.tmp $@
+
 clean:
-	-rm -rf $(OUTPUT) metadata.min.js *.tmp
+	-rm -rf $(OUTPUT) metadata.min.js *.tmp gpghome
 
 check: draft-protected-headers.txt
 	echo "checking for overlong lines..."
