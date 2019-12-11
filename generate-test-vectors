@@ -583,9 +583,10 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes]]) -> email.mes
     sessionkey = codecs.decode(params['sk'], 'hex')
     payload['Message-ID'] = f"<{msgid}@protected-headers.example>"
 
-    msg = email.message.Message()
+    msg = email.message.MIMEPart(policy=email.policy.EmailPolicy(max_line_length=64))
     # Example transit header that is not part of the protected headers:
     msg['Received'] = f'from localhost (localhost [127.0.0.1]); {rcvdstring}'
+    msg['MIME-Version'] = '1.0'
 
     if params.get('smime', False):
         pass

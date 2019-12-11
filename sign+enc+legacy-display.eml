@@ -1,5 +1,5 @@
-Received: from localhost (localhost [127.0.0.1]);
- Mon, 21 Oct 2019 07:18:39 -0700 (UTC-07:00)
+Received: from localhost (localhost [127.0.0.1]); Mon, 21 Oct 2019
+ 07:18:39 -0700 (UTC-07:00)
 MIME-Version: 1.0
 Content-Type: multipart/encrypted; boundary="8f1c37571f";
  protocol="application/pgp-encrypted"
