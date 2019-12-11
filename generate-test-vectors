@@ -54,6 +54,13 @@ cfg:Dict[str,Dict[str,Union[bool,bytes]]] = {
         'multipart': False,
         'sk': b'5e67165ed1516333daeba32044f88fd75d4a9485a563d14705e41d31fb61a9e9'
     },
+    'smime+sign+enc': {
+        'encrypt': True,
+        'legacy': False,
+        'multipart': False,
+        'smime': True,
+        'sk': b'12e2551896f77e24ce080153cda27dddd789d399bdd87757e65655d956f5f0b7'
+    },
     'sign+enc+legacy-display': {
         'encrypt': True,
         'multilayer': False,

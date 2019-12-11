@@ -810,8 +810,8 @@ Unwrapping the Cryptographic Layer yields the following content:
 @@signed+encrypted.inner@@
 ~~~
 
-Signed and Encrypted PGP/MIME  Message with Protected Headers and Legacy Display Part
--------------------------------------------------------------------------------------
+Signed and Encrypted PGP/MIME Message with Protected Headers and Legacy Display Part
+------------------------------------------------------------------------------------
 
 If Alice's MUA wasn't sure whether Bob's MUA would know to render the obscured `Subject:` header correctly, it might include a legacy display part in the cryptographic payload.
 
