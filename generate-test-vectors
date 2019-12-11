@@ -535,10 +535,14 @@ OpenPGP Example Corp<br/>
 
 def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes]]) -> email.message.Message:
     # seconds since the unix epoch
-    posixtime = 1571667491
+    if params.get('smime', False):
+        # smime signatures are later because the certs are later
+        posixtime = 1574843489
+    else:
+        posixtime = 1571667491
     # America/Los_Angeles during DST:
     tz = datetime.timezone(datetime.timedelta(hours=-7))
-    # 2019-10-21T07:18:11-0700
+    # 2019-10-21T07:18:11-0700 for PGP/MIME
     when = datetime.datetime.fromtimestamp(posixtime, tz)
     whenstring = when.strftime('%a, %d %b %Y %T %z').strip()
 
