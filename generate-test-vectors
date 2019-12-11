@@ -597,7 +597,11 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes]]) -> email.mes
     msg['MIME-Version'] = '1.0'
 
     if params.get('smime', False):
-        pass
+        # FIXME: consider multipart/signed inner layer?
+        # create PKCS7 SignedData part
+        p7sigpart = email.message.MIMEPart(policy=email.policy.EmailPolicy(max_line_length=64))
+        p7sigpart = alice_x509.onepart_sig(payload, when, p7sigpart)
+        msg = alice_x509.encrypt(p7sigpart, when, [bob_x509], msg)
     else:
         if params['multilayer']:
             # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
