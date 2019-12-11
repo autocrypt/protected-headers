@@ -4,7 +4,7 @@ draft = draft-protected-headers
 OUTPUT = $(draft).txt $(draft).html $(draft).xml $(draft).pdf
 vectors = $(shell ./generate-test-vectors list-vectors)
 vectordata = $(foreach x,$(vectors), $(x).eml)
-innerdata = $(foreach x, $(shell ./generate-test-vectors list-vectors | grep -vx -e signed -e smime-multipart-signed), $(x).inner)
+innerdata = $(foreach x, $(shell ./generate-test-vectors list-vectors | grep -vx -e signed -e smime-multipart-signed), $(x).inner) smime+sign+enc.inner.inner smime+sign+enc+legacy-display.inner.inner
 
 email_body = awk '{ if (body) print $$0 } /^$$/{ body=1 }'
 
@@ -39,6 +39,16 @@ $(draft).md: $(draft).in.md assemble $(vectordata) $(innerdata)
 	mv $@.tmp $@
 
 smime-onepart-signed.inner: smime-onepart-signed.eml
+	$(email_body) < $< | base64 -d | certtool --p7-info --p7-show-data --inraw > $@.tmp
+	fromdos $@.tmp
+	mv $@.tmp $@
+
+smime+%.inner: smime+%.eml gpghome
+	printf -- '-----BEGIN PKCS7-----\n%s-----END PKCS7-----\n' "$$($(email_body) < $< )" | gpgsm --batch --homedir gpghome --output $@.tmp --decrypt
+	fromdos $@.tmp
+	mv $@.tmp $@
+
+%.inner.inner: %.inner
 	$(email_body) < $< | base64 -d | certtool --p7-info --p7-show-data --inraw > $@.tmp
 	fromdos $@.tmp
 	mv $@.tmp $@

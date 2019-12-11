@@ -810,6 +810,48 @@ Unwrapping the Cryptographic Layer yields the following content:
 @@signed+encrypted.inner@@
 ~~~
 
+Signed and Encrypted S/MIME Message with Protected Headers {#smime-sign-enc}
+----------------------------------------------------------
+
+This shows a simple signed and encrypted S/MIME message with protected headers.
+Its MIME message structure is:
+
+~~~
+└─╴application/pkcs7-mime smime-type="enveloped-data"
+ ↧ (decrypts to)
+ └─╴application/pkcs7-mime smime-type="signed-data"
+  ⇩ (unwraps to)
+  └─╴text/plain ← Cryptographic Payload
+~~~
+
+The `Subject:` header is successfully obscured.
+
+Note that if this message had been generated without Protected Headers, then an attacker with access to it could have read the Subject.
+Such an attacker would know details about Alice and Bob's business that they wanted to keep confidential.
+
+The protected headers also protect the authenticity of subject line as well.
+
+The session key for this message's Cryptographic Layer is an AES-256 key with value `12e2551896f77e24ce080153cda27dddd789d399bdd87757e65655d956f5f0b7` (in hex).
+
+If Bob's MUA is capable of interpreting these protected headers, it should render the `Subject:` of this message as `BarCorp contract signed, let's go!`.
+
+~~~
+@@smime+sign+enc.eml@@
+~~~
+
+Unwrapping the outer Cryptographic Layer of this message yields the following MIME part (with its own Cryptographic Layer):
+
+~~~
+@@smime+sign+enc.inner@@
+~~~
+
+Unwrapping the inner Cryptographic Layer yields the Cryptographic Payload:
+
+~~~
+@@smime+sign+enc.inner.inner@@
+~~~
+
+
 Signed and Encrypted PGP/MIME Message with Protected Headers and Legacy Display Part
 ------------------------------------------------------------------------------------
 
@@ -908,6 +950,50 @@ Unwrapping the encryption Cryptographic Layer yields the following content:
 ~~~
 @@multilayer+legacy-display.inner@@
 ~~~
+
+Signed and Encrypted S/MIME Message with Protected Headers and Legacy Display
+-----------------------------------------------------------------------------
+
+This shows the same signed and encrypted S/MIME message as {{smime-sign-enc}}, but formulated with a Legacy Display part so that
+Its MIME message structure is:
+
+~~~
+└─╴application/pkcs7-mime smime-type="enveloped-data"
+ ↧ (decrypts to)
+ └─╴application/pkcs7-mime smime-type="signed-data"
+  ⇩ (unwraps to)
+  └┬╴multipart/mixed ← Cryptographic Payload
+   ├─╴text/rfc822-headers ← Legacy Display Part
+   └─╴text/plain 445 bytes
+~~~
+
+The `Subject:` header is successfully obscured.
+
+Note that if this message had been generated without Protected Headers, then an attacker with access to it could have read the Subject.
+Such an attacker would know details about Alice and Bob's business that they wanted to keep confidential.
+
+The protected headers also protect the authenticity of subject line as well.
+
+The session key for this message's Cryptographic Layer is an AES-256 key with value `09e8f2a19d9e97deea7d51ee7d401be8763ab0377b6f30a68206e0bed4a0baec` (in hex).
+
+If Bob's MUA is capable of interpreting these protected headers, it should render the `Subject:` of this message as `BarCorp contract signed, let's go!`.
+
+~~~
+@@smime+sign+enc+legacy-display.eml@@
+~~~
+
+Unwrapping the outer Cryptographic Layer of this message yields the following MIME part (with its own Cryptographic Layer):
+
+~~~
+@@smime+sign+enc+legacy-display.inner@@
+~~~
+
+Unwrapping the inner Cryptographic Layer yields the Cryptographic Payload, which includes the Legacy Display part:
+
+~~~
+@@smime+sign+enc+legacy-display.inner.inner@@
+~~~
+
 
 An Unfortunately Complex Example
 --------------------------------
