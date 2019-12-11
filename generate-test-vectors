@@ -587,55 +587,58 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes]]) -> email.mes
     # Example transit header that is not part of the protected headers:
     msg['Received'] = f'from localhost (localhost [127.0.0.1]); {rcvdstring}'
 
-    if params['multilayer']:
-        # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
-        # in order for the signature creation time to match the message Date header:
-        pgpsig = alice_key.sign(pgpy.PGPMessage.new(str(payload), cleartext=True), created=when)
-        sigpart = get_pgp_sigpart(pgpsig)
-        micalg = f'pgp-{pgpsig.hash_algorithm.name.lower()}'
-
-        sigwrapper = email.message.MIMEPart()
-        sigwrapper.set_type('multipart/signed')
-        del sigwrapper['MIME-Version'] # MIME-Version on subparts is meaningless
-        del sigwrapper['Content-Transfer-Encoding'] # test data is all 7-bit clean
-        sigwrapper.set_boundary(hashlib.sha256(f"inner{payload['Message-ID']}".encode()).hexdigest()[:10])
-        sigwrapper.set_param('protocol', sigpart.get_content_type())
-        sigwrapper.set_param('micalg', micalg)
-        sigwrapper.attach(payload)
-        sigwrapper.attach(sigpart)
-
-        payloadmsg = pgpy.PGPMessage.new(str(sigwrapper), format='m')
+    if params.get('smime', False):
+        pass
     else:
-        payloadmsg = pgpy.PGPMessage.new(str(payload), format='m')
-        # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
-        # in order for the signature creation time to match the message Date header:
-        payloadmsg |= alice_key.sign(payloadmsg, created=when)
+        if params['multilayer']:
+            # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
+            # in order for the signature creation time to match the message Date header:
+            pgpsig = alice_key.sign(pgpy.PGPMessage.new(str(payload), cleartext=True), created=when)
+            sigpart = get_pgp_sigpart(pgpsig)
+            micalg = f'pgp-{pgpsig.hash_algorithm.name.lower()}'
 
-    cipher = pgpy.constants.SymmetricKeyAlgorithm.AES256
+            sigwrapper = email.message.MIMEPart()
+            sigwrapper.set_type('multipart/signed')
+            del sigwrapper['MIME-Version'] # MIME-Version on subparts is meaningless
+            del sigwrapper['Content-Transfer-Encoding'] # test data is all 7-bit clean
+            sigwrapper.set_boundary(hashlib.sha256(f"inner{payload['Message-ID']}".encode()).hexdigest()[:10])
+            sigwrapper.set_param('protocol', sigpart.get_content_type())
+            sigwrapper.set_param('micalg', micalg)
+            sigwrapper.attach(payload)
+            sigwrapper.attach(sigpart)
 
-    encmsg = alice_key.pubkey.encrypt(payloadmsg, cipher=cipher, sessionkey=sessionkey)
-    encmsg = bob_key.encrypt(encmsg, cipher=cipher, sessionkey=sessionkey)
+            payloadmsg = pgpy.PGPMessage.new(str(sigwrapper), format='m')
+        else:
+            payloadmsg = pgpy.PGPMessage.new(str(payload), format='m')
+            # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
+            # in order for the signature creation time to match the message Date header:
+            payloadmsg |= alice_key.sign(payloadmsg, created=when)
 
-    encpart = email.message.MIMEPart()
-    encpart.set_content(str(encmsg))
-    encpart.set_type('application/octet-stream')
-    encpart.set_charset(None) # encrypted body is ASCII-armored already
-    del encpart['MIME-Version'] # MIME-Version on subparts is meaningless
-    del encpart['Content-Transfer-Encoding'] # ASCII-armored data is 7-bit clean
+        cipher = pgpy.constants.SymmetricKeyAlgorithm.AES256
 
-    cruft = email.message.MIMEPart()
-    cruft.set_content('Version: 1')
-    cruft.set_type('application/pgp-encrypted')
-    cruft.set_charset(None) # the cruft data is 7-bit clean by definition
-    del cruft['MIME-Version'] # MIME-Version on subparts is meaningless
-    del cruft['Content-Transfer-Encoding'] # the cruft data is 7-bit clean by definition
-    
-    msg.set_type('multipart/encrypted')
-    # making up an arbitrary MIME boundary based on the Message-ID:
-    msg.set_boundary(hashlib.sha256(payload['Message-ID'].encode()).hexdigest()[:10])
-    msg.set_param('protocol', 'application/pgp-encrypted')
-    msg.attach(cruft)
-    msg.attach(encpart)
+        encmsg = alice_key.pubkey.encrypt(payloadmsg, cipher=cipher, sessionkey=sessionkey)
+        encmsg = bob_key.encrypt(encmsg, cipher=cipher, sessionkey=sessionkey)
+
+        encpart = email.message.MIMEPart()
+        encpart.set_content(str(encmsg))
+        encpart.set_type('application/octet-stream')
+        encpart.set_charset(None) # encrypted body is ASCII-armored already
+        del encpart['MIME-Version'] # MIME-Version on subparts is meaningless
+        del encpart['Content-Transfer-Encoding'] # ASCII-armored data is 7-bit clean
+
+        cruft = email.message.MIMEPart()
+        cruft.set_content('Version: 1')
+        cruft.set_type('application/pgp-encrypted')
+        cruft.set_charset(None) # the cruft data is 7-bit clean by definition
+        del cruft['MIME-Version'] # MIME-Version on subparts is meaningless
+        del cruft['Content-Transfer-Encoding'] # the cruft data is 7-bit clean by definition
+
+        msg.set_type('multipart/encrypted')
+        # making up an arbitrary MIME boundary based on the Message-ID:
+        msg.set_boundary(hashlib.sha256(payload['Message-ID'].encode()).hexdigest()[:10])
+        msg.set_param('protocol', 'application/pgp-encrypted')
+        msg.attach(cruft)
+        msg.attach(encpart)
 
     # ensure that all non-Content headers from the payload are also on
     # the message:
