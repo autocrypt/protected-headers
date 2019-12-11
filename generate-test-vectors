@@ -577,8 +577,12 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes]]) -> email.mes
         payload.attach(innerpayload)
     
     # place intended headers on the payload:
-    payload['From'] = f'{alice_key.userids[0].name} <{alice_key.userids[0].email}>'
-    payload['To'] = f'{bob_key.userids[0].name} <{bob_key.userids[0].email}>'
+    if params.get('smime', False):
+        payload['From'] = f'{alice_x509.name} <{alice_x509.mailaddr}>'
+        payload['To'] = f'{bob_x509.name} <{bob_x509.mailaddr}>'
+    else:
+        payload['From'] = f'{alice_key.userids[0].name} <{alice_key.userids[0].email}>'
+        payload['To'] = f'{bob_key.userids[0].name} <{bob_key.userids[0].email}>'
     payload['Date'] = whenstring
     payload['Subject'] = subj
 
