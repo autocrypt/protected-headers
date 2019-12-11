@@ -583,6 +583,10 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes]]) -> email.mes
     sessionkey = codecs.decode(params['sk'], 'hex')
     payload['Message-ID'] = f"<{msgid}@protected-headers.example>"
 
+    msg = email.message.Message()
+    # Example transit header that is not part of the protected headers:
+    msg['Received'] = f'from localhost (localhost [127.0.0.1]); {rcvdstring}'
+
     if params['multilayer']:
         # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
         # in order for the signature creation time to match the message Date header:
@@ -626,9 +630,6 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes]]) -> email.mes
     del cruft['MIME-Version'] # MIME-Version on subparts is meaningless
     del cruft['Content-Transfer-Encoding'] # the cruft data is 7-bit clean by definition
     
-    msg = email.message.Message()
-    # Example transit header that is not part of the protected headers:
-    msg['Received'] = f'from localhost (localhost [127.0.0.1]); {rcvdstring}'
     msg.set_type('multipart/encrypted')
     # making up an arbitrary MIME boundary based on the Message-ID:
     msg.set_boundary(hashlib.sha256(payload['Message-ID'].encode()).hexdigest()[:10])
