@@ -1,0 +1,19 @@
+[Unit]
+Description=IMAP server hosting example messages with protected headers
+Documentation=https://datatracker.ietf.org/doc/draft-autocrypt-lamps-protected-headers/
+After=local-fs.target network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/dovecot -F -c /srv/protected-headers/meta/dovecot.conf
+PrivateTmp=true
+NonBlocking=yes
+ProtectSystem=full
+ProtectHome=no
+PrivateDevices=true
+User=protected-headers
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target

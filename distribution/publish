@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+publishhost="${1:-che.mayfirst.org}"
+staging=$(mktemp -d)
+cleanup() {
+    rm -rf "$staging"
+}
+trap cleanup EXIT
+
+printf "publishing to %s…" "$publishhost" >&2
+mkdir -p "$staging"/{messages/{new,tmp,cur},meta}
+cp *.eml "$staging/messages/cur/"
+cp distribution/{dovecot.conf,protected-headers-imap.service,dovecot.acls} "$staging/meta/"
+tar --create -C "$staging" messages meta | ssh "$publishhost" tar -x -C /srv/protected-headers
+printf "done\n" >&2
