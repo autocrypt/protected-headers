@@ -398,7 +398,7 @@ Thanks, Alice
 {dotsig_separator}
 Alice Lovelace
 President
-OpenPGP Example Corp''')
+Example Corp''')
     payload.set_type('text/plain')
     payload.set_charset('us-ascii') # the test vector data is 7-bit clean
     del payload['MIME-Version'] # MIME-Version on subparts is meaningless
@@ -480,7 +480,7 @@ Thanks, Alice
 {dotsig_separator}
 Alice Lovelace
 President
-OpenPGP Example Corp'''
+Example Corp'''
 
     if not multipart:
         payload.set_content(txt)
@@ -509,7 +509,7 @@ Thanks, Alice<br/>
 {dotsig_separator}<br/>
 Alice Lovelace<br/>
 President<br/>
-OpenPGP Example Corp<br/>
+Example Corp<br/>
 </p></body></html>'''
         attachment = f'''diff -ruN a/testharness.cfg b/testharness.cfg
 --- a/testharness.cfg
