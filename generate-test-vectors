@@ -27,67 +27,77 @@ from cryptography.x509.oid import NameOID, ExtensionOID #type: ignore
 from typing import Dict, Union, TextIO, Optional, List
 from tempfile import NamedTemporaryFile
 
-cfg:Dict[str,Dict[str,Union[bool,bytes]]] = {
+cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
     'signed': {
         'encrypt': False,
+        'minute': 0,
     },
     'smime-multipart-signed': {
         'encrypt': False,
         'smime': True,
+        'minute': 3,
     },
     'smime-onepart-signed': {
         'encrypt': False,
         'smime': True,
         'multipart': False,
+        'minute': 6,
     },
     'signed+encrypted': {
         'encrypt': True,
         'multilayer': False,
         'legacy': False,
         'multipart': False,
-        'sk': b'8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2'
+        'sk': b'8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2',
+        'minute': 9,
     },
     'multilayer': {
         'encrypt': True,
         'multilayer': True,
         'legacy': False,
         'multipart': False,
-        'sk': b'5e67165ed1516333daeba32044f88fd75d4a9485a563d14705e41d31fb61a9e9'
+        'sk': b'5e67165ed1516333daeba32044f88fd75d4a9485a563d14705e41d31fb61a9e9',
+        'minute': 12,
     },
     'smime+sign+enc': {
         'encrypt': True,
         'legacy': False,
         'multipart': False,
         'smime': True,
-        'sk': b'12e2551896f77e24ce080153cda27dddd789d399bdd87757e65655d956f5f0b7'
+        'sk': b'12e2551896f77e24ce080153cda27dddd789d399bdd87757e65655d956f5f0b7',
+        'minute': 15,
     },
     'sign+enc+legacy-display': {
         'encrypt': True,
         'multilayer': False,
         'legacy': True,
         'multipart': False,
-        'sk': b'95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e'
+        'sk': b'95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e',
+        'minute': 18,
     },
     'multilayer+legacy-display': {
         'encrypt': True,
         'multilayer': True,
         'legacy': True,
         'multipart': False,
-        'sk': b'b346a2a50fa0cf62895b74e8c0d2ad9e3ee1f02b5d564c77d879caaee7a0aa70'
+        'sk': b'b346a2a50fa0cf62895b74e8c0d2ad9e3ee1f02b5d564c77d879caaee7a0aa70',
+        'minute': 21,
     },
     'smime+sign+enc+legacy-display': {
         'encrypt': True,
         'legacy': True,
         'multipart': False,
         'smime': True,
-        'sk': b'09e8f2a19d9e97deea7d51ee7d401be8763ab0377b6f30a68206e0bed4a0baec'
+        'sk': b'09e8f2a19d9e97deea7d51ee7d401be8763ab0377b6f30a68206e0bed4a0baec',
+        'minute': 24,
     },
     'unfortunately-complex': {
         'encrypt': True,
         'multilayer': True,
         'legacy': True,
         'multipart': True,
-        'sk': b'1c489cfad9f3c0bf3214bf34e6da42b7f64005e59726baa1b17ffdefe6ecbb52'
+        'sk': b'1c489cfad9f3c0bf3214bf34e6da42b7f64005e59726baa1b17ffdefe6ecbb52',
+        'minute': 27,
     },
 }
 
@@ -360,13 +370,13 @@ def get_pgp_sigpart(pgpsig:pgpy.PGPSignature) -> email.message.MIMEPart:
     del sigpart['Content-Transfer-Encoding'] # ASCII-armored PGP Signature data is 7-bit clean
     return sigpart
 
-def signed(params:Dict[str,Union[bool,bytes]]) -> email.message.Message:
+def signed(params:Dict[str,Union[bool,bytes,int]]) -> email.message.Message:
     # seconds since the unix epoch
     if params.get('smime', False):
         # smime signatures are later because the certs are later
-        posixtime = 1574813489
+        posixtime = (1574813489 // 3600)*3600 + 60*params['minute']
     else:
-        posixtime = 1571577491
+        posixtime = (1571577491 // 3600)*3600 + 60*params['minute']
     # America/New_York during DST:
     tz = datetime.timezone(datetime.timedelta(hours=-4))
     # 2019-10-20T09:18:11-0400
@@ -547,13 +557,13 @@ OpenPGP Example Corp<br/>
         payload.attach(attachmentpart)
     return payload
 
-def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes]]) -> email.message.Message:
+def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes,int]]) -> email.message.Message:
     # seconds since the unix epoch
     if params.get('smime', False):
         # smime signatures are later because the certs are later
-        posixtime = 1574843489
+        posixtime = (1574843489 // 3600)*3600 + 60*params['minute']
     else:
-        posixtime = 1571667491
+        posixtime = (1571667491 // 3600)*3600 + 60*params['minute']
     # America/Los_Angeles during DST:
     tz = datetime.timezone(datetime.timedelta(hours=-7))
     # 2019-10-21T07:18:11-0700 for PGP/MIME
