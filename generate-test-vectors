@@ -28,7 +28,7 @@ from typing import Dict, Union, TextIO, Optional, List
 from tempfile import NamedTemporaryFile
 
 cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
-    'signed': {
+    'pgpmime-signed': {
         'encrypt': False,
         'minute': 0,
     },
@@ -43,7 +43,7 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'multipart': False,
         'minute': 6,
     },
-    'signed+encrypted': {
+    'pgpmime-signed+encrypted': {
         'encrypt': True,
         'multilayer': False,
         'legacy': False,
@@ -51,7 +51,7 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'sk': b'8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2',
         'minute': 9,
     },
-    'multilayer': {
+    'pgpmime-multilayer': {
         'encrypt': True,
         'multilayer': True,
         'legacy': False,
@@ -67,7 +67,7 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'sk': b'12e2551896f77e24ce080153cda27dddd789d399bdd87757e65655d956f5f0b7',
         'minute': 15,
     },
-    'sign+enc+legacy-display': {
+    'pgpmime-sign+enc+legacy-display': {
         'encrypt': True,
         'multilayer': False,
         'legacy': True,
@@ -75,7 +75,7 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'sk': b'95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e',
         'minute': 18,
     },
-    'multilayer+legacy-display': {
+    'pgpmime-multilayer+legacy-display': {
         'encrypt': True,
         'multilayer': True,
         'legacy': True,

@@ -729,7 +729,7 @@ Note that if this message had been generated without Protected Headers, then an 
 Such an attacker could cause Bob to think that Alice wanted to cancel the contract with BarCorp instead of FooCorp.
 
 ~~~
-@@signed.eml@@
+@@pgpmime-signed.eml@@
 ~~~
 
 S/MIME multipart/signed Message with Protected Headers {#test-vector-smime-multipart-signed}
@@ -801,13 +801,13 @@ The session key for this message's Cryptographic Layer is an AES-256 key with va
 If Bob's MUA is capable of interpreting these protected headers, it should render the `Subject:` of this message as `BarCorp contract signed, let's go!`.
 
 ~~~
-@@signed+encrypted.eml@@
+@@pgpmime-signed+encrypted.eml@@
 ~~~
 
 Unwrapping the Cryptographic Layer yields the following content:
 
 ~~~
-@@signed+encrypted.inner@@
+@@pgpmime-signed+encrypted.inner@@
 ~~~
 
 Signed and Encrypted S/MIME Message with Protected Headers {#smime-sign-enc}
@@ -878,13 +878,13 @@ But if Bob's MUA is capable of decryption but is unaware of protected headers, i
 For this message, the session key is an AES-256 key with value `95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e` (in hex).
 
 ~~~
-@@sign+enc+legacy-display.eml@@
+@@pgpmime-sign+enc+legacy-display.eml@@
 ~~~
 
 Decrypting the Cryptographic Layer yields the following content:
 
 ~~~
-@@sign+enc+legacy-display.inner@@
+@@pgpmime-sign+enc+legacy-display.inner@@
 ~~~
 
 Multilayer PGP/MIME Message with Protected Headers
@@ -908,13 +908,13 @@ A typical PGP/MIME message like this has the following structure:
 For this message, the session key is an AES-256 key with value `5e67165ed1516333daeba32044f88fd75d4a9485a563d14705e41d31fb61a9e9` (in hex).
 
 ~~~
-@@multilayer.eml@@
+@@pgpmime-multilayer.eml@@
 ~~~
 
 Decrypting the encryption Cryptographic Layer yields the following content:
 
 ~~~
-@@multilayer.inner@@
+@@pgpmime-multilayer.inner@@
 ~~~
 
 Note the placement of the Protected Headers on the Cryptographic Payload specifically, which is not the immediate child of the encryption Cryptographic Layer.
@@ -942,13 +942,13 @@ Such a PGP/MIME message might have the following structure:
 For this message, the session key is an AES-256 key with value `b346a2a50fa0cf62895b74e8c0d2ad9e3ee1f02b5d564c77d879caaee7a0aa70` (in hex).
 
 ~~~
-@@multilayer+legacy-display.eml@@
+@@pgpmime-multilayer+legacy-display.eml@@
 ~~~
 
 Unwrapping the encryption Cryptographic Layer yields the following content:
 
 ~~~
-@@multilayer+legacy-display.inner@@
+@@pgpmime-multilayer+legacy-display.inner@@
 ~~~
 
 Signed and Encrypted S/MIME Message with Protected Headers and Legacy Display
