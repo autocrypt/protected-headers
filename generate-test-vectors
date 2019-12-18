@@ -59,7 +59,7 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'sk': b'5e67165ed1516333daeba32044f88fd75d4a9485a563d14705e41d31fb61a9e9',
         'minute': 12,
     },
-    'smime+sign+enc': {
+    'smime-sign+enc': {
         'encrypt': True,
         'legacy': False,
         'multipart': False,
@@ -83,7 +83,7 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'sk': b'b346a2a50fa0cf62895b74e8c0d2ad9e3ee1f02b5d564c77d879caaee7a0aa70',
         'minute': 21,
     },
-    'smime+sign+enc+legacy-disp': {
+    'smime-sign+enc+legacy-disp': {
         'encrypt': True,
         'legacy': True,
         'multipart': False,
@@ -91,7 +91,7 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'sk': b'09e8f2a19d9e97deea7d51ee7d401be8763ab0377b6f30a68206e0bed4a0baec',
         'minute': 24,
     },
-    'smime+enc+legacy-disp': {
+    'smime-enc+legacy-disp': {
         'encrypt': True,
         'legacy': True,
         'multipart': False,

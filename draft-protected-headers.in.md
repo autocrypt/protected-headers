@@ -836,19 +836,19 @@ The session key for this message's Cryptographic Layer is an AES-256 key with va
 If Bob's MUA is capable of interpreting these protected headers, it should render the `Subject:` of this message as `BarCorp contract signed, let's go!`.
 
 ~~~
-@@smime+sign+enc.eml@@
+@@smime-sign+enc.eml@@
 ~~~
 
 Unwrapping the outer Cryptographic Layer of this message yields the following MIME part (with its own Cryptographic Layer):
 
 ~~~
-@@smime+sign+enc.inner@@
+@@smime-sign+enc.inner@@
 ~~~
 
 Unwrapping the inner Cryptographic Layer yields the Cryptographic Payload:
 
 ~~~
-@@smime+sign+enc.inner.inner@@
+@@smime-sign+enc.inner.inner@@
 ~~~
 
 
@@ -979,19 +979,19 @@ The session key for this message's Cryptographic Layer is an AES-256 key with va
 If Bob's MUA is capable of interpreting these protected headers, it should render the `Subject:` of this message as `BarCorp contract signed, let's go!`.
 
 ~~~
-@@smime+sign+enc+legacy-disp.eml@@
+@@smime-sign+enc+legacy-disp.eml@@
 ~~~
 
 Unwrapping the outer Cryptographic Layer of this message yields the following MIME part (with its own Cryptographic Layer):
 
 ~~~
-@@smime+sign+enc+legacy-disp.inner@@
+@@smime-sign+enc+legacy-disp.inner@@
 ~~~
 
 Unwrapping the inner Cryptographic Layer yields the Cryptographic Payload, which includes the Legacy Display part:
 
 ~~~
-@@smime+sign+enc+legacy-disp.inner.inner@@
+@@smime-sign+enc+legacy-disp.inner.inner@@
 ~~~
 
 Encrypted-only (unsigned) S/MIME Message with Protected Headers and Legacy Display
@@ -1018,13 +1018,13 @@ Its MIME message structure is:
 
 
 ~~~
-@@smime+enc+legacy-disp.eml@@
+@@smime-enc+legacy-disp.eml@@
 ~~~
 
 Unwrapping the single-layer Cryptographic Envelope of this message yields the following MIME structure:
 
 ~~~
-@@smime+enc+legacy-disp.inner@@
+@@smime-enc+legacy-disp.inner@@
 ~~~
 
 An Unfortunately Complex Example
