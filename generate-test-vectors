@@ -51,7 +51,7 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'sk': b'8df4b2d27d5637138ac6de46415661be0bd01ed12ecf8c1db22a33cf3ede82f2',
         'minute': 9,
     },
-    'pgpmime-multilayer': {
+    'pgpmime-layered': {
         'encrypt': True,
         'multilayer': True,
         'legacy': False,
@@ -67,7 +67,7 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'sk': b'12e2551896f77e24ce080153cda27dddd789d399bdd87757e65655d956f5f0b7',
         'minute': 15,
     },
-    'pgpmime-sign+enc+legacy-display': {
+    'pgpmime-sign+enc+legacy-disp': {
         'encrypt': True,
         'multilayer': False,
         'legacy': True,
@@ -75,7 +75,7 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'sk': b'95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e',
         'minute': 18,
     },
-    'pgpmime-multilayer+legacy-display': {
+    'pgpmime-layered+legacy-disp': {
         'encrypt': True,
         'multilayer': True,
         'legacy': True,
@@ -83,7 +83,7 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'sk': b'b346a2a50fa0cf62895b74e8c0d2ad9e3ee1f02b5d564c77d879caaee7a0aa70',
         'minute': 21,
     },
-    'smime+sign+enc+legacy-display': {
+    'smime+sign+enc+legacy-disp': {
         'encrypt': True,
         'legacy': True,
         'multipart': False,
@@ -91,7 +91,7 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'sk': b'09e8f2a19d9e97deea7d51ee7d401be8763ab0377b6f30a68206e0bed4a0baec',
         'minute': 24,
     },
-    'smime+enc+legacy-display': {
+    'smime+enc+legacy-disp': {
         'encrypt': True,
         'legacy': True,
         'multipart': False,

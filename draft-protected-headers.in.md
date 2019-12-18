@@ -878,13 +878,13 @@ But if Bob's MUA is capable of decryption but is unaware of protected headers, i
 For this message, the session key is an AES-256 key with value `95a71b0e344cce43a4dd52c5fd01deec5118290bfd0792a8a733c653a12d223e` (in hex).
 
 ~~~
-@@pgpmime-sign+enc+legacy-display.eml@@
+@@pgpmime-sign+enc+legacy-disp.eml@@
 ~~~
 
 Decrypting the Cryptographic Layer yields the following content:
 
 ~~~
-@@pgpmime-sign+enc+legacy-display.inner@@
+@@pgpmime-sign+enc+legacy-disp.inner@@
 ~~~
 
 Multilayer PGP/MIME Message with Protected Headers
@@ -908,13 +908,13 @@ A typical PGP/MIME message like this has the following structure:
 For this message, the session key is an AES-256 key with value `5e67165ed1516333daeba32044f88fd75d4a9485a563d14705e41d31fb61a9e9` (in hex).
 
 ~~~
-@@pgpmime-multilayer.eml@@
+@@pgpmime-layered.eml@@
 ~~~
 
 Decrypting the encryption Cryptographic Layer yields the following content:
 
 ~~~
-@@pgpmime-multilayer.inner@@
+@@pgpmime-layered.inner@@
 ~~~
 
 Note the placement of the Protected Headers on the Cryptographic Payload specifically, which is not the immediate child of the encryption Cryptographic Layer.
@@ -942,13 +942,13 @@ Such a PGP/MIME message might have the following structure:
 For this message, the session key is an AES-256 key with value `b346a2a50fa0cf62895b74e8c0d2ad9e3ee1f02b5d564c77d879caaee7a0aa70` (in hex).
 
 ~~~
-@@pgpmime-multilayer+legacy-display.eml@@
+@@pgpmime-layered+legacy-disp.eml@@
 ~~~
 
 Unwrapping the encryption Cryptographic Layer yields the following content:
 
 ~~~
-@@pgpmime-multilayer+legacy-display.inner@@
+@@pgpmime-layered+legacy-disp.inner@@
 ~~~
 
 Signed and Encrypted S/MIME Message with Protected Headers and Legacy Display {#smime-sign-enc-legacy}
@@ -979,19 +979,19 @@ The session key for this message's Cryptographic Layer is an AES-256 key with va
 If Bob's MUA is capable of interpreting these protected headers, it should render the `Subject:` of this message as `BarCorp contract signed, let's go!`.
 
 ~~~
-@@smime+sign+enc+legacy-display.eml@@
+@@smime+sign+enc+legacy-disp.eml@@
 ~~~
 
 Unwrapping the outer Cryptographic Layer of this message yields the following MIME part (with its own Cryptographic Layer):
 
 ~~~
-@@smime+sign+enc+legacy-display.inner@@
+@@smime+sign+enc+legacy-disp.inner@@
 ~~~
 
 Unwrapping the inner Cryptographic Layer yields the Cryptographic Payload, which includes the Legacy Display part:
 
 ~~~
-@@smime+sign+enc+legacy-display.inner.inner@@
+@@smime+sign+enc+legacy-disp.inner.inner@@
 ~~~
 
 Encrypted-only (unsigned) S/MIME Message with Protected Headers and Legacy Display
@@ -1018,13 +1018,13 @@ Its MIME message structure is:
 
 
 ~~~
-@@smime+enc+legacy-display.eml@@
+@@smime+enc+legacy-disp.eml@@
 ~~~
 
 Unwrapping the single-layer Cryptographic Envelope of this message yields the following MIME structure:
 
 ~~~
-@@smime+enc+legacy-display.inner@@
+@@smime+enc+legacy-disp.inner@@
 ~~~
 
 An Unfortunately Complex Example
