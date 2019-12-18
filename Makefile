@@ -4,7 +4,7 @@ draft = draft-protected-headers
 OUTPUT = $(draft).txt $(draft).html $(draft).xml $(draft).pdf
 vectors = $(shell ./generate-test-vectors list-vectors)
 vectordata = $(foreach x,$(vectors), $(x).eml)
-innerdata = $(foreach x, $(shell ./generate-test-vectors list-vectors | grep -vx -e signed -e smime-multipart-signed), $(x).inner) smime+sign+enc.inner.inner smime+sign+enc+legacy-display.inner.inner
+innerdata = $(foreach x, $(shell ./generate-test-vectors list-vectors | grep -vx -e pgpmime-signed -e smime-multipart-signed), $(x).inner) smime+sign+enc.inner.inner smime+sign+enc+legacy-display.inner.inner
 
 email_body = awk '{ if (body) print $$0 } /^$$/{ body=1 }'
 
