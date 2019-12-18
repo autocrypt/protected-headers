@@ -409,17 +409,12 @@ Example Corp''')
     if params.get('smime', False):
         payload['From'] = f'{alice_x509.name} <{alice_x509.mailaddr}>'
         payload['To'] = f'{bob_x509.name} <{bob_x509.mailaddr}>'
-        if params.get('multipart', True):
-            msgidlhs = 'smime-multipart-signed'
-        else:
-            msgidlhs = 'smime-onepart-signed'
     else:
         payload['From'] = f'{alice_key.userids[0].name} <{alice_key.userids[0].email}>'
         payload['To'] = f'{bob_key.userids[0].name} <{bob_key.userids[0].email}>'
-        msgidlhs = 'signed'
     payload['Date'] = whenstring
     payload['Subject'] = 'The FooCorp contract'
-    payload['Message-ID'] = f'<{msgidlhs}@protected-headers.example>'
+    payload['Message-ID'] = f'<{msgid}@protected-headers.example>'
 
     msg = email.message.MIMEPart(policy=email.policy.EmailPolicy(max_line_length=64))
     # Example transit header that is not part of the protected headers:
