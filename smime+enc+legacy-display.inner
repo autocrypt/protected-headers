@@ -1,0 +1,40 @@
+Content-Type: multipart/mixed; boundary="6ae0cc9247"
+From: Alice Lovelace <alice@smime.example>
+To: Bob Babbage <bob@smime.example>
+Date: Wed, 27 Nov 2019 01:27:00 -0700
+Subject: BarCorp contract signed, let's go!
+Message-ID: <smime+enc+legacy-display@protected-headers.example>
+
+--6ae0cc9247
+content-type: text/rfc822-headers; protected-headers="v1"
+Content-Disposition: inline
+
+Subject: BarCorp contract signed, let's go!
+
+--6ae0cc9247
+Content-Type: text/plain; charset="us-ascii"
+
+Hi Bob!
+
+I just signed the contract with BarCorp and they've set us up with
+an account on their system for testing.
+
+The account information is:
+
+        Site: https://barcorp.example/
+    Username: examplecorptest
+    Password: correct-horse-battery-staple
+
+Please get the account set up and apply the test harness.
+
+Let me know when you've got some results.
+
+(this is the 'smime+enc+legacy-display' message)
+
+Thanks, Alice
+-- 
+Alice Lovelace
+President
+Example Corp
+
+--6ae0cc9247--

@@ -91,13 +91,22 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'sk': b'09e8f2a19d9e97deea7d51ee7d401be8763ab0377b6f30a68206e0bed4a0baec',
         'minute': 24,
     },
+    'smime+enc+legacy-display': {
+        'encrypt': True,
+        'legacy': True,
+        'multipart': False,
+        'signed': False,
+        'smime': True,
+        'sk': b'e94f6aaef7f14d6ceeac770c46d7f4885e81fbeaf1462d0fdadfce6c581525e2',
+        'minute': 27,
+    },
     'unfortunately-complex': {
         'encrypt': True,
         'multilayer': True,
         'legacy': True,
         'multipart': True,
         'sk': b'1c489cfad9f3c0bf3214bf34e6da42b7f64005e59726baa1b17ffdefe6ecbb52',
-        'minute': 27,
+        'minute': 30,
     },
 }
 
@@ -622,11 +631,14 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes,int]]) -> email
     msg['MIME-Version'] = '1.0'
 
     if params.get('smime', False):
-        # FIXME: consider multipart/signed inner layer?
-        # create PKCS7 SignedData part
-        p7sigpart = email.message.MIMEPart(policy=email.policy.EmailPolicy(max_line_length=64))
-        p7sigpart = alice_x509.onepart_sig(payload, when, p7sigpart)
-        msg = alice_x509.encrypt(p7sigpart, when, [bob_x509], msg)
+        if params.get('signed', True):
+            # FIXME: consider multipart/signed inner layer?
+            # create PKCS7 SignedData part
+            p7sigpart = email.message.MIMEPart(policy=email.policy.EmailPolicy(max_line_length=64))
+            inner = alice_x509.onepart_sig(payload, when, p7sigpart)
+        else:
+            inner = payload
+        msg = alice_x509.encrypt(inner, when, [bob_x509], msg)
     else:
         if params['multilayer']:
             # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed

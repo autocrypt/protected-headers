@@ -951,7 +951,7 @@ Unwrapping the encryption Cryptographic Layer yields the following content:
 @@pgpmime-multilayer+legacy-display.inner@@
 ~~~
 
-Signed and Encrypted S/MIME Message with Protected Headers and Legacy Display
+Signed and Encrypted S/MIME Message with Protected Headers and Legacy Display {#smime-sign-enc-legacy}
 -----------------------------------------------------------------------------
 
 This shows the same signed and encrypted S/MIME message as {{smime-sign-enc}}, but formulated with a Legacy Display part so that
@@ -994,6 +994,38 @@ Unwrapping the inner Cryptographic Layer yields the Cryptographic Payload, which
 @@smime+sign+enc+legacy-display.inner.inner@@
 ~~~
 
+Encrypted-only (unsigned) S/MIME Message with Protected Headers and Legacy Display
+----------------------------------------------------------------------------------
+
+This shows the same encrypted message as {{smime-sign-enc-legacy}}, but formulated without a signature layer, so it is "encrypted-only".
+
+Note that the lack of any signature layer means that the only forms of cryptographic protection these header receive is confidentiality.
+
+An arbitrary adversary could forge a message with arbitrary headers (and content), and package it in this same form.
+Consequently, the only thing "protected" about the headers in this example is confidentiality for any obscured headers (just the `Subject` in this case).
+
+Presenting the cryptographic properties of the headers of such a message in a meaningful way to the end user is a subtle and challenging task, which this document cannot cover.
+
+Its MIME message structure is:
+
+~~~
+└─╴application/pkcs7-mime smime-type="enveloped-data"
+ ↧ (decrypts to)
+ └┬╴multipart/mixed ← Cryptographic Payload
+  ├─╴text/rfc822-headers ← Legacy Display
+  └─╴text/plain
+~~~
+
+
+~~~
+@@smime+enc+legacy-display.eml@@
+~~~
+
+Unwrapping the single-layer Cryptographic Envelope of this message yields the following MIME structure:
+
+~~~
+@@smime+enc+legacy-display.inner@@
+~~~
 
 An Unfortunately Complex Example
 --------------------------------
