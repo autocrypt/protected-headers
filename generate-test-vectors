@@ -370,7 +370,7 @@ def get_pgp_sigpart(pgpsig:pgpy.PGPSignature) -> email.message.MIMEPart:
     del sigpart['Content-Transfer-Encoding'] # ASCII-armored PGP Signature data is 7-bit clean
     return sigpart
 
-def signed(params:Dict[str,Union[bool,bytes,int]]) -> email.message.Message:
+def signed(params:Dict[str,Union[bool,bytes,int]], msgid:str) -> email.message.Message:
     # seconds since the unix epoch
     if params.get('smime', False):
         # smime signatures are later because the certs are later
@@ -393,6 +393,8 @@ def signed(params:Dict[str,Union[bool,bytes,int]]) -> email.message.Message:
     payload.set_content(f'''Bob, we need to cancel this contract.
 
 Please start the necessary processes to make that happen today.
+
+(this is the '{msgid}' message)
 
 Thanks, Alice
 {dotsig_separator}
@@ -458,7 +460,7 @@ def cleanpart(part:email.message.MIMEPart) -> None:
     del part['MIME-Version'] # MIME-Version on subparts is meaningless
     del part['Content-Transfer-Encoding'] # the test vector data is 7-bit clean
 
-def make_payload(multipart:bool=False) -> email.message.MIMEPart:
+def make_payload(multipart:bool, msgid:str) -> email.message.MIMEPart:
     payload:email.message.MIMEPart = email.message.MIMEPart()
     dotsig_separator = '-- ' # this is a totally different kind of "signature"
     txt = f'''Hi Bob!
@@ -475,6 +477,8 @@ The account information is:
 Please get the account set up and apply the test harness.
 
 Let me know when you've got some results.
+
+(this is the '{msgid}' message)
 
 Thanks, Alice
 {dotsig_separator}
@@ -504,6 +508,8 @@ The account information is:
 Please get the account set up and apply the test harness.
 </p><p>
 Let me know when you've got some results.
+</p><p>
+(this is the '{msgid}' message)
 </p><p>
 Thanks, Alice<br/>
 {dotsig_separator}<br/>
@@ -577,7 +583,7 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes,int]]) -> email
     # make the Cryptographic Payload:
     if not isinstance(params['multipart'], bool):
         raise TypeError('multipart is not a bool')
-    payload = make_payload(params['multipart'])
+    payload = make_payload(params['multipart'], msgid)
 
     subj = 'BarCorp contract signed, let\'s go!'
 
@@ -696,7 +702,7 @@ if __name__ == '__main__':
     elif sys.argv[1] in cfg:
         params = cfg[sys.argv[1]]
         if not params['encrypt']:
-            msg = signed(params)
+            msg = signed(params, sys.argv[1])
         else:
             msg = signed_encrypted(sys.argv[1], params)
         print(msg.as_string(maxheaderlen=MAXHEADERLEN))
