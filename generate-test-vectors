@@ -43,7 +43,7 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'multipart': False,
         'minute': 6,
     },
-    'pgpmime-signed+encrypted': {
+    'pgpmime-sign+enc': {
         'encrypt': True,
         'multilayer': False,
         'legacy': False,

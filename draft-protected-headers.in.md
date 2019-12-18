@@ -801,13 +801,13 @@ The session key for this message's Cryptographic Layer is an AES-256 key with va
 If Bob's MUA is capable of interpreting these protected headers, it should render the `Subject:` of this message as `BarCorp contract signed, let's go!`.
 
 ~~~
-@@pgpmime-signed+encrypted.eml@@
+@@pgpmime-sign+enc.eml@@
 ~~~
 
 Unwrapping the Cryptographic Layer yields the following content:
 
 ~~~
-@@pgpmime-signed+encrypted.inner@@
+@@pgpmime-sign+enc.inner@@
 ~~~
 
 Signed and Encrypted S/MIME Message with Protected Headers {#smime-sign-enc}
