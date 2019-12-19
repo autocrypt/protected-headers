@@ -1016,6 +1016,7 @@ Its MIME message structure is:
   └─╴text/plain
 ~~~
 
+For this message, the session key is an AES-256 key with value `e94f6aaef7f14d6ceeac770c46d7f4885e81fbeaf1462d0fdadfce6c581525e2` (in hex).
 
 ~~~
 @@smime-enc+legacy-disp.eml@@
