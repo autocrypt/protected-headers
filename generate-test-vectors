@@ -214,7 +214,7 @@ class IdX509:
     def mailaddr(self) -> str:
         return str(self._x509.extensions.get_extension_for_oid(ExtensionOID.SUBJECT_ALTERNATIVE_NAME).value.get_values_for_type(x509.general_name.RFC822Name)[0])
 
-    def encrypt(self, data:email.message.MIMEPart, when:datetime.datetime, others:List[object], msg:email.message.Message) -> email.message.Message:
+    def encrypt(self, data:email.message.MIMEPart, when:datetime.datetime, others:List[object], msg:email.message.MIMEPart) -> email.message.MIMEPart:
         txt:str = data.as_string(policy=email.policy.EmailPolicy(linesep='\r\n'))
         recips:List[NamedTemporaryFile] = []
         me = NamedTemporaryFile()
@@ -380,12 +380,15 @@ def get_pgp_sigpart(pgpsig:pgpy.PGPSignature) -> email.message.MIMEPart:
     return sigpart
 
 def signed(params:Dict[str,Union[bool,bytes,int]], msgid:str) -> email.message.Message:
+    minute = params['minute']
+    if not isinstance(minute, int):
+        raise TypeError('"minute" must be an integer!')
     # seconds since the unix epoch
     if params.get('smime', False):
         # smime signatures are later because the certs are later
-        posixtime = (1574813489 // 3600)*3600 + 60*params['minute']
+        posixtime = (1574813489 // 3600)*3600 + 60*minute
     else:
-        posixtime = (1571577491 // 3600)*3600 + 60*params['minute']
+        posixtime = (1571577491 // 3600)*3600 + 60*minute
     # America/New_York during DST:
     tz = datetime.timezone(datetime.timedelta(hours=-4))
     # 2019-10-20T09:18:11-0400
@@ -568,12 +571,15 @@ Example Corp<br/>
     return payload
 
 def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes,int]]) -> email.message.Message:
+    minute = params['minute']
+    if not isinstance(minute, int):
+        raise TypeError('"minute" must be an integer!')
     # seconds since the unix epoch
     if params.get('smime', False):
         # smime signatures are later because the certs are later
-        posixtime = (1574843489 // 3600)*3600 + 60*params['minute']
+        posixtime = (1574843489 // 3600)*3600 + 60*minute
     else:
-        posixtime = (1571667491 // 3600)*3600 + 60*params['minute']
+        posixtime = (1571667491 // 3600)*3600 + 60*minute
     # America/Los_Angeles during DST:
     tz = datetime.timezone(datetime.timedelta(hours=-7))
     # 2019-10-21T07:18:11-0700 for PGP/MIME
