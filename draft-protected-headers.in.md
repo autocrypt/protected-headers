@@ -994,7 +994,7 @@ Unwrapping the inner Cryptographic Layer yields the Cryptographic Payload, which
 @@smime-sign+enc+legacy-disp.inner.inner@@
 ~~~
 
-Encrypted-only (unsigned) S/MIME Message with Protected Headers and Legacy Display
+Encrypted-only (unsigned) S/MIME Message with Protected Headers and Legacy Display {#smime-encrypted-only}
 ----------------------------------------------------------------------------------
 
 This shows the same encrypted message as {{smime-sign-enc-legacy}}, but formulated without a signature layer, so it is "encrypted-only".
@@ -1026,6 +1026,42 @@ Unwrapping the single-layer Cryptographic Envelope of this message yields the fo
 
 ~~~
 @@smime-enc+legacy-disp.inner@@
+~~~
+
+Encrypted-only (unsigned) PGP/MIME Message with Protected Headers and Legacy Display
+------------------------------------------------------------------------------------
+
+This shows a comparable encrypted-only (unsigned) message, like {{smime-encrypted-only}} , but using PGP/MIME instead of S/MIME.
+
+Note that the lack of any signature layer means that the only forms of cryptographic protection these header receive is confidentiality.
+
+An arbitrary adversary could forge a message with arbitrary headers (and content), and package it in this same form.
+Consequently, the only thing "protected" about the headers in this example is confidentiality for any obscured headers (just the `Subject` in this case).
+
+Presenting the cryptographic properties of the headers of such a message in a meaningful way to the end user is a subtle and challenging task, which this document cannot cover.
+
+Its MIME message structure is:
+
+~~~
+└┬╴multipart/encrypted
+ ├─╴application/pgp-encrypted
+ └─╴application/octet-stream
+  ↧ (decrypts to)
+  └┬╴multipart/mixed ← Cryptographic Payload
+   ├─╴text/rfc822-headers ← Legacy Display
+   └─╴text/plain
+~~~
+
+For this message, the session key is an AES-256 key with value `4f3e7e3cb4a49747f88d232601fa98a29d7427e8f80882464cfbca3dcb847356` (in hex).
+
+~~~
+@@pgpmime-enc+legacy-disp.eml@@
+~~~
+
+Unwrapping the single-layer Cryptographic Envelope of this message yields the following MIME structure:
+
+~~~
+@@pgpmime-enc+legacy-disp.inner@@
 ~~~
 
 An Unfortunately Complex Example

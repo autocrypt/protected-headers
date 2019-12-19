@@ -100,13 +100,21 @@ cfg:Dict[str,Dict[str,Union[bool,bytes,int]]] = {
         'sk': b'e94f6aaef7f14d6ceeac770c46d7f4885e81fbeaf1462d0fdadfce6c581525e2',
         'minute': 27,
     },
+    'pgpmime-enc+legacy-disp': {
+        'encrypt': True,
+        'legacy': True,
+        'multipart': False,
+        'signed': False,
+        'sk': b'4f3e7e3cb4a49747f88d232601fa98a29d7427e8f80882464cfbca3dcb847356',
+        'minute': 30,
+    },
     'unfortunately-complex': {
         'encrypt': True,
         'multilayer': True,
         'legacy': True,
         'multipart': True,
         'sk': b'1c489cfad9f3c0bf3214bf34e6da42b7f64005e59726baa1b17ffdefe6ecbb52',
-        'minute': 30,
+        'minute': 33,
     },
 }
 
@@ -646,7 +654,7 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes,int]]) -> email
             inner = payload
         msg = alice_x509.encrypt(inner, when, [bob_x509], msg)
     else:
-        if params['multilayer']:
+        if params.get('signed', True) and params['multilayer']:
             # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
             # in order for the signature creation time to match the message Date header:
             pgpsig = alice_key.sign(pgpy.PGPMessage.new(str(payload), cleartext=True), created=when)
@@ -666,9 +674,10 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes,int]]) -> email
             payloadmsg = pgpy.PGPMessage.new(str(sigwrapper), format='m')
         else:
             payloadmsg = pgpy.PGPMessage.new(str(payload), format='m')
-            # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
-            # in order for the signature creation time to match the message Date header:
-            payloadmsg |= alice_key.sign(payloadmsg, created=when)
+            if params.get('signed', True):
+                # Note that https://github.com/SecurityInnovation/PGPy/issues/291 needs to be fixed
+                # in order for the signature creation time to match the message Date header:
+                payloadmsg |= alice_key.sign(payloadmsg, created=when)
 
         cipher = pgpy.constants.SymmetricKeyAlgorithm.AES256
 
