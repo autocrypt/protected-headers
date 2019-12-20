@@ -1,0 +1,49 @@
+Received: from localhost (localhost [127.0.0.1]); Mon, 21 Oct 2019
+ 07:30:28 -0700 (UTC-07:00)
+MIME-Version: 1.0
+Content-Type: multipart/encrypted; boundary="c073ecaef3";
+ protocol="application/pgp-encrypted"
+From: Alice Lovelace <alice@openpgp.example>
+To: Bob Babbage <bob@openpgp.example>
+Date: Mon, 21 Oct 2019 07:30:00 -0700
+Message-ID: <pgpmime-enc+legacy-disp@protected-headers.example>
+Subject: ...
+
+--c073ecaef3
+content-type: application/pgp-encrypted
+
+Version: 1
+
+--c073ecaef3
+content-type: application/octet-stream
+
+-----BEGIN PGP MESSAGE-----
+
+wV4DR2b2udXyHrYSAQdA6nddyMIcMMZsRk1+ogiaTnzBVuOzWjE35mzdAt6tr1cw
+IBj3erF1NwZEeGRTGZxOmKvhudVXQyUOCCUDvxbHIfp8/wgZY2mVFNxTj4MFvoOC
+wcDMA3wvqk35PDeyAQv/dUVdWVxqzgFQ8MuJGbFzCa7n557plPFCpvoTvXthhp3p
+yzcqEKpF9xb2l8xvWffWkFELJuld7WJcemTZoOMHxUUv3SzXvHr7kNU1cNOOtXyI
+lmmy1IGqbgfmrTCz+B1If6o6wSXW1Nhajl4G3wqjUEHuo9ekXJDIpqgB7Kr4hGS1
+7bNES8gWPJstCNwXxwLrc2ViIXVNg6IxIcQC/usscOHR+6FVdJ7G7S5oo1w6h8cA
+m2cl0azJclV8HUbLpjRts3FFYlw7AA9WbcsNJSdcp5r75t/+yCaPzEQWnxl6eHEm
+3QWRJyLMOh5/e4CvXWtxT+EypvHr1mAW+XlmkWtYS3Ya9pi3F1hp/XqFdyXQfrAD
+OohzLOkP0IoxaRpbHgnqbGHWfPFiIFbwhu68qd7fmJQFyUTNeP5TUR0CEe/O1GBs
+MM0m+dJCBx1lu+1nNuvKnbpkdQlNAFO80eYckEfFqfo1wsX8LEn0h/WgUqbTUHKw
+PeXPy2NExIKoQmHQZEKf0sGUAVZ4IIPx06CY9XspgI/jInXiZxOWHoWy78hAV5J0
+hxYellsjFYqAK5YuJjBu4aPy8mKHq4vF2y9S1Mgb5+ZCIBgRHnTEq2n1LLy7INei
+SpmmZolWgLPPi+NvyEm+wHlIZ2/r1bKN4sHAtu+nod+NA1RfBxgalHcCk0DEK4gR
+WgbJQ0DzgiAJk4TrLyZ2v3rfBUE2ieMkkCqWdmYKxgQbyGNlB7aug/QFXR8DdQwT
+Q7ZJstis3g/PjcCchw91GgZcmBJGW5EaPdF1oz1ZwZjjS9Go3LyMRz/Ap7QaoNin
+BrOvOSAH+SfCvFgy7ndT9vMmlaeD/5q78EtL2On00ZZ4c4otJFuwBoWrlNnk5Vyg
+vXsC3nekfeK7z1mukG49DSoctNidc0dhC2jSl3DJMeysGUxM0podI3dmXpftamp4
+sdVFGaf1iX7N9PYYY1v7eVk5idq81rEDrmgb3V2QETqGvserabD29aeWSloZoI1E
+QikZxLgM2Gu6sWAk0DxfN3taYTpzYmpzIqXvYUVLgRE940wQRUUOGBoEAATVD3gB
+w34+L7tRHAzttdzRFU9+TR3LuCDswhC2kKSTHhGr1gpal87RfuLay7SNv2YLw/YZ
+HCq/MofpiDlHZWcubr8OSz2wpLYvLmv0uUXeJ5Zn68JfRd1rKkNxkoWCXgwhKkSX
+3U98MpxetVZBp8XlYljNYQckm7AHaIdQaO1WAk4y43YMGXrrAgUriHLAlwG3FtU+
+UNe7bBVOUKMmhC+ba9XaQhMku+MeAokVh8garFGXsK0tb220lXw=
+=Jni9
+-----END PGP MESSAGE-----
+
+--c073ecaef3--
+
