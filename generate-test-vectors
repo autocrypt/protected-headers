@@ -612,7 +612,7 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes,int]]) -> email
     if params['legacy']:
         legacydisplay = email.message.MIMEPart()
         legacydisplay.set_content(f'Subject: {subj}\n')
-        legacydisplay.set_type('text/rfc822-headers')
+        legacydisplay.set_type('text/plain')
         legacydisplay.set_param('protected-headers', 'v1')
         legacydisplay.set_charset(None) # header data is always 7-bit clean
         del legacydisplay['MIME-Version'] # MIME-Version on subparts is meaningless

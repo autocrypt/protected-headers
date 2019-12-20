@@ -378,7 +378,7 @@ A reasonable sequential algorithm for composing a message *with* protected heade
 The revised algorithm for applying cryptographic protection to a message is as follows:
 
 - if `crypto` contains encryption, and `legacy` is `true`, and `obscures` contains any user-facing headers (see {{user-facing-headers}}), wrap `orig` in a structure that carries a Legacy Display part:
-  - Create a new MIME leaf part `legacydisplay` with header `Content-Type: text/rfc822-headers; protected-headers="v1"`
+  - Create a new MIME leaf part `legacydisplay` with header `Content-Type: text/plain; protected-headers="v1"`
   - For each obscured header name `obh` in `obscures`:
      - If `obh` is user-facing:
         - Add `obh: origheaders[ob]` to the body of `legacydisplay`.  For example, if `origheaders['Subject']` is `lunch plans?`, then add the line `Subject: lunch plans?` to the body of `legacydisplay`
@@ -418,7 +418,7 @@ Message Generation: Including a Legacy Display Part
 
 A generating MUA that wants to make an Obscured Subject (or any other user-facing header) visible to a recipient using a legacy MUA SHOULD modify the Cryptographic Payload by wrapping the intended body of the message in a `multipart/mixed` MIME part that prefixes the intended body with a Legacy Display part.
 
-The Legacy Display part MUST be of Content-Type `text/rfc822-headers`, and MUST contain a `protected-headers` parameter whose value is `v1`.
+The Legacy Display part MUST be of Content-Type `text/plain` or `text/rfc822-headers` (`text/plain` is RECOMMENDED), and MUST contain a `protected-headers` parameter whose value is `v1`.
 It SHOULD be marked with `Content-Disposition: inline` to encourage recipients to render it.
 
 The contents of the Legacy Display part MUST be only the user-facing headers that the sending MUA intends to obscure after encryption.
@@ -436,7 +436,7 @@ Consider a message whose Cryptographic Payload, before encrypting, that would ha
 When adding a Legacy Display part, this structure becomes:
 
     V └┬╴multipart/mixed
-    W  ├─╴text/rfc822-headers ("Legacy Display" part)
+    W  ├─╴text/plain ("Legacy Display" part)
     X  └┬╴multipart/alternative ("original body")
     Y   ├─╴text/plain
     Z   └─╴text/html
@@ -469,7 +469,7 @@ A receiving MUA acting on a message SHOULD detect the presence of a Legacy Displ
   - The Cryptographic Envelope must contain an encrypting Cryptographic Layer
   - The Cryptographic Payload must have a `Content-Type` of `multipart/mixed`
   - The Cryptographic Payload must have exactly two subparts
-  - The first subpart of the Cryptographic Payload must have a `Content-Type` of `text/rfc822-headers`
+  - The first subpart of the Cryptographic Payload must have a `Content-Type` of `text/plain` or `text/rfc822-headers`
   - The first subpart of the Cryptographic Payload's `Content-Type` must contain a property of `protected-headers`, and its value must be `v1`.
  - If all of the above are true, then the first subpart is the Legacy Display part, and the second subpart is the "original body".  Otherwise, the message does not have a Legacy Display part.
 
@@ -865,7 +865,7 @@ This PGP/MIME message is structured in the following way:
  └─╴application/octet-stream
    ↧ (decrypts to)
    └┬╴multipart/mixed ← Cryptographic Payload
-    ├─╴text/rfc822-headers ← Legacy Display Part
+    ├─╴text/plain ← Legacy Display Part
     └─╴text/plain
 ~~~
 
@@ -934,7 +934,7 @@ Such a PGP/MIME message might have the following structure:
   ↧ (decrypts to)
   └┬╴multipart/signed
    ├┬╴multipart/mixed ← Cryptographic Payload
-   │├─╴text/rfc822-headers ← Legacy Display Part
+   │├─╴text/plain ← Legacy Display Part
    │└─╴text/plain
    └─╴application/pgp-signature
 ~~~
@@ -963,7 +963,7 @@ Its MIME message structure is:
  └─╴application/pkcs7-mime smime-type="signed-data"
   ⇩ (unwraps to)
   └┬╴multipart/mixed ← Cryptographic Payload
-   ├─╴text/rfc822-headers ← Legacy Display Part
+   ├─╴text/plain ← Legacy Display Part
    └─╴text/plain 445 bytes
 ~~~
 
@@ -1012,7 +1012,7 @@ Its MIME message structure is:
 └─╴application/pkcs7-mime smime-type="enveloped-data"
  ↧ (decrypts to)
  └┬╴multipart/mixed ← Cryptographic Payload
-  ├─╴text/rfc822-headers ← Legacy Display
+  ├─╴text/plain ← Legacy Display
   └─╴text/plain
 ~~~
 
@@ -1048,7 +1048,7 @@ Its MIME message structure is:
  └─╴application/octet-stream
   ↧ (decrypts to)
   └┬╴multipart/mixed ← Cryptographic Payload
-   ├─╴text/rfc822-headers ← Legacy Display
+   ├─╴text/plain ← Legacy Display
    └─╴text/plain
 ~~~
 
@@ -1084,7 +1084,7 @@ This message has the following structure:
   ↧ (decrypts to)
   └┬╴multipart/signed
    ├┬╴multipart/mixed ← Cryptographic Payload
-   │├─╴text/rfc822-headers ← Legacy Display Part
+   │├─╴text/plain ← Legacy Display Part
    │└┬╴multipart/mixed
    │ ├┬╴multipart/alternative
    │ │├─╴text/plain
