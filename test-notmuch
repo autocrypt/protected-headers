@@ -44,9 +44,9 @@ gpg --quiet --batch --no-tty --pinentry-mode=loopback --passphrase '' --quick-ge
 gpg --quiet --batch --no-tty --yes --lsign alice@openpgp.example
 notmuch new --quiet
 notmuch config set index.decrypt true
-for x in $(./generate-test-vectors list-vectors); do
+for x in *.eml; do
     echo "inserting $x"
-    ./generate-test-vectors "$x" | notmuch insert
+    < "$x" notmuch insert
 done
 notmuch count
 for x in $(./generate-test-vectors list-vectors); do
