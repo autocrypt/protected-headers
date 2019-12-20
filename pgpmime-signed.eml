@@ -1,42 +1,44 @@
 Received: from localhost (localhost [127.0.0.1]); Sun, 20 Oct 2019
- 09:18:28 -0400 (UTC-04:00)
+ 09:00:17 -0400 (UTC-04:00)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="1790868a14";
+Content-Type: multipart/signed; boundary="fee108fc88";
  protocol="application/pgp-signature"; micalg="pgp-sha512"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
-Date: Sun, 20 Oct 2019 09:18:11 -0400
+Date: Sun, 20 Oct 2019 09:00:00 -0400
 Subject: The FooCorp contract
-Message-ID: <signed@protected-headers.example>
+Message-ID: <pgpmime-signed@protected-headers.example>
 
---1790868a14
+--fee108fc88
 Content-Type: text/plain; charset="us-ascii"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
-Date: Sun, 20 Oct 2019 09:18:11 -0400
+Date: Sun, 20 Oct 2019 09:00:00 -0400
 Subject: The FooCorp contract
-Message-ID: <signed@protected-headers.example>
+Message-ID: <pgpmime-signed@protected-headers.example>
 
 Bob, we need to cancel this contract.
 
 Please start the necessary processes to make that happen today.
 
+(this is the 'pgpmime-signed' message)
+
 Thanks, Alice
 -- 
 Alice Lovelace
 President
-OpenPGP Example Corp
+Example Corp
 
---1790868a14
+--fee108fc88
 content-type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
 
-wnUEARYKAB0FAl2sXpMWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
-jq3uAP4/K66bZXT4jFsmKLztz2Ihxjftgf3TaeD2uL05yWdJAQEAjRdWIh35C6MP
-utqkLnFeLpkTwrMnncdF/G+so/yXvQA=
-=UMd4
+wnUEARYKAB0FAl2sWlAWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
+jn6JAQD1GQi7IXJkT6sYvAtLhY1rYQGeTkPqHDt5xoXeG/TeLgEAhC7cR6321fcm
+DZjsl9DTg+QYEcqjDotFL6GvZiwUEQo=
+=eQUi
 -----END PGP SIGNATURE-----
 
---1790868a14--
+--fee108fc88--
 

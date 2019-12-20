@@ -5,7 +5,7 @@ Content-Type: multipart/signed; boundary="c72d4fa142";
 Content-Type: multipart/mixed; boundary="6ae0cc9247"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
-Date: Mon, 21 Oct 2019 07:18:11 -0700
+Date: Mon, 21 Oct 2019 07:33:00 -0700
 Subject: BarCorp contract signed, let's go!
 Message-ID: <unfortunately-complex@protected-headers.example>
 
@@ -39,11 +39,13 @@ Please get the account set up and apply the test harness.
 
 Let me know when you've got some results.
 
+(this is the 'unfortunately-complex' message)
+
 Thanks, Alice
 -- 
 Alice Lovelace
 President
-OpenPGP Example Corp
+Example Corp
 
 --32c4d5a901
 Content-Type: text/html; charset="us-ascii"
@@ -65,11 +67,13 @@ Please get the account set up and apply the test harness.
 </p><p>
 Let me know when you've got some results.
 </p><p>
+(this is the 'unfortunately-complex' message)
+</p><p>
 Thanks, Alice<br/>
 -- <br/>
 Alice Lovelace<br/>
 President<br/>
-OpenPGP Example Corp<br/>
+Example Corp<br/>
 </p></body></html>
 
 --32c4d5a901--
@@ -100,10 +104,10 @@ content-type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
 
-wnUEARYKAB0FAl2tviMWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
-jrR3AP9H2o1HBGLwkz5qzBgGmXsXLrc2xbluWtYmiDQcnq3e9QEA+DaBG1gEXasg
-7OfAEqT4DrOivtNo18CxpIPrskgOXws=
-=Ul2/
+wnUEARYKAB0FAl2twZwWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
+jmpkAP9jaWeIjHro7WUSGpx2o5c62uor3twLgIxU3WXNcjZczwEAubpUzpnNBYdD
+tI9IXlyc9GPKHc2/GcYgnFvaU4BS8QU=
+=53F9
 -----END PGP SIGNATURE-----
 
 --c72d4fa142--

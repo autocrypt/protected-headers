@@ -1,53 +1,53 @@
 Received: from localhost (localhost [127.0.0.1]); Mon, 21 Oct 2019
- 07:18:39 -0700 (UTC-07:00)
+ 07:18:28 -0700 (UTC-07:00)
 MIME-Version: 1.0
-Content-Type: multipart/encrypted; boundary="8f1c37571f";
+Content-Type: multipart/encrypted; boundary="92481a870a";
  protocol="application/pgp-encrypted"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
-Date: Mon, 21 Oct 2019 07:18:11 -0700
-Message-ID: <sign+enc+legacy-display@protected-headers.example>
+Date: Mon, 21 Oct 2019 07:18:00 -0700
+Message-ID: <pgpmime-sign+enc+legacy-disp@protected-headers.example>
 Subject: ...
 
---8f1c37571f
+--92481a870a
 content-type: application/pgp-encrypted
 
 Version: 1
 
---8f1c37571f
+--92481a870a
 content-type: application/octet-stream
 
 -----BEGIN PGP MESSAGE-----
 
-wV4DR2b2udXyHrYSAQdARLfz+1WBB1rOgBFbyrPQXZkCoiK/aA7SpG8mY39S8Tow
-cuEVQ1/a4B0VfwiKMyXomehg4GMo7akIAd7nh1LIG26eW+JeEjOJLhjrcg4x5Cg/
-wcDMA3wvqk35PDeyAQv9Hu30CZtCMGeHCVyvPeZZuYUWtHDADt4Wo3rg5va5bUu1
-nZCV/7vo9worPUvhN+qqLP0t4l0KbdklNofLKggJt/+LgJ/IvJv4KhwK6PR10Cba
-Lu2uyzUJK33WKCnvPzqsgEuE4OmbGcIZki3Bo+hKLgr0wS1sNi5okybM5JMmrqTw
-GXEmHdtohx4/YFsAJ++b4WEWb26jflBbj7NwyXdAESb/lcxi5ZKqXerRJiaN2X/x
-O/CiwZwSw3LA7VlCwN8Jb9AR4KjjFHIi6pUOp5S7Iz0Hs0juA6862gsuOrfGN8q8
-1KkTUPwAw0lQSnSpMxsnRS3+zv1aeWnm8K+bt1Q0E/Nl1E0GYtwiEBLVWX1ZQYCr
-DgrgFBl3/kvx8e+L+b6bEF9GVckZSGrkzJJeMx1JzGaR5MtkEJThsZAlyrJVpMuf
-un4N1Xy11G3IWNMCl8SfvPdnaSrytVej2s3ItL+0sxy3wi4hhCXle/YJuFwPTbEP
-G8jkjJknuVd/6kxf85mT0sI1AfS//hCeieoyi9cjeBVGh39z7bonD2bSp5RfYKI5
-ANj5ANV+hWeB8TGmI7Ka6OOU/43MuilIRAu79M+XnFjMqDQWmRLhydgkThdc63+l
-LTt4jZRnUI2IjxsZ5Bgc13agpWzsStJcjRYz8QWOoANc+A74MCX75gsFn8NbQknR
-xa/rXpMEF6TulvgCtV/tDCXOv2hnpu+JhIqwLgKIspJih60R8oSIr5qzX3B4AAcc
-8Lr3cGrlohVtMDUYUkQF81+KsBWKJZWEvhZdQZC2nSzJSx5hgmw0D6ybYSGuCh9Z
-MyZbH38HJnwkZQWUYPyg4ui8XFi0PVY1WignaF6l0D0DhklzgkzO0Ey1BvEu4Zdg
-jkfUjYD4VnXNd4UyIwycfo8myrx3fqd5WcZRJmX9Njhlwn3a4l0adZlTIG9S0ytP
-VW9jijjGQ+IhizH+Q4jErcEuHJhNDCD0xOIpjQz68/NDm94BDmI2dyr07YOrQEQa
-ahDl7vMfMFQVncGp4zY0kYmNDOPSG3djCU5OhKA6dRz8cmigxvW0/CzMrOArMso3
-oW+EjldvkQIgeDwodARO8OLKKdQBQhcWIV4G3R8oaLXDxbP/3XAx7eU53jPi0ahW
-PbcD7IfHdrVVTyKLcolb0MqnP12gtnCmOwqWSA3D0aeuRGxIKCLnMVMID3I7OVjb
-1PMpXs4EsgIuVxWbm0qibVrw9yYd/4xRKKdZqYP+PCSo4aQEMzW7U+mWiZUmDE07
-4xzZlTd1qBRUgBKdteNjOcZ859hPZGREuG++JKBrL5Yr/kVBf8UFGLPES+8vslg3
-zMQ9K2FO50o4LxYyaKZEW9ihk2BbGB60+hiimtbpWjqZ79qZZ3PJqzd2Au7da7x4
-jKhOSvFAoLyze+8l2m+8uzGAQTh/1k6e3O6UcwdrV5Z4i41LZp2qdD7WBSfZD1tv
-IdvtbwnZ7YlLr/X0ESERPW4WWrDlHq4SDt5H16hgAbXVfYwmHxgAPawnIRLYVqZ6
-ViIf7Hfaqg==
-=QAR/
+wV4DR2b2udXyHrYSAQdAdS4Zumj9cPqaK5OsvshK03jIzeWWhFJWNWtAL8tEwDsw
+ZNP+5hgRWtUtz8YjDuG8j3c9RMGbP4AhFaybDn43tAVRdV9NTh8mwa4OK/PEJ/GW
+wcDMA3wvqk35PDeyAQwArJ5+7SB48EJ+1QD4LUOyHBS8FKFJN2w0ukdBratqAVNc
+At3bXVHrzQ3//IqYqOsxUtJaF5+TeTq7S0lMsLtXX91IUFZaqOnDo8Ztx+t+vBaF
+osZH14XXYDIVCZ+I/VZlxB0wlhfZG8l0oQ/+tOPY3gB8JPifPMEVGGKU0+7lK6+1
+zP7o7zYw2Di34QR0eJCTr7NBwyqq3elBismiBObJwGXfwYg5lRQwtKhjMRNJI2rH
+Z5NzNv3wmMj+jXXmJikvdvncd1mUGs/UIT5CXS6kLPO0unYVYn3cKl2783xrJhAX
+GLIUyj+YNbanVS8UkiL8xrkyOBtwdOnvDxLNyACuRq6HBR7DmT0TTCM3jHXC5OaF
+B6RLZiaiaExvhLXD2hxbmSNs5It2Ge+WQj4cUPVQPbBRasrSI1VLeSuD+gJdoW1k
+zahBL5Y+H/7iKMpyR5HFADmzoddCpHuiWqRaosxM5fa1qi8EqAkZEqRZx7ifGWue
+nMX5ymDk+0K1tRRY6wCk0sJGAcRzzRQ80qq4v7P7QbRtY+WjuqFJgQkyvfx7wEhI
+u/PsMKJasvoMqRLn3vAG+zy2FBoGpKF5utMN9FQ+8Dpgi37pwG1NurYdE1cbwCIq
+JdLEsMworNv8D3tyUwAyDtqVchV3vgeZT4NZ1boIcdKPkC7RCHeA/gpd6uhvOA02
+IkVsnyXwUesQWvkQ9kEH4mcF4PnahFC/5jUd2B1EMtVbFp4qkPuiDeSHzgqKj7pC
+XhNzHJqAMF/V70lNYC42EhhIi3LHnXM/Jg6+y/8Xa2jJgrQVz6ivkqAD8hXacbMI
+P6I3+SkyjMDuAR2po4PiVXHRz6v6xe7vnf8GqvhftcXX0QK+PtbitPtaanxtPYut
+jDBaT3K2c/q59co+RWLF9mzT/afvYaUWWZiBz50bru/dz0c0DuGChtfty2o7Xfr0
+uXuk0xoYwO+5wDrpm6cS2hEIPMZLY+mtrLMp+iGkhCxtqjVX/wcErvyGR7ADzsL3
+xeNxQXON4koAgrI07yiqtpn4i4PRrOXqP5z8Ja91ptMxBlUTdZIR06CA6WndoPP+
+fIsKoR/jLlQEerAacJXkL7eQjqKCFM2AaeYWqU2oWSxJpOEKr64s1chJzWMivGk6
+jE5Dn+FrrRYzC8dSwDeMrQNgkgcJeI0rrpYqJLiM84kSjuCOAq1sBdnoF2HzXXxZ
+8918n7zC6OQ43vzyN9zRxLYhNr5wwLDwfXBFahK/HdZTggxyOCuhGSz+Ib+hb7q3
+dMqC11hMwjmQtCXkKOkTERhPg1Hmwkl6/wNWMMADB9rjCQsXJpkMW+eUcXXVX0EB
+Nt2nHLU6P+OojNJOqPFHZdKdUBYqwdEjatgINO2fWPKRZCTQxp5lJXVO05cPUm1Q
+ew23Fh/B/Xfk6Jl9xw10v8n9N+jwF8RWae2p2k6kw8959pmXyIaJNTIEHg7OhVo5
+/iGtg4iwvtAcMhtqcC1PXS35+tbqBeDb13FBnv28Y4RD1f7ac1ZwM2Hr/N7VRAWQ
+D5quTi/ENEegoeYeMRjFt34MdT6oUAj8
+=U2CV
 -----END PGP MESSAGE-----
 
---8f1c37571f--
+--92481a870a--
 

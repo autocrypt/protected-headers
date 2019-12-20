@@ -1,13 +1,13 @@
-Content-Type: multipart/signed; boundary="a6b911f1d1";
+Content-Type: multipart/signed; boundary="80b307f18b";
  protocol="application/pgp-signature"; micalg="pgp-sha512"
 
---a6b911f1d1
+--80b307f18b
 Content-Type: text/plain; charset="us-ascii"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
-Date: Mon, 21 Oct 2019 07:18:11 -0700
+Date: Mon, 21 Oct 2019 07:12:00 -0700
 Subject: BarCorp contract signed, let's go!
-Message-ID: <multilayer@protected-headers.example>
+Message-ID: <pgpmime-layered@protected-headers.example>
 
 Hi Bob!
 
@@ -24,21 +24,23 @@ Please get the account set up and apply the test harness.
 
 Let me know when you've got some results.
 
+(this is the 'pgpmime-layered' message)
+
 Thanks, Alice
 -- 
 Alice Lovelace
 President
-OpenPGP Example Corp
+Example Corp
 
---a6b911f1d1
+--80b307f18b
 content-type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
 
-wnUEARYKAB0FAl2tviMWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
-jv/lAP95zG/boihWaRRYusB5KInnMqz8DM9CrxCO/Z67FoZvQAD/WJKfIW/UaBaG
-TvwLcfdYDnHVFi/sLCPzP7/+Rp/prQU=
-=X47R
+wnUEARYKAB0FAl2tvLAWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
+juW9AQCSOVOP81+DgM8na6/DUdwOInh3hNnJH5pMkpfrKyXzOwD/Sf1a7ywT1Ml6
+U0/6VUP49PV1b6b1JHvVvVTtaJ7M0wU=
+=Htmw
 -----END PGP SIGNATURE-----
 
---a6b911f1d1--
+--80b307f18b--

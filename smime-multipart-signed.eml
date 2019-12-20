@@ -1,11 +1,11 @@
 Received: from localhost (localhost [127.0.0.1]); Tue, 26 Nov 2019
- 20:11:46 -0400 (UTC-04:00)
+ 20:03:17 -0400 (UTC-04:00)
 MIME-Version: 1.0
 Content-Type: multipart/signed; boundary="179455ac56";
  protocol="application/pkcs7-signature"; micalg="sha-256"
 From: Alice Lovelace <alice@smime.example>
 To: Bob Babbage <bob@smime.example>
-Date: Tue, 26 Nov 2019 20:11:29 -0400
+Date: Tue, 26 Nov 2019 20:03:00 -0400
 Subject: The FooCorp contract
 Message-ID: <smime-multipart-signed@protected-headers.example>
 
@@ -13,7 +13,7 @@ Message-ID: <smime-multipart-signed@protected-headers.example>
 Content-Type: text/plain; charset="us-ascii"
 From: Alice Lovelace <alice@smime.example>
 To: Bob Babbage <bob@smime.example>
-Date: Tue, 26 Nov 2019 20:11:29 -0400
+Date: Tue, 26 Nov 2019 20:03:00 -0400
 Subject: The FooCorp contract
 Message-ID: <smime-multipart-signed@protected-headers.example>
 
@@ -21,11 +21,13 @@ Bob, we need to cancel this contract.
 
 Please start the necessary processes to make that happen today.
 
+(this is the 'smime-multipart-signed' message)
+
 Thanks, Alice
 -- 
 Alice Lovelace
 President
-OpenPGP Example Corp
+Example Corp
 
 --179455ac56
 Content-Transfer-Encoding: base64
@@ -53,14 +55,14 @@ cbsl3rag2enVP/f4qg/0mUuzkCI8sLXd+N5gAs9wdUZRcTB0gOnUAH9m7RrpqkdC
 ogKdypGEQHj6GiamJAe2WndOp4BZdBtBRzjfuzGCAdkwggHVAgEBMEUwLTErMCkG
 A1UEAxMiU2FtcGxlIExBTVBTIENlcnRpZmljYXRlIEF1dGhvcml0eQIUZ4K0WXNS
 S8H0cUcZavD9EYqqTAswCwYJYIZIAWUDBAIBoGkwGAYJKoZIhvcNAQkDMQsGCSqG
-SIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTkxMTI3MDAxMTI5WjAvBgkqhkiG9w0B
-CQQxIgQgR9BJRu6Dqubc3LjMGnqYdKicfD/LB/9wUK6MKbYGHxEwDQYJKoZIhvcN
-AQEBBQAEggEANdcpdLB7BrDYuV2c2W6QFUeRDApdayx9LdDAN1kZs1GuQfWfZG8M
-YiFgZEGYfg9KmgOwH+NRjSDZEOJhyQdLZNvrB0zZMwL7PWcIL8cUtBfPNNvEl21t
-wB6s87BPeK8ZyQ9Lzklk//VoqFWJRxQZr46VvuZoZ2Eeibm7Ba/xGQEiVOlwsel+
-V8lEhSighhOWv0fCBtlUmC7odG5ex1KiOm0/r7IIyggsbarG9PCOXA7s0AZjSMvH
-zXZi5qRhG4aEFvnthIEEUHxGkIJbyqqjhK9Iplg8LLrL2dQTlZfeglT649yfW9G6
-PqBZ33KBjivOnMwRW8kJfPYLycTpJQ65Qw==
+SIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTkxMTI3MDAwMzAwWjAvBgkqhkiG9w0B
+CQQxIgQgjUnJcuFqYcqSU3msMMGoefkv0+fVKg95/LMDoYbCinQwDQYJKoZIhvcN
+AQEBBQAEggEASSWU5JRwGLNvuV1fnC3tiG1xTE7Bm2glSjiQ43h+8+P5OLmR2zbd
+L/jJD8aFjlWHfCW3DssIqfbkrsASziQ0MU68wD4EV6VdVwxDD5kQdVGmMupP5NSr
+DZQ7Zs13oxRBB79AT8gy3Pyxro7aFe2JC3iUJ4WM4mdtyvkEitJ+lrL6NYMcNUJZ
+u5Upxj0PKj4DB1Ic2w5D5S2DImPwBIvQmZPasQgfUh5mYd60FEfl1PdrDusK0G/T
+BbmJQ0je9Sf/ccCSoj7EZX3V/tEWCT8DlJ4oJncMrwPIpOiNc+Cg6pQUpl3wFSel
+YRADXnvZyV9S1UgGAAo2H5imlQV/36DVFQ==
 
 --179455ac56--
 

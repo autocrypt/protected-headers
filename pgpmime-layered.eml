@@ -1,53 +1,53 @@
 Received: from localhost (localhost [127.0.0.1]); Mon, 21 Oct 2019
- 07:18:39 -0700 (UTC-07:00)
+ 07:12:28 -0700 (UTC-07:00)
 MIME-Version: 1.0
-Content-Type: multipart/encrypted; boundary="15d01ebd43";
+Content-Type: multipart/encrypted; boundary="0249cd01bf";
  protocol="application/pgp-encrypted"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
-Date: Mon, 21 Oct 2019 07:18:11 -0700
-Message-ID: <multilayer@protected-headers.example>
+Date: Mon, 21 Oct 2019 07:12:00 -0700
+Message-ID: <pgpmime-layered@protected-headers.example>
 Subject: ...
 
---15d01ebd43
+--0249cd01bf
 content-type: application/pgp-encrypted
 
 Version: 1
 
---15d01ebd43
+--0249cd01bf
 content-type: application/octet-stream
 
 -----BEGIN PGP MESSAGE-----
 
-wV4DR2b2udXyHrYSAQdAOgQDEkyc6EDXP9maqDSnaxSKQ5Cli2idlkJr/fiRJUkw
-FBc7t5vaz9x2HIE1M87W8fljvfK9HQIcLRxLo4kba3ZI7wLbDUSQP5SXzV2agnf5
-wcDMA3wvqk35PDeyAQv7BFf4oXdwgK7+GaFykpweiQV9PtdzyQUyAZKTjblmH53S
-bURXXxQaJVs1v5sqM85WMwgBbCQw2Gjs2K9l4JBWubC/ROO2AKG8odPaj1XA+FW4
-cW3jP1G/hoHRhTsWFOYQm/+1lfa7DRt5WVPkIBSHECHP7NW5slLB0uGJaeopU4bY
-ZY+65r3ZV3ieTkexwEVkcAdLHGzgpCXyYfj1JwLWWHAuJv96K137Q37J36g9T8wR
-hlkIDRqIorY2IexI2lv/PsEHXrzUw4RT4HllriGmHmRJA45QoijnFA3ei+IuhIPm
-OcQmlyICZL40fznOaRWYHqp2oLaJ8OVHTU/ZAYurVj+0vsc7qcfxF69S9LvTSInu
-CtcamqybdH56wd575OdFKKcng75M19ttIXNguejwMJR0ERL/4xh0y5oN9v5fYzUM
-LiK1HIBTjY9JW/jbeqr+InuwTAEvh7Vfzjg+8bMhJMVnTgjea3FSdcfxsrnsZp30
-JY6SC70on74Di/zmBg1Z0sIxAVYh7Vc++W0eUIeEj+Azc4mIfaDZ5U3hHk1OV8Lt
-XCJz6r/KzUuy3bogwhVUL76kMvuKw/3zQ5zI2YYDpAybsXtUhVA6hg6Zy4JTtJEU
-+Z0H0a2EU3CYPBG+ic0PzxAdTz7iDb9AvwpRgWJrgBQmZ5J8bWjgvRTKdt7e2cz8
-0ESrfetg+VSEJLWWipNZNzNGaHlUO7ypgwjYYKfX0VAq5rhWCk8079/n4Xzcn9mt
-9UaqfjvaV6FuRDFTW1YVkVJdndnC9vQzkHVb6MPFA4fp5H3aY/j3yvMa5YaePv1v
-3zA70nuFbe6j1RQO6KhiJBJA7x+MtnZFt6xByhdImVloSr7c9kfuRaFQ83YbwM5I
-vjrz29jB8+jG9msFeJ75ajFKpUiN1yVOltTQg+WS28osD3irb461X5YtJCCuD8+d
-i6EA7W9P/Hr1YJsaH1wFxYqEpvSClpHWUD/nMbUUWmhvTQ75yJyF1BDfEPmaHhsd
-vRBVkZgKdSUo8uNRsSakVWe+4D0U92P0kPyZog6LOOq5EILXnmtZpri6zGt0evgV
-qEc316nfQeWRism2KJot83TXIov6KIliB4THBo1Chnp/eCs634B4KF2Z1K2N4AHf
-8nIIfpJw60VqPrmOzUUvyabiqrebEkhJ7ZHesZJI+OL8UbaAFklaHMHv6PYWDyBl
-7XEwRV8MxqMADd094p5sPXOhj4kbCvHCAY08NFPGIPFVUuwE0YRvRhtVaqMVwf/o
-AHO6lGMdQqw1NhmRHkcdLK9qVdZvg5MPwm5w6n8/JvvsHkAVDpsBmvX9jeajI1pq
-X6b2cn/G9uNCM1K8zsYIbM/RMM1ILmTh1rgQjFc8S1xE2pQNydegk0JaQz/IqbAa
-GZy153vaUNzWSku5Ef3AjFP7YTyB+WRR+AHkAg2UawJq8FXR+KYMjWkg0BPBmhE+
-TXXt8IYUE0uudIAHplt4RWXfr1dfZH2UODdl2ZNyQExtPfTE4VUYtpCIrgSAERKD
-QBjq
-=ME+d
+wV4DR2b2udXyHrYSAQdAKQQlAyOJb+g2dmYjcYoicBC6H7NokDlRirL73dVA3Ccw
+Jkr2p4h09in3A0VRsfG+9CBDjMDn3MffiXmSgHKwmWlGqxt1OdNuSPk1ml9ibTr1
+wcDMA3wvqk35PDeyAQwApLk980VjHDEgZ4YrzpI1uX+kdp+fNCwfagK3XEgFlzKH
+lo2bnsQtsnO6SVQmIBHDpmIk5G0RzutjSmFJp7oLp3ykYH5QOe8o1QIa+f5oHA24
+HzpZh0J/5J6CTMXSKE5i9eNxDt6vQ4sLzBL1kYFdXZjVnPeG2hmegRcsOEhH1RQA
+laRAB2jORvlwSfw0wdCJd8yiHJovMDlW5DnNmehhCYlq1IT2ZkuCiqzu+4WVOeHx
+8P9OCkIBxB3Ud6BM09yIWI7S9PAavKdSuH1NMXSlSPF3qaUQ1wIOBAfimzsiShEb
+ctgXx2qK5XWJd0algTXzrfW3u94hgNk0I4tv+vqIJbOv2KY5qMPEPQKARN9SY5Jy
+E5EhLDUOmyn2zj3mPEeso97iEbWAN3CR5ZLJ8t6+SAChfvOmIgbtdW1DQ+BY7udO
+uSmZXBXUFHr3k6hL7N+4TYvpSDcKeO5kYAVCSi28dMp1JFrJWOsbyoCqN7QQFori
+kX2YYRhgvPCYbF8wO5zK0sJEAQ5DFKBmbEUoocHcRIu+J6xw0/wf9cAi+/RgjxPN
+QhFLTcidebxJWz3stVgqoidwaMHAFiIYUUguAEqwHmOrlF2ktI/cfneSVtY3L12J
+xykAsYqJBZsC4GGqR4BCBwRv691bF40CavZiK4XTCklx2cwo5viB3djU+JiwmZ4X
+715Ynwil6iuucc8u+ttnAIUvrzTA4m20pVi0oJU2+a5RwYvD2TPXE+ixwkrnx+dJ
+nQdW42GsVAWFHIiv2pO4tWzu7s3f5FuR2Oo/d8BXfQwojsenSPcVKzWotMTGFSgA
+qKdhPa9tzBeOKD1T+q1qgM2+2MCPOVMHtwSZ2nDYGYZK3Dk/PDcVNucXMDZaMSVh
+tsqGTUAP/pwNGtU9n2AMKl6r72CI8IiHoU3iKSnAzYgeLlHvF0hljfMZVNaS9ZW5
+EQC/T/kRZJ4MZZIgVmrRe9GuUwnYeK9pPS9quH1+WSL84grVAblDGfFsjcorZIEt
+/WTHnV3VGP3y4neOusQ65cQlFbsS74pOQ/00oP2soq4xk0crnL+rruqe5uReWBFa
+50NswPwejv+LDvckaSWrefphRlk0oYraKELftMQfQ0zq1SqjZ7hAr2WKOoZ7Zo+k
+1Xjit8ZRokYx3ugAgBBP4cxYhHGHeto50I+pb7TBTCHFGD0KSBqX+74w6JWN8Baw
+HrWUV7/o2itosw07OvRC4O4Z72DUJeD3eSyBih333fmY70vT68wQuiP8cznzqme1
+yE7vdge9pRE27sVWs2WdUqW+x9HVKe96Ox6xPvqKSfVBO2UeOau1TAifmp87rSJE
+RInq12RPT0XivnbyaehbbBUd+OAkY5Vjoqgfk5ZBcAFg5vkl8eP5FGdDR2Uvh0MN
+cQyrLebm1TgMkb9vxFvZZZRkopnJsh4be+grw8j8OdYoYS73UOBHzglj1CtGw9uH
+U3/kLtbiZHPDGvPKiTB9lrabaYD7//Ipr8ZlFVAwmpG6E9QIO635lYGJpLTFXK+G
+LuFPpxFBo5HIYkFfXOtUWu9izRDoCw==
+=CLBg
 -----END PGP MESSAGE-----
 
---15d01ebd43--
+--0249cd01bf--
 

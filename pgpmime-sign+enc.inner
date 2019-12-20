@@ -1,9 +1,9 @@
 Content-Type: text/plain; charset="us-ascii"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
-Date: Mon, 21 Oct 2019 07:18:11 -0700
+Date: Mon, 21 Oct 2019 07:09:00 -0700
 Subject: BarCorp contract signed, let's go!
-Message-ID: <signed+encrypted@protected-headers.example>
+Message-ID: <pgpmime-sign+enc@protected-headers.example>
 
 Hi Bob!
 
@@ -20,8 +20,10 @@ Please get the account set up and apply the test harness.
 
 Let me know when you've got some results.
 
+(this is the 'pgpmime-sign+enc' message)
+
 Thanks, Alice
 -- 
 Alice Lovelace
 President
-OpenPGP Example Corp
+Example Corp

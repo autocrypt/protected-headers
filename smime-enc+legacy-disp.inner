@@ -3,7 +3,7 @@ From: Alice Lovelace <alice@smime.example>
 To: Bob Babbage <bob@smime.example>
 Date: Wed, 27 Nov 2019 01:27:00 -0700
 Subject: BarCorp contract signed, let's go!
-Message-ID: <smime+enc+legacy-display@protected-headers.example>
+Message-ID: <smime-enc+legacy-disp@protected-headers.example>
 
 --6ae0cc9247
 content-type: text/rfc822-headers; protected-headers="v1"
@@ -29,7 +29,7 @@ Please get the account set up and apply the test harness.
 
 Let me know when you've got some results.
 
-(this is the 'smime+enc+legacy-display' message)
+(this is the 'smime-enc+legacy-disp' message)
 
 Thanks, Alice
 -- 

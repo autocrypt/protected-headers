@@ -1,51 +1,51 @@
 Received: from localhost (localhost [127.0.0.1]); Mon, 21 Oct 2019
- 07:18:39 -0700 (UTC-07:00)
+ 07:09:28 -0700 (UTC-07:00)
 MIME-Version: 1.0
-Content-Type: multipart/encrypted; boundary="bcde3ce988";
+Content-Type: multipart/encrypted; boundary="ca474fa70d";
  protocol="application/pgp-encrypted"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
-Date: Mon, 21 Oct 2019 07:18:11 -0700
-Message-ID: <signed+encrypted@protected-headers.example>
+Date: Mon, 21 Oct 2019 07:09:00 -0700
+Message-ID: <pgpmime-sign+enc@protected-headers.example>
 Subject: ...
 
---bcde3ce988
+--ca474fa70d
 content-type: application/pgp-encrypted
 
 Version: 1
 
---bcde3ce988
+--ca474fa70d
 content-type: application/octet-stream
 
 -----BEGIN PGP MESSAGE-----
 
-wV4DR2b2udXyHrYSAQdAifmSGlN6dUG8WjtsDsVf3RoFUu69cEhUQyVMaUBEaSAw
-EAtGxmoM2YY6y/87UXI2USJMj9PiFn7RuV0pAFVT6NwMAY1JgLX5qoSdKXuLZ9CA
-wcDMA3wvqk35PDeyAQv9HNVhvGMSyCXZjsu5LlLGPF/6XHnk3PtunCo8GpUd7Mg9
-zVDS0zK+dtePYHNgKZ47KLDBgu6XInVBWeeSkImaWjFirTmqp/GP20urKQ/phSkC
-vI88cEH+fCqeFxDcL5tb0RLm3/iv707CHvoOM2qCbV8WDSSvNY2FGlJZqqGO3mkE
-VhZFytVop12c/L5+PltIS0/P25KMoSuIIb9xenAncyLZ1a2M/NsgZjBqWeXFfQnZ
-ssMK1xOvNIYNxUzEws+U6un74OE5sBZeZCvM/nIf50iXvEQMxoc/MX2XFUA9Scid
-+bmy9nZCit0KQNk4ikrshgtxmG6xJfMv1IpnscQwMy9KfOAhnrVWFVHpzr+K7mXb
-yHHF4Ov1Cl2FvwHU6DujaoApkn/xg5BjbRZxfRfVF7LvZ3UJJ/v1XzGLv5LTL8Fr
-1S+Ql69M8yvftMiZ799dNgOT7jc4CY5yN7P2YQn5Z3Nm/gUWcGwuqwQecw0hs/87
-yCQzkDHAC62LL6+zHqc20sHbAeuQHcGttI9Vu8rEO+5OeDr3WjTB/UXvLKr/G9ty
-LUpaYYwFtNgMaRAg0niMV9xfwTFjLBmNkq/8N0mAOsZSO9lMZyUIfBiFbw5yWNzx
-TuKxZymZ3ts6ywvKOgzLNgF+AdtTQk5nkNIsh7Fd02RSl9heF3t47FXVSvBSo5KI
-FXuznjzK7VNl8fTp9MpBwp00Dai3jtKGQ3/XGiD4l/wa/QxfffojPAZ9UZpgA2Xx
-Uw3W4+zCNZNJ35QME6I2ysKwbgAQGFeKM57lLXrmIJWU7KEIDnc1MCBwsSt50yB8
-kIdSPXxK/Jon2wbATUN8Uuo3oLA2dpH8XncjrkqTooNjkK3uPrGNphDBVSMA5W5Z
-deHc9NmzETXLBPysc0LHWMUO8g4YnWB4sLq9ZBxTYYX9CYRJvdB8EZN4Dq+IUDVK
-W7Hu8oFkPRqU7oVa+utiZq5YvTXbIMJBWdUa8r8zlwz0jVsUJGBIPDWhs8Yse2JX
-54dNJRAy2X5M3KM1S2Aat1gHl35cft5pLYLp5/gs7GYgybhYfgXbcbBHE6/XTAtg
-L7ZbzN+AEDu24uPQaTN5jUA8MfQIkksRgIhZN3N8NBVltv4t+tbtIiaLLaQ/7Wdd
-X0BINwZxhBZHEtjljqf4VE4RlWpMriW+ezcrPU3zEcM62knjeCLCh9iseAuz1J1o
-R1o4DKwlVY9dJZigguO9kzz+K9n1/mpn8orV9kn5FyH9vs9ZF+RQiSHgpoZ3TKER
-iy4T7WPV1WzyPSTmlKktOGjgJ5nszKw8YarMjtXYiPNOShBWuBTxBeSyjCLhZ85m
-YAhS1znrJ9CzX3jjaZTHTd/5gYN7wVByUlw9OkyN2QQRFl6fg1xN6Tb79oGxDqh/
-BHb6PBgDtwnGmHdDmw==
-=rTjd
+wV4DR2b2udXyHrYSAQdARs+Kp7Y4dO9FvBjpM0xJPd0AqWIdJKH6Si0OlQHk7mYw
+VkAzQ51ttKJpI0lKai0vWimLw2jW4aPEitZVyw9M83t2/kBt/d32BF441IQ7BAII
+wcDMA3wvqk35PDeyAQwAkO1pFt4JrncDEZcBRLdgG4WRHWUD4g1msyzW0o7UdHKX
+8aRmvTFd8UV7rxW4LtUtC1S7I0kkPYJuZdqvCubH8CIdxvqfnq3wz+0E7JC3GMc9
+gu59HrPNLdjwpL1wSPugpvfIChzLbcUxO4/8Y1s9HnN6H3KVvrj6K8pM5cdRmt+t
+Eqhw3zxBioz+h6uC7TuucbZZtat9wBEAYYpK1IEbzjt9rmThvQpF3VBI+WPEQaP0
+hGN3ZmU6TuoizsJ6OQpcNbGiV54E4a3Z5BkJQzWnABrMFeQNWonk+clZKx+UpreY
+CV0+O3Yuu76QPrdTupPqGQucZ9bpVeeHdraqiBpHC1ue/V4yWMJPqelaAfyKsaKq
+7doLzTXmYLPkktRHybNAOMreKF2BWlu1TvhVcAxIXRDoLPjwgJTyi1BHgyl85StE
+KBW+6EtOLi2x9w4G+OEgepiUdCTgCVC3f68h7F+ynTzU5gKX3PbiJ6/5yQp9yAKz
+9tfgiH4vWTxXJ3v+BjPv0sHiAXpVHdUbBYCnm4K0O43huu22Gea3QRSEb1yRjqU5
+tZBSKl8quQdJJ/o/gm3CsKisb3RIeNXOWFPf1TPjvHH4hP2zVMPFNkDk3imkg4PG
+cGY+He71Q514OpPnL9xwDwZNJUL4ctgq6z+I6gzppP2/es5NELs8tBtnNw7XctQE
+Z+5wdvcuqac6TCVXNvssWjLXMMGErpyuWQHTRYvkRudvED6i/SvjcT3IHNuz5SP7
+1M2r//CNaIgWqjus+A4iMs9KEnHfvceA7bddviOBCOEYSakigF2XjuAbV9ImUgqe
+BXEJRfhuukJ78aONlbkIetUp/eDTygQuBQOBmz3xgTR941ZHpkOik740vzKyYhMm
+2bnF0S39ocOsxFYGh+llhZQrLZzslmDvPGOt0lFWPgOy+58/bacL0J+r9LTJXW1m
+cacs5Xy8MT2iBJzCGJsIBI6GcW0rGyvCnSiGgbR7xVUrZYRXrDpQ13OLO7XekE30
+ZrNWlOkwdy/4BcI9wgYZbhKBQ/pZNoWDnBTWY3curxB7vqaHdSyeXtz3Ftg37ZFE
+aTPD7EE3ebE15EU+Q9k7qVogEiIQQ3vXyOpJ+0bjuMOmJDNvN63nzKWakvmRQWwv
+FTrwoOYuNIBnPa6msYQDhlrkd+NZljRp5HMvM+UI7/J1yL5hngaf3JaRxJs+JjcO
+P1zqhr8aVdHCiWIrmrLdQnb7RRpz9t8yJg+4CjaH5vT5v7r1eqQB1h+Q4TtqWS7p
+forQvJiqGV5fTCGgMKlWtOLhesUcDJTqNaG3JfZR9lcI7KgiDvt1yCX8LFe82jCg
+Odcfd/5hbnweBN0YEDmh9+SZuLX+CgFerYEvJR5Az651c0+DPSzU4yDMiqkv4Mco
+TQB3p0XrfnAsq0XaVXfUZOCxEuc=
+=ZNqb
 -----END PGP MESSAGE-----
 
---bcde3ce988--
+--ca474fa70d--
 

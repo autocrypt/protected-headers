@@ -1,7 +1,7 @@
 Content-Type: text/plain; charset="us-ascii"
 From: Alice Lovelace <alice@smime.example>
 To: Bob Babbage <bob@smime.example>
-Date: Tue, 26 Nov 2019 20:11:29 -0400
+Date: Tue, 26 Nov 2019 20:06:00 -0400
 Subject: The FooCorp contract
 Message-ID: <smime-onepart-signed@protected-headers.example>
 
@@ -9,8 +9,10 @@ Bob, we need to cancel this contract.
 
 Please start the necessary processes to make that happen today.
 
+(this is the 'smime-onepart-signed' message)
+
 Thanks, Alice
 -- 
 Alice Lovelace
 President
-OpenPGP Example Corp
+Example Corp
