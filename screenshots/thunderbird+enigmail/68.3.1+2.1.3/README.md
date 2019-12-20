@@ -19,7 +19,49 @@ setup.
 Samples:
 
  - `pgpmime-signed`
-   ![pgpmime-signed](pgpmime-signed.png)
-   
+
+    ![pgpmime-signed](pgpmime-signed.png)
+
  - `smime-multipart-signed`
-   ![smime-multipart-signed](smime-multipart-signed.png)
+
+    ![smime-multipart-signed](smime-multipart-signed.png)
+
+ - `smime-onepart-signed`
+
+    ![smime-onepart-signed](smime-onepart-signed.png)
+
+ - `pgpmime-sign+enc`
+
+    ![pgpmime-sign+enc](pgpmime-sign+enc.png)
+
+ - `smime-sign+enc`
+
+    ![smime-sign+enc](smime-sign+enc.png)
+
+ - `pgpmime-sign+enc+legacy-disp`
+
+    ![pgpmime-sign+enc+legacy-disp](pgpmime-sign+enc+legacy-disp.png)
+
+ - `pgpmime-layered`
+
+    ![pgpmime-layered](pgpmime-layered.png)
+
+ - `pgpmime-layered+legacy-disp`
+
+    ![pgpmime-layered+legacy-disp](pgpmime-layered+legacy-disp.png)
+
+ - `smime-sign+enc+legacy-disp`
+
+    ![smime-sign+enc+legacy-disp](smime-sign+enc+legacy-disp.png)
+
+ - `smime-enc+legacy-disp`
+
+    ![smime-enc+legacy-disp](smime-enc+legacy-disp.png)
+
+ - `pgpmime-enc+legacy-disp`
+
+    ![pgpmime-enc+legacy-disp](pgpmime-enc+legacy-disp.png)
+
+ - `unfortunately-complex`
+
+    ![unfortunately-complex](unfortunately-complex.png)
