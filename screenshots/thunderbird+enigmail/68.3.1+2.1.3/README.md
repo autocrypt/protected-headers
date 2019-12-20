@@ -15,3 +15,13 @@ $
 
 See also the `distribution/thunderbird` script in this repository for
 setup.
+
+Samples:
+
+ - `pgpmime-signed`
+ 
+   ![pgpmime-signed](pgpmime-signed.png)
+   
+ - `smime-multipart-signed`
+ 
+   ![smime-multipart-signed](smime-multipart-signed.png)
