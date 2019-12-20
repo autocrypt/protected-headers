@@ -714,6 +714,9 @@ The secret keys and X.509 certificates from {{I-D.draft-dkg-lamps-samples-01}} c
 
 All test vectors are provided in textual source form as {{RFC5322}} messages.
 
+For easy access to these test vectors, they are also available at `imap://bob@protected-headers.cmrg.net/inbox` using any password for authentication.
+This IMAP account is read-only, and any flags set or cleared on the messages will persist only for the duration of the specific IMAP session.
+
 Signed PGP/MIME Message with Protected Headers {#test-vector-pgp-signed-only}
 ----------------------------------------------
 
