@@ -1,7 +1,7 @@
 ---
 title: Protected Headers for Cryptographic E-mail
 docname: draft-autocrypt-lamps-protected-headers-02
-date: 2019-11-04
+date: 2019-12-20
 category: info
 
 ipr: trust200902
@@ -1174,6 +1174,14 @@ This document is currently edited as markdown.  Minor editorial changes can be s
 Document History
 ----------------
 
+Significant changes between version -01 and -02:
+
+ - Added S/MIME test vectors in addition to PGP/MIME
+ - Legacy Display parts should now be `text/plain` and not `text/rfc822-headers`
+ - Cryptographic Payload must have `protected-headers` parameter set to `v1`
+ - Test vector sample Message-Ids have been normalized
+ - Added encrypted-only (unsigned) test vectors, at the suggestion of Russ Housley
+
 Changes between version -00 and -01:
 
  - Credit Randall for "correct horse battery staple".
@@ -1197,5 +1205,6 @@ The following people have contributed implementation experience, documentation, 
 - Vincent Breitmoser
 - Edwin Taylor
 - Alexey Melnikov
+- Russ Housley
  
 The password example used in {{test-vectors}} comes from {{xkcd936}}.
