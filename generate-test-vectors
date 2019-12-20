@@ -428,6 +428,7 @@ Example Corp''')
     payload.set_charset('us-ascii') # the test vector data is 7-bit clean
     del payload['MIME-Version'] # MIME-Version on subparts is meaningless
     del payload['Content-Transfer-Encoding'] # the test vector data is 7-bit clean
+    payload.set_param('protected-headers', 'v1')
     # place intended headers on the payload:
     if params.get('smime', False):
         payload['From'] = f'{alice_x509.name} <{alice_x509.mailaddr}>'
@@ -636,6 +637,7 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes,int]]) -> email
         payload['To'] = f'{bob_key.userids[0].name} <{bob_key.userids[0].email}>'
     payload['Date'] = whenstring
     payload['Subject'] = subj
+    payload.set_param('protected-headers', 'v1')
 
     if not isinstance(params['sk'], bytes):
         raise TypeError('sk is not bytes')
