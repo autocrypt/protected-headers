@@ -1,7 +1,7 @@
 Received: from localhost (localhost [127.0.0.1]); Sun, 20 Oct 2019
  09:00:17 -0400 (UTC-04:00)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="fee108fc88";
+Content-Type: multipart/signed; boundary="fee";
  protocol="application/pgp-signature"; micalg="pgp-sha512"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
@@ -9,8 +9,8 @@ Date: Sun, 20 Oct 2019 09:00:00 -0400
 Subject: The FooCorp contract
 Message-ID: <pgpmime-signed@protected-headers.example>
 
---fee108fc88
-Content-Type: text/plain; charset="us-ascii"
+--fee
+Content-Type: text/plain; charset="us-ascii"; protected-headers="v1"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
 Date: Sun, 20 Oct 2019 09:00:00 -0400
@@ -29,16 +29,16 @@ Alice Lovelace
 President
 Example Corp
 
---fee108fc88
+--fee
 content-type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
 
 wnUEARYKAB0FAl2sWlAWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
-jn6JAQD1GQi7IXJkT6sYvAtLhY1rYQGeTkPqHDt5xoXeG/TeLgEAhC7cR6321fcm
-DZjsl9DTg+QYEcqjDotFL6GvZiwUEQo=
-=eQUi
+jtl0AQDtIsRWZVCjbB3TISlcyxLpBfwjaXXV0is5+c4Gd2NNgwEAipDF3m5zIt7t
+29cFwQusmCqKqKfdJUf6HOUPF5L/zAI=
+=+M9u
 -----END PGP SIGNATURE-----
 
---fee108fc88--
+--fee--
 

@@ -1,7 +1,7 @@
 Received: from localhost (localhost [127.0.0.1]); Tue, 26 Nov 2019
  20:03:17 -0400 (UTC-04:00)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="179455ac56";
+Content-Type: multipart/signed; boundary="179";
  protocol="application/pkcs7-signature"; micalg="sha-256"
 From: Alice Lovelace <alice@smime.example>
 To: Bob Babbage <bob@smime.example>
@@ -9,8 +9,8 @@ Date: Tue, 26 Nov 2019 20:03:00 -0400
 Subject: The FooCorp contract
 Message-ID: <smime-multipart-signed@protected-headers.example>
 
---179455ac56
-Content-Type: text/plain; charset="us-ascii"
+--179
+Content-Type: text/plain; charset="us-ascii"; protected-headers="v1"
 From: Alice Lovelace <alice@smime.example>
 To: Bob Babbage <bob@smime.example>
 Date: Tue, 26 Nov 2019 20:03:00 -0400
@@ -29,7 +29,7 @@ Alice Lovelace
 President
 Example Corp
 
---179455ac56
+--179
 Content-Transfer-Encoding: base64
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 
@@ -56,13 +56,13 @@ ogKdypGEQHj6GiamJAe2WndOp4BZdBtBRzjfuzGCAdkwggHVAgEBMEUwLTErMCkG
 A1UEAxMiU2FtcGxlIExBTVBTIENlcnRpZmljYXRlIEF1dGhvcml0eQIUZ4K0WXNS
 S8H0cUcZavD9EYqqTAswCwYJYIZIAWUDBAIBoGkwGAYJKoZIhvcNAQkDMQsGCSqG
 SIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTkxMTI3MDAwMzAwWjAvBgkqhkiG9w0B
-CQQxIgQgjUnJcuFqYcqSU3msMMGoefkv0+fVKg95/LMDoYbCinQwDQYJKoZIhvcN
-AQEBBQAEggEASSWU5JRwGLNvuV1fnC3tiG1xTE7Bm2glSjiQ43h+8+P5OLmR2zbd
-L/jJD8aFjlWHfCW3DssIqfbkrsASziQ0MU68wD4EV6VdVwxDD5kQdVGmMupP5NSr
-DZQ7Zs13oxRBB79AT8gy3Pyxro7aFe2JC3iUJ4WM4mdtyvkEitJ+lrL6NYMcNUJZ
-u5Upxj0PKj4DB1Ic2w5D5S2DImPwBIvQmZPasQgfUh5mYd60FEfl1PdrDusK0G/T
-BbmJQ0je9Sf/ccCSoj7EZX3V/tEWCT8DlJ4oJncMrwPIpOiNc+Cg6pQUpl3wFSel
-YRADXnvZyV9S1UgGAAo2H5imlQV/36DVFQ==
+CQQxIgQgGeoQw8WDmjB606EKGR5n1oMuV7Te1VjfA2oB2ebW390wDQYJKoZIhvcN
+AQEBBQAEggEABblYEWSnYyzL3jTS3AoPr93YKksIZr5q/b8Y5/1rMxdYxPm+iReO
+RHRgpbFQeiqZXzRXtMohfoIkh7RmdQoSV4OpwiUmNU+f0ZEAu8cMVJM6gdyUD+1D
+JwDNr+YNLV/1UUGhqx0FExOa/4O92KYBD4eRQw4KDWrkfh9dlSj0Bsl4thrZYGLz
+e7ut3FN5TBruZfmqMy50xZ9yUW91YyQUBLiIcuF185y5ZW/aQCxBKBbrNNGXLJbo
+8yKFJqSPiWZvwUmVQvfgL182hg823OJTtP4VImcUakTF0+k+BM//qqKXYrlX/tZn
+QzG+4ZH/XM1vgHl7ShjHS6TSOHz2ODqD6Q==
 
---179455ac56--
+--179--
 

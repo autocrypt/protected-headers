@@ -1,17 +1,17 @@
-Content-Type: multipart/mixed; boundary="6ae0cc9247"
 From: Alice Lovelace <alice@smime.example>
 To: Bob Babbage <bob@smime.example>
 Date: Wed, 27 Nov 2019 01:24:00 -0700
 Subject: BarCorp contract signed, let's go!
+Content-Type: multipart/mixed; boundary="6ae"; protected-headers="v1"
 Message-ID: <smime-sign+enc+legacy-disp@protected-headers.example>
 
---6ae0cc9247
-content-type: text/rfc822-headers; protected-headers="v1"
+--6ae
+content-type: text/plain; protected-headers="v1"
 Content-Disposition: inline
 
 Subject: BarCorp contract signed, let's go!
 
---6ae0cc9247
+--6ae
 Content-Type: text/plain; charset="us-ascii"
 
 Hi Bob!
@@ -37,4 +37,4 @@ Alice Lovelace
 President
 Example Corp
 
---6ae0cc9247--
+--6ae--

@@ -1,4 +1,4 @@
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="us-ascii"; protected-headers="v1"
 From: Alice Lovelace <alice@smime.example>
 To: Bob Babbage <bob@smime.example>
 Date: Tue, 26 Nov 2019 20:06:00 -0400

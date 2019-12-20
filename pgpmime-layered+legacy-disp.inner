@@ -1,21 +1,21 @@
-Content-Type: multipart/signed; boundary="03ada04eca";
+Content-Type: multipart/signed; boundary="03a";
  protocol="application/pgp-signature"; micalg="pgp-sha512"
 
---03ada04eca
-Content-Type: multipart/mixed; boundary="6ae0cc9247"
+--03a
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
 Date: Mon, 21 Oct 2019 07:21:00 -0700
 Subject: BarCorp contract signed, let's go!
+Content-Type: multipart/mixed; boundary="6ae"; protected-headers="v1"
 Message-ID: <pgpmime-layered+legacy-disp@protected-headers.example>
 
---6ae0cc9247
-content-type: text/rfc822-headers; protected-headers="v1"
+--6ae
+content-type: text/plain; protected-headers="v1"
 Content-Disposition: inline
 
 Subject: BarCorp contract signed, let's go!
 
---6ae0cc9247
+--6ae
 Content-Type: text/plain; charset="us-ascii"
 
 Hi Bob!
@@ -41,17 +41,17 @@ Alice Lovelace
 President
 Example Corp
 
---6ae0cc9247--
+--6ae--
 
---03ada04eca
+--03a
 content-type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
 
 wnUEARYKAB0FAl2tvswWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
-jnhkAQDP0lI4m+TrjeN1dlngMlAtnf7XVIQr+Zg2iOBN8jItngD+LdODhllcg8Ir
-oyzqrc1+/1R2HBj35AjySGE8UH0UPAI=
-=xQvt
+js14AQD2GOrZXkuKxZPY0l6AJFKiAFphRt+5V9gj3HEXKvQKPAD/bZy+vW9j1+e4
+MLiOb1ojjFocLx/6MvQBoI3P9a591Qs=
+=l8GL
 -----END PGP SIGNATURE-----
 
---03ada04eca--
+--03a--

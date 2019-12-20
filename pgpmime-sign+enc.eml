@@ -1,7 +1,7 @@
 Received: from localhost (localhost [127.0.0.1]); Mon, 21 Oct 2019
  07:09:28 -0700 (UTC-07:00)
 MIME-Version: 1.0
-Content-Type: multipart/encrypted; boundary="ca474fa70d";
+Content-Type: multipart/encrypted; boundary="ca4";
  protocol="application/pgp-encrypted"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
@@ -9,43 +9,43 @@ Date: Mon, 21 Oct 2019 07:09:00 -0700
 Message-ID: <pgpmime-sign+enc@protected-headers.example>
 Subject: ...
 
---ca474fa70d
+--ca4
 content-type: application/pgp-encrypted
 
 Version: 1
 
---ca474fa70d
+--ca4
 content-type: application/octet-stream
 
 -----BEGIN PGP MESSAGE-----
 
-wV4DR2b2udXyHrYSAQdARs+Kp7Y4dO9FvBjpM0xJPd0AqWIdJKH6Si0OlQHk7mYw
-VkAzQ51ttKJpI0lKai0vWimLw2jW4aPEitZVyw9M83t2/kBt/d32BF441IQ7BAII
-wcDMA3wvqk35PDeyAQwAkO1pFt4JrncDEZcBRLdgG4WRHWUD4g1msyzW0o7UdHKX
-8aRmvTFd8UV7rxW4LtUtC1S7I0kkPYJuZdqvCubH8CIdxvqfnq3wz+0E7JC3GMc9
-gu59HrPNLdjwpL1wSPugpvfIChzLbcUxO4/8Y1s9HnN6H3KVvrj6K8pM5cdRmt+t
-Eqhw3zxBioz+h6uC7TuucbZZtat9wBEAYYpK1IEbzjt9rmThvQpF3VBI+WPEQaP0
-hGN3ZmU6TuoizsJ6OQpcNbGiV54E4a3Z5BkJQzWnABrMFeQNWonk+clZKx+UpreY
-CV0+O3Yuu76QPrdTupPqGQucZ9bpVeeHdraqiBpHC1ue/V4yWMJPqelaAfyKsaKq
-7doLzTXmYLPkktRHybNAOMreKF2BWlu1TvhVcAxIXRDoLPjwgJTyi1BHgyl85StE
-KBW+6EtOLi2x9w4G+OEgepiUdCTgCVC3f68h7F+ynTzU5gKX3PbiJ6/5yQp9yAKz
-9tfgiH4vWTxXJ3v+BjPv0sHiAXpVHdUbBYCnm4K0O43huu22Gea3QRSEb1yRjqU5
-tZBSKl8quQdJJ/o/gm3CsKisb3RIeNXOWFPf1TPjvHH4hP2zVMPFNkDk3imkg4PG
-cGY+He71Q514OpPnL9xwDwZNJUL4ctgq6z+I6gzppP2/es5NELs8tBtnNw7XctQE
-Z+5wdvcuqac6TCVXNvssWjLXMMGErpyuWQHTRYvkRudvED6i/SvjcT3IHNuz5SP7
-1M2r//CNaIgWqjus+A4iMs9KEnHfvceA7bddviOBCOEYSakigF2XjuAbV9ImUgqe
-BXEJRfhuukJ78aONlbkIetUp/eDTygQuBQOBmz3xgTR941ZHpkOik740vzKyYhMm
-2bnF0S39ocOsxFYGh+llhZQrLZzslmDvPGOt0lFWPgOy+58/bacL0J+r9LTJXW1m
-cacs5Xy8MT2iBJzCGJsIBI6GcW0rGyvCnSiGgbR7xVUrZYRXrDpQ13OLO7XekE30
-ZrNWlOkwdy/4BcI9wgYZbhKBQ/pZNoWDnBTWY3curxB7vqaHdSyeXtz3Ftg37ZFE
-aTPD7EE3ebE15EU+Q9k7qVogEiIQQ3vXyOpJ+0bjuMOmJDNvN63nzKWakvmRQWwv
-FTrwoOYuNIBnPa6msYQDhlrkd+NZljRp5HMvM+UI7/J1yL5hngaf3JaRxJs+JjcO
-P1zqhr8aVdHCiWIrmrLdQnb7RRpz9t8yJg+4CjaH5vT5v7r1eqQB1h+Q4TtqWS7p
-forQvJiqGV5fTCGgMKlWtOLhesUcDJTqNaG3JfZR9lcI7KgiDvt1yCX8LFe82jCg
-Odcfd/5hbnweBN0YEDmh9+SZuLX+CgFerYEvJR5Az651c0+DPSzU4yDMiqkv4Mco
-TQB3p0XrfnAsq0XaVXfUZOCxEuc=
-=ZNqb
+wV4DR2b2udXyHrYSAQdAH1KRyK7qZzNpI7TVprCPo/aOTW9R5hBKcTkKES1Fo3Yw
+mtDplfGFN2JMzQ1OVbe2gbcyhrYfs+7Fd4eoZ0geE2cUYn5M951I0se1W+MdMZ/j
+wcDMA3wvqk35PDeyAQv/ePyXTBTU98wzM5LcwhWZcCmxCtTgqHmjJmymQKQqJuCA
+flrZPG6V6RyidGwmJYf2uDdmlhAHxFbYAalkI+/V3SnO5OSejKvspUtuRnBOW8Ps
+luWQ6ANww/o4y/2/SkIodRmwaIBbs/4CaDQivSeBueHnPu0EqxTBNI47dQx9mkdB
+Z5PsucuUVSq2SmdIrCM9aLyoUF60NVhdp3mYQaVH12dX19wjZtclTR74t66I/Wsc
+FHONiGii/ioJS9LGllnaRiS7carLbtw0s2yJJZPZeRozMPi0o8zgne77wdoF+NyU
+LkGtqXvLbPPA9SDGTHgkJ6H+wUhh0OGWebYwpN3F6R7Su1OlYRkQ8kokOmJmZokg
+qhDueENW2RsZIg06sydGFaRY5BoGe2EBkcXUVBWqYEMH3Zxz/kAEylVY5sZOqcae
+PAlvTF6Y4nNVGVylUvcuJ4DsQbi2AueD7Tl28ha1xJTkzlHlt4UyU878eUfdVLOM
+FF+hwbxlo6RBT4uurMee0sHrAUDHma9Kx6XrALINbIl5lfMKKXnKhfQYpfbYbz8J
+jVFz0zCxMqmdHZLe/G9mxoksvXrbFf8b5DHfDYGCRvbj+CzERo6KCceaVSpKVGL8
+xiwHrjg+vwfn9EG9j+vp3jB39wES/IZZThSnf0JvJA4ePVnfbxcxMqgg/S2isyHf
+NAp89ZlX5mznom9efKUoojodNNFsMIt+YNaHEtnjZl+BXstGkXXOiurEt5HuEyRz
++cyjwpnQChz6PuY0Ehsj42mMyGa3167H2kIqtKtxIfl5/qm1df1mlEc7SpmU+uHV
+58D22bl/Ukr8vmFu09z7V2U7zXz+FtohuVpeTr3l0UVEFEGIQT4JUqxiavZqMsZE
+6DKj6X+fzXdxMyrDd/lD2ikZdllqTuvsuuiFW1OtEbuIKRoYUl6u8t44/KYoHCQK
+BWXhyh7lPpfOGkemA3KY0D7yG4caTWmN5GSskGyKqQjiCxa0jKqT1qfNBTxBh4/6
+8Ijf/cmlSNjC6ghzuwtNG7wr0mSC0pjQsl7b16Im7FOmP67pputqcFrZOIzVbrS8
+vVe0+1X3/5VnmYHCilaI41ln3wGRTlC/j4lIoGNGlJJ9LeOz0DlfIwfIy9aVUDXo
+48awW8hYu4Ck42GIJQP9HsQ9fbFzHmyUHhS4h+xGXHTbPFqiPyzsoAT8KDTLMj4y
+CKWaqmqXMkuaD7hMc42xW8ziq2ZXZCv1ajDclbkg5rx9R6n4dZL6Cajt7wK2mMHt
+giNkCqLU2LuPhw/R9comDDJPFmb6WB/PBrnTrUwrFy4/6du5uK09kwLIUu82UVhm
+5xHVqybxIkHGeVNXqRSe3M3w8ERbkXqNp3s7BrGGb1bYdlrPf8h1PTeWi9vfXUdn
+wFHr0g3xjeQ9orvJZl5jPuk5NryF2J/iNEh7+sE=
+=NT2A
 -----END PGP MESSAGE-----
 
---ca474fa70d--
+--ca4--
 

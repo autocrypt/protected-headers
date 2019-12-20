@@ -1,7 +1,7 @@
 Received: from localhost (localhost [127.0.0.1]); Mon, 21 Oct 2019
  07:12:28 -0700 (UTC-07:00)
 MIME-Version: 1.0
-Content-Type: multipart/encrypted; boundary="0249cd01bf";
+Content-Type: multipart/encrypted; boundary="024";
  protocol="application/pgp-encrypted"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
@@ -9,45 +9,45 @@ Date: Mon, 21 Oct 2019 07:12:00 -0700
 Message-ID: <pgpmime-layered@protected-headers.example>
 Subject: ...
 
---0249cd01bf
+--024
 content-type: application/pgp-encrypted
 
 Version: 1
 
---0249cd01bf
+--024
 content-type: application/octet-stream
 
 -----BEGIN PGP MESSAGE-----
 
-wV4DR2b2udXyHrYSAQdAKQQlAyOJb+g2dmYjcYoicBC6H7NokDlRirL73dVA3Ccw
-Jkr2p4h09in3A0VRsfG+9CBDjMDn3MffiXmSgHKwmWlGqxt1OdNuSPk1ml9ibTr1
-wcDMA3wvqk35PDeyAQwApLk980VjHDEgZ4YrzpI1uX+kdp+fNCwfagK3XEgFlzKH
-lo2bnsQtsnO6SVQmIBHDpmIk5G0RzutjSmFJp7oLp3ykYH5QOe8o1QIa+f5oHA24
-HzpZh0J/5J6CTMXSKE5i9eNxDt6vQ4sLzBL1kYFdXZjVnPeG2hmegRcsOEhH1RQA
-laRAB2jORvlwSfw0wdCJd8yiHJovMDlW5DnNmehhCYlq1IT2ZkuCiqzu+4WVOeHx
-8P9OCkIBxB3Ud6BM09yIWI7S9PAavKdSuH1NMXSlSPF3qaUQ1wIOBAfimzsiShEb
-ctgXx2qK5XWJd0algTXzrfW3u94hgNk0I4tv+vqIJbOv2KY5qMPEPQKARN9SY5Jy
-E5EhLDUOmyn2zj3mPEeso97iEbWAN3CR5ZLJ8t6+SAChfvOmIgbtdW1DQ+BY7udO
-uSmZXBXUFHr3k6hL7N+4TYvpSDcKeO5kYAVCSi28dMp1JFrJWOsbyoCqN7QQFori
-kX2YYRhgvPCYbF8wO5zK0sJEAQ5DFKBmbEUoocHcRIu+J6xw0/wf9cAi+/RgjxPN
-QhFLTcidebxJWz3stVgqoidwaMHAFiIYUUguAEqwHmOrlF2ktI/cfneSVtY3L12J
-xykAsYqJBZsC4GGqR4BCBwRv691bF40CavZiK4XTCklx2cwo5viB3djU+JiwmZ4X
-715Ynwil6iuucc8u+ttnAIUvrzTA4m20pVi0oJU2+a5RwYvD2TPXE+ixwkrnx+dJ
-nQdW42GsVAWFHIiv2pO4tWzu7s3f5FuR2Oo/d8BXfQwojsenSPcVKzWotMTGFSgA
-qKdhPa9tzBeOKD1T+q1qgM2+2MCPOVMHtwSZ2nDYGYZK3Dk/PDcVNucXMDZaMSVh
-tsqGTUAP/pwNGtU9n2AMKl6r72CI8IiHoU3iKSnAzYgeLlHvF0hljfMZVNaS9ZW5
-EQC/T/kRZJ4MZZIgVmrRe9GuUwnYeK9pPS9quH1+WSL84grVAblDGfFsjcorZIEt
-/WTHnV3VGP3y4neOusQ65cQlFbsS74pOQ/00oP2soq4xk0crnL+rruqe5uReWBFa
-50NswPwejv+LDvckaSWrefphRlk0oYraKELftMQfQ0zq1SqjZ7hAr2WKOoZ7Zo+k
-1Xjit8ZRokYx3ugAgBBP4cxYhHGHeto50I+pb7TBTCHFGD0KSBqX+74w6JWN8Baw
-HrWUV7/o2itosw07OvRC4O4Z72DUJeD3eSyBih333fmY70vT68wQuiP8cznzqme1
-yE7vdge9pRE27sVWs2WdUqW+x9HVKe96Ox6xPvqKSfVBO2UeOau1TAifmp87rSJE
-RInq12RPT0XivnbyaehbbBUd+OAkY5Vjoqgfk5ZBcAFg5vkl8eP5FGdDR2Uvh0MN
-cQyrLebm1TgMkb9vxFvZZZRkopnJsh4be+grw8j8OdYoYS73UOBHzglj1CtGw9uH
-U3/kLtbiZHPDGvPKiTB9lrabaYD7//Ipr8ZlFVAwmpG6E9QIO635lYGJpLTFXK+G
-LuFPpxFBo5HIYkFfXOtUWu9izRDoCw==
-=CLBg
+wV4DR2b2udXyHrYSAQdApTCCVZLqLBNWL55la9dZGbO1aPtMkIFXYo8DOKgIpCcw
+gm5VfqOECRjoZqCwveFWGqRknz0lc+eau5fcbenmEW8J1E0FjpoBEnFo9vYb6PrU
+wcDMA3wvqk35PDeyAQwAwiuMTVdntVxYn6dnGUoaga2txqCsxioqn4JgfmGrIfBf
++BEHyt/a43rWwfi3QycCKg483Fqx0YG3HHJEiiwdFmE3XdoHmTRKfHuSiyzCNxPz
+AK2cwloBtD3w6zs+mOY7Ytq83ghyBeX0aGmgCZqGhL60In5Qu+w3Vmxc19d2+BTs
+ZOJzxcHACRvq2tD0RRmyhjWKqVdd2akllMy1pcXLIediUiEI5MA3TaWUk/uVDsUq
+S6JtL0dEy0s49Z+flcGfEyGCGU6TqV0Yun0bl3A7/OJjYC+75eCv89s/q4W1UM1M
+psO2X7xNlhgREncwvaoQbvfVfSlxHgWGCZDL8+O/7XC5EDyK4LAR912SG4Desr9e
+k9Fn3bH6Tt71vpH0nByKCh0m2/apFEMLXSq7DMiJEN4spbc4D3iBnxYqEH99e052
+KNjrHaoG59bZ6TNJj/JN+E5sQzDxic00O4Qccg9M7iFh6eBLOuBhBpRxbeoXQkl3
+1mzI8XpyFoGu0HH0I0Cs0sJGAUnVvA0LGq7wjKpy0bWQlB2YVCKU6C8GnX6GUcLm
+SMovYhGKfpb+LUu+UM1BZ9vd9D/tsMd2WBw5tM1ncfRuSTOhVeFgTEGiCrBn7sdb
+UFTV+jb5CktQMwj5vWlVPhMIUeISwoAQJ1ONuOqFnVTJ2bZOdxZeV6NDYPYCERuR
+Sh980UxdjGLvw/LtMThKJRUr3S2TcmKSwGen5a96S+lAAmMJN5wLrH+X76UuRvV+
+O7m6KDasO+fEIWXKYHGjJI1On8MnkVE4dSDKgUNukVRoBAB9Iqn11zWb6IX7f11M
+k8C+8F5Y1xxEG3CCeYdTKSiIkDvBV8oFGrFCYXWO2bLWFpCZ0t2qDfWX5SvXj+EZ
+KxAiZobwQEw16WYp4Mk0Ppf0UrBXkfnLBieRgO4o5j5Y//EXKpv8TSBxRbeOVfRk
+x11HNbaNeBtID4N2HfjsqUX3y2ZH3m7HWLwkQeX6Yw5qqSWQjC8fklxOku+brAaM
+ayudhVFKiD5PVfe1NrVv5dDSbj5VyQkoESi2zLmd4SLoFIMp8/lfSnpl0ZF4krFb
+wIF8wd+zT2307fN4DRKjuqFVr0Yl8oh9iPJN0xXSyygeo+JWWfYPu41vf+viRZMh
+aj1nhJoa9UghiYfXuDu+VjzZuM22C/9gVbXMSuY1PaKffBleTNhCT7JWlmhNBW6t
+ouH6dZ2X6OlXECmByzKy+d8Dun21G2nLuE82QP9y7/QZ2g+OSWZAA2IIDiH2tEIb
+8CNSVwZXNpSeqH5u3+aRE1M5EzslbLU78Ryrxt6lNAzEHD42Fif+qaH0WW52wV2H
+vnaxJW0yQ1o4W6W+BPtKqtE7t8JgTEtxldKHIdWCMXg2isxWMMIE12QEc26+bQnz
+h+kDrTqxtp8rSfhLSQi4TRoudxx8mMjwFEWnRIFRQG7eGNPaqZYF3dz/neN/fy0p
+Jbf1gFJAtrSIlOOaZ+iT864OtcaLOHkOLNGEuyJR1dOC9tuyldarvKR0v0i4jhY6
+UxDkknDkq0IzTmczFyAH3lBLRPMZNZ1z
+=YU4k
 -----END PGP MESSAGE-----
 
---0249cd01bf--
+--024--
 

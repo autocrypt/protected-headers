@@ -1,7 +1,7 @@
 Received: from localhost (localhost [127.0.0.1]); Mon, 21 Oct 2019
  07:18:28 -0700 (UTC-07:00)
 MIME-Version: 1.0
-Content-Type: multipart/encrypted; boundary="92481a870a";
+Content-Type: multipart/encrypted; boundary="924";
  protocol="application/pgp-encrypted"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
@@ -9,45 +9,45 @@ Date: Mon, 21 Oct 2019 07:18:00 -0700
 Message-ID: <pgpmime-sign+enc+legacy-disp@protected-headers.example>
 Subject: ...
 
---92481a870a
+--924
 content-type: application/pgp-encrypted
 
 Version: 1
 
---92481a870a
+--924
 content-type: application/octet-stream
 
 -----BEGIN PGP MESSAGE-----
 
-wV4DR2b2udXyHrYSAQdAdS4Zumj9cPqaK5OsvshK03jIzeWWhFJWNWtAL8tEwDsw
-ZNP+5hgRWtUtz8YjDuG8j3c9RMGbP4AhFaybDn43tAVRdV9NTh8mwa4OK/PEJ/GW
-wcDMA3wvqk35PDeyAQwArJ5+7SB48EJ+1QD4LUOyHBS8FKFJN2w0ukdBratqAVNc
-At3bXVHrzQ3//IqYqOsxUtJaF5+TeTq7S0lMsLtXX91IUFZaqOnDo8Ztx+t+vBaF
-osZH14XXYDIVCZ+I/VZlxB0wlhfZG8l0oQ/+tOPY3gB8JPifPMEVGGKU0+7lK6+1
-zP7o7zYw2Di34QR0eJCTr7NBwyqq3elBismiBObJwGXfwYg5lRQwtKhjMRNJI2rH
-Z5NzNv3wmMj+jXXmJikvdvncd1mUGs/UIT5CXS6kLPO0unYVYn3cKl2783xrJhAX
-GLIUyj+YNbanVS8UkiL8xrkyOBtwdOnvDxLNyACuRq6HBR7DmT0TTCM3jHXC5OaF
-B6RLZiaiaExvhLXD2hxbmSNs5It2Ge+WQj4cUPVQPbBRasrSI1VLeSuD+gJdoW1k
-zahBL5Y+H/7iKMpyR5HFADmzoddCpHuiWqRaosxM5fa1qi8EqAkZEqRZx7ifGWue
-nMX5ymDk+0K1tRRY6wCk0sJGAcRzzRQ80qq4v7P7QbRtY+WjuqFJgQkyvfx7wEhI
-u/PsMKJasvoMqRLn3vAG+zy2FBoGpKF5utMN9FQ+8Dpgi37pwG1NurYdE1cbwCIq
-JdLEsMworNv8D3tyUwAyDtqVchV3vgeZT4NZ1boIcdKPkC7RCHeA/gpd6uhvOA02
-IkVsnyXwUesQWvkQ9kEH4mcF4PnahFC/5jUd2B1EMtVbFp4qkPuiDeSHzgqKj7pC
-XhNzHJqAMF/V70lNYC42EhhIi3LHnXM/Jg6+y/8Xa2jJgrQVz6ivkqAD8hXacbMI
-P6I3+SkyjMDuAR2po4PiVXHRz6v6xe7vnf8GqvhftcXX0QK+PtbitPtaanxtPYut
-jDBaT3K2c/q59co+RWLF9mzT/afvYaUWWZiBz50bru/dz0c0DuGChtfty2o7Xfr0
-uXuk0xoYwO+5wDrpm6cS2hEIPMZLY+mtrLMp+iGkhCxtqjVX/wcErvyGR7ADzsL3
-xeNxQXON4koAgrI07yiqtpn4i4PRrOXqP5z8Ja91ptMxBlUTdZIR06CA6WndoPP+
-fIsKoR/jLlQEerAacJXkL7eQjqKCFM2AaeYWqU2oWSxJpOEKr64s1chJzWMivGk6
-jE5Dn+FrrRYzC8dSwDeMrQNgkgcJeI0rrpYqJLiM84kSjuCOAq1sBdnoF2HzXXxZ
-8918n7zC6OQ43vzyN9zRxLYhNr5wwLDwfXBFahK/HdZTggxyOCuhGSz+Ib+hb7q3
-dMqC11hMwjmQtCXkKOkTERhPg1Hmwkl6/wNWMMADB9rjCQsXJpkMW+eUcXXVX0EB
-Nt2nHLU6P+OojNJOqPFHZdKdUBYqwdEjatgINO2fWPKRZCTQxp5lJXVO05cPUm1Q
-ew23Fh/B/Xfk6Jl9xw10v8n9N+jwF8RWae2p2k6kw8959pmXyIaJNTIEHg7OhVo5
-/iGtg4iwvtAcMhtqcC1PXS35+tbqBeDb13FBnv28Y4RD1f7ac1ZwM2Hr/N7VRAWQ
-D5quTi/ENEegoeYeMRjFt34MdT6oUAj8
-=U2CV
+wV4DR2b2udXyHrYSAQdAXX1u0LNgj2o6biKu64RULx3PY/gcetRoyNOWNoXG8zow
+LF4DhnBs27vQkh1BIU4KmJFOwwjLwuRvS/J4NvCqqcEYwiPdhp5q5ftn7wrq2W5s
+wcDMA3wvqk35PDeyAQv+M8gxGXm9ecpcotEX+9OM9EY5N8V7FmZ6ydRpBXgWvCpB
+Nr6qk9OsOvIlhiN1IJbl73mEb5LdMj3wtRwGP3DB4AoPabIMXh/hCcNAhaWusVH0
+AK33oDjH3rhntORMveOqq4QhRzUGR1ctYWRNBXgKC/n3Bmp7mHAzfb4RyBGXDXsI
+TCXAb2qDnk06vTCVaHJ/ggBInSb12iYPkhDtoxbNFOP7U97lSVgSoDels6TRDfpb
+9K667gVyhkTnBvys+EqWbe7Bz5MJqxn9NQxh7HTdY2kXSKGGe1DUrAzLKRpT78fQ
+O02DLHR9EUh30hYQEPnuKAdYHJquXB5UiObJpQ5UDEt3MsvObUD7k21MQk5K6iyh
+1wcxtXm/kPqQ3eOpVm8iaRve/VrpZEgA0/9PcvQJ0VCWQ/fZEBVmh3ojIoZF9WJE
+jB3FwPS2lVLJhaZFTGU7xOKsz/x0K2M8meAsa7nx0TaetmieRA2L+wBaHhoUz77L
+9ihYlIBPNvkb49jnF3ft0sI2AYM9DWi3Ki7uWnw/Ue7jiu8dseBTvuxXU7XYPS+l
+k3nqqtCKjDziq+ojjw3+ahsfNNIrcFTizjZqGG5AK+dwjiTY3T4fJ4b07513+2uj
+/tJE7p6IuuxlE+qlpI1PrX7JFHpihbxsWnwT2RBgo+sdeVko3HbyWtfLnfwI+eNo
+njB1DvhWg4C61ilnbRU+osbnZSoSqJSdHCHqn06YfL75sdHrhDiXzV5+LPiaqHoD
+S1wOLknIFD91GO3PXaae3ENJgE9CFz4v0jNw2+kASuH80DwnKiMQrmG78rY4u652
+HcO2p0ZQAX2QeK0UidSjQQaKRtz5sys6QUbS46lgMSnHljQun4g8hlvoDH/7Zz4a
+kMgbZj7TRPU2EaApRX9JZub7nD9ODJkqtLJef9ncmI3QwBjClXy1sL/olUhUjFAZ
+VNbbInqEba+LLio4HUozBAjrVVWOrAt776lBSR4n72DdMjMKZ5osxPLtAVce9KeV
+s1cdKffbF4VDoe97eRq5ua4KJW/c+8WGW1u/vzPA7Zj6rR+gaWKqw4rnlys4+M2b
+LHugg+cF0k/sEfrmEuHyefYvms9Ht2icbiSTbqN+ApXuC9QtNRb/XnEw5lCH+dBO
+EYm/W0qSDXMcvoZaZ379uFkXqiECLF11iA3K89BV1VXFXgatnLHbNBdpm+mmJlz+
+MY0NTCASFv0Bri4Y7j6kSOZMnfol+84j/nVCpBej8QrXqbpL+/6xrBURcA1Sb+Xu
+XRF1Veybr1bj1Tcp7aDLzZtQ8pk+8zyxy9dOePPcBDZlnDXCALf9eXJ/HX/6EYNT
+3Oh+kmF7UxghUGUnyTfBMhnBD5oNi+OGVyDWyRv5jfYc5FWwXOmcRjigPlofLmo9
+7eLOmYMmp0L2DdNiVer/Dl5g8HRSVaRceHJVUrNM+M2xzCkdrTHJSh7MBU0TwUd+
+RXYQgfPu8xbeouLnSTVC5Kuul3VA8Q1/Y6KcjQTgjNvrOzjHTxjKek5fokNxvFQj
+1fkAIM9w2k0=
+=+l7i
 -----END PGP MESSAGE-----
 
---92481a870a--
+--924--
 

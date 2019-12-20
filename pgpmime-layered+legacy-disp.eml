@@ -1,7 +1,7 @@
 Received: from localhost (localhost [127.0.0.1]); Mon, 21 Oct 2019
  07:21:28 -0700 (UTC-07:00)
 MIME-Version: 1.0
-Content-Type: multipart/encrypted; boundary="32c5e42c93";
+Content-Type: multipart/encrypted; boundary="32c";
  protocol="application/pgp-encrypted"
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
@@ -9,47 +9,46 @@ Date: Mon, 21 Oct 2019 07:21:00 -0700
 Message-ID: <pgpmime-layered+legacy-disp@protected-headers.example>
 Subject: ...
 
---32c5e42c93
+--32c
 content-type: application/pgp-encrypted
 
 Version: 1
 
---32c5e42c93
+--32c
 content-type: application/octet-stream
 
 -----BEGIN PGP MESSAGE-----
 
-wV4DR2b2udXyHrYSAQdACsIFayl5tCEfJpk7i7ON4pWtuO2AtoG9tdj0O2Gw82Qw
-wtcul2gscaLV4aOR1GO+X9d23UVlXS/9O7fHOQSLEGjF8XtSByxrC2tKIwPxq9wZ
-wcDMA3wvqk35PDeyAQv/cLcar9AmeirrgF7JFyfpsTfw4pxP7zw++lWanWjJg8nC
-VFhZ9RLyXl2jJy+TqOvZZEaktUyE01BHkO0FLOm/e1xTgKMEA14WZIBvmUoHJhl6
-/lFJxoIT2kq8vO7ZshwuvP3Phn7LWYDaHK5LaCCV4fKy7TI1ccwH7sZKf22Ynt9h
-7WIQjlspwL2LPRv0/lsF1xqZm1/d7R/2sBAWuRtd2Z2HoQEl4iqcVKfXg2r8hs//
-/dziHl91fDP42t/nJcY+I6plbcs6LOr/0GQ4+v4UrExvu3TKVYYELz86KAaPSgr1
-pZl6Xlo/pYaoK56SdeDNnA9hh8gWHu2BeTQARm/Zsi1xL5bOVDVj4etfOMCfoVmg
-ohyNvK9pg/bEE3EBXRODiMxaNkQMKQ2ynmzBP2emx9hmX8zDdhEP6wFZn3IHi5nT
-8ydnkCtzdmg7VVREJU9Z00IC6LyTim4ZrLNCxElY3vVhhTD4szg/OMzLkPbRWVfM
-wzdkElAwYNjsuyWhah6C0sKQAXJ11bO6iG3PLX/9RS5pITyYLdb2BZnb5SDxCjEH
-rHqRRseia633TLB5yv1Oke1Dqd5jQYetCX/jHjGIgeROMODRtOdkFkWisIFY+xRx
-tnCiYuA9h1y72ut0DAqLYIUDEyp1rljGLHkVwZSlLR372wgMo/JGRs+J3NZ1sZqv
-AftzCeU3SjQq45Es7X1+SR9Mo/Kwc8LfskbM8fCyuEwmu6AlJ2YwYQheNLj1Ym/G
-5vxG3oBIpM60HaryIXV6I0O6Nqr3CQh4aStMpp9vGCeKcVYY7FIRQaqcRfmbC7G9
-nldwIW92zpPXRUXjQ3eFt43sS/L0+LrpdlKDH/mL+fm8ZgbnaAe/2bbGfOOEBZ5s
-264Kun+AQKyHcAD0lH3OJbOIREQOSu7RxEJ5SjeCAatt2xZPmeU2ZgNFt4uA0J6z
-8N3LpVa3SseWstsUSderVIVE7BnFUvi2iMCi0ZcXV5yapgoqTJkVayUBu1fW6Lay
-vRD7LfLtFK8SFjfTPsZ1bllyz6B+85LSB11S1iKYBANjMiSMz67WmBLqEHwfki4Q
-Tv3m/cnLYJ5LV6QamTc6bHm1w4FKieyuHlohYLzlN/MAn50RBWlyE+iQ+/seUc/y
-jzwJZ5E0m+u+bnn9r/fNfHEswxPGM4iGTcDGY0mvq81JGL5VMp28ZYue+6fsEf37
-/nUrErq+SIuIgv+BvjruwOByW/R+U5gjoeRcu8oiqjYNr33/8XLIVyVOWQsuX0ug
-E6AwhRaORnkN3P5fOYLss7s3zHYqJ5ni2EVWz53R3UyIEl7dVsj0QzRtG4Z+Q7qu
-1vKdJUFo2gsBfCTHGpHpFL2nrQpwG29VddT0dLSZdeo1Z7XJPsxERaQN9rw/isdO
-meRwQlRPSpcUNbMJGhu261G99IhmjtsYdJxntZRba4X6eiDoAV02tsn2sZl1zEiU
-cPjUr5FFZbF5/XqmDrNGpt9v63/4eREc2xNKluXMFPE2I0n5rbUfKa0xmlnzzN8u
-cZN9ggKx+zIn4QA5VVm9xvjuc/esDsvCUkdlhJh/fulp07SvMGeKNQMWj1HDxzUQ
-+z4XBGiaAtzBhD+cpxri4+hmsUvDbut767F/cN7hsI4twnc+Wxo8DEmX9zwt+IK1
-QeM=
-=op+N
+wV4DR2b2udXyHrYSAQdAC1Ly2OZdEVNBoA4HUfvQJgdpSkelPzYiPR/TWOapEx0w
+gPck9O1y4gnu01fnptzYiIaZKMWis7jPqmH2jQRhnG1Q0JKS1PeCfTS9207oQiD1
+wcDMA3wvqk35PDeyAQwAqIL7jcN2Rm5u4qhMfvT7by7nUKCOaP/H+kMPIsXP2Kxf
+MlRVnrrsCgJ6j5htt48HGddpEgLlZceK3vg8WlRWSpMstpdGxxE7HZqXHKMNk8V+
+8EVWlHGWBmxisA7/JOOrt4HQJnHm01drIXgWjIA+Vpu/zFA542qQH78jr9Ghhp/C
+Q32VOrCY/PsFxabPIYS9wWh1Ym3+VQFndCVSpxCZHs1Qilt9XGj4X712QcvgL2Pp
+glaulvNob899dOIo4Noj7p+cx4yMkWpi9dqHuOme23aixieBbzQopzY3gleVgXhc
+HFhUzje7DybtVq0em4xpNPWxq2b+WBeu+SvXFo2buHhWmMClbKf6gggod3CRKcPt
+h5MLF3dFE1kj3BOLxJqFOIny2EhWZvvmDQgG4uncEGo1siQhEiutQL2WClzuHGzs
+T8eEHKeATEPqRQHm395Ivr5btQ8gg4tnIkfBBULPgnEfY07Llc+393a0MgW9bLbn
+UZTmNIsS1FKXYzHxpUAD0sKBAe03UKSoYJ5b5yBghMZCCS9L9dm8llJVsMh022DC
+lMPpRsSm79hnFww0+Yud+i4z24C8WdivWBNoZz0M1hA5cwoQoXaxalL5GpZ/UWAd
+XNC6QwaCB2ioTFueq8SJAHzur2V89FMUuPmSaB3yO72vko/468nLnjwCcZDpbWCS
+fVwcTz8bvyZfcYA2ugRPii4NM1+bYJHHtr6CIojN0FkE5tOLAxO4vPAx5CYABTm7
+HQn063YJJlTtJB1SJWMzmK5vqxtXFeOByc/msdQX8goxS3G6RNPVHabESaqVrG4i
+F+TyzqiMFTZdLjiJXiKcFHwDoLUwA/FxkA5/BwRCM5LX3LITAvvqYy0TkaQH0SeN
+bfqCf4kWzuNhTfZM3wFgaA+FvYC8M7PKiE9y1+TiWEUqMa+j0rcrf2+Nzt8mT6WU
+eQRwf9XzgmPVNarQpStomff6dJVaxloNCwKKk3LtGRWkV0EIbKtFwPi+M7h3BgWn
+NQHVT1MXXV8LyKipH1ZpB3WUHjGqL13esOFwR4W+U9/qzgn6kN7kZP+yj0qXutCR
+GsjoVvwN6FU8cjv4nK1H65cobBAqP0iWEvLt1e351cwQWwUL1V/B3jWM3Wqui/hR
+lOQ9TW/WdP1/VT2Heb3503IJKJYntOMcT8aYooCLUCQmx1g4Ks1y4hP5mlLurjdv
+qBrvDNbRsW27GnyuUm8/oS1qpYS0gIrMe4BMXpwLca6xvXElNcm2Lo1Oqh3MhW5J
+IVjGkQDV2vM76qsfBdpHebO0XBKfccyx9wZDO9MOAOXVO8o/yh8H/Mcn/sOpaVsv
+gdf6JElYfwCOd7J44ymzonw0kbC6F7UZgpWlY5gGlga2EPwwaFkTH22D8MHOrwKA
+JBJCvaGxEmzrV4WlaE77LUJoDs6chIF/GKcntsBvvyvjsrFLPK/2/RtrUEkP2G4e
+svWDdqSECPYEFYMvzfJMwa2G0uXCLiATP8NTSleOcZ9sPkE9Ul62JVJ+y/tOz8z/
+oZ4SdrgAEdJSbWbyev8bd1WCbRnOyOxuQHmVmhtCm4Ps506+sGWL+PDnywrwvyP7
+X1b8YpYCWaHS8md9AW2Jgcdj6p3Hc2Bs7zlMqzsc0pdvXRs=
+=Fb+8
 -----END PGP MESSAGE-----
 
---32c5e42c93--
+--32c--
 

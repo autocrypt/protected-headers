@@ -1,27 +1,27 @@
-Content-Type: multipart/signed; boundary="c72d4fa142";
+Content-Type: multipart/signed; boundary="c72";
  protocol="application/pgp-signature"; micalg="pgp-sha512"
 
---c72d4fa142
-Content-Type: multipart/mixed; boundary="6ae0cc9247"
+--c72
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
 Date: Mon, 21 Oct 2019 07:33:00 -0700
 Subject: BarCorp contract signed, let's go!
+Content-Type: multipart/mixed; boundary="6ae"; protected-headers="v1"
 Message-ID: <unfortunately-complex@protected-headers.example>
 
---6ae0cc9247
-content-type: text/rfc822-headers; protected-headers="v1"
+--6ae
+content-type: text/plain; protected-headers="v1"
 Content-Disposition: inline
 
 Subject: BarCorp contract signed, let's go!
 
---6ae0cc9247
-Content-Type: multipart/mixed; boundary="8dfc0e9ecf"
+--6ae
+Content-Type: multipart/mixed; boundary="8df"
 
---8dfc0e9ecf
-Content-Type: multipart/alternative; boundary="32c4d5a901"
+--8df
+Content-Type: multipart/alternative; boundary="32c"
 
---32c4d5a901
+--32c
 Content-Type: text/plain; charset="us-ascii"
 
 Hi Bob!
@@ -47,7 +47,7 @@ Alice Lovelace
 President
 Example Corp
 
---32c4d5a901
+--32c
 Content-Type: text/html; charset="us-ascii"
 
 <html><head></head><body><p>Hi Bob!
@@ -76,9 +76,9 @@ President<br/>
 Example Corp<br/>
 </p></body></html>
 
---32c4d5a901--
+--32c--
 
---8dfc0e9ecf
+--8df
 Content-Type: text/x-diff; charset="us-ascii"
 Content-Disposition: inline; filename="testharness-config.diff"
 
@@ -95,19 +95,19 @@ diff -ruN a/testharness.cfg b/testharness.cfg
 +username = examplecorptest
 +password = correct-horse-battery-staple
 
---8dfc0e9ecf--
+--8df--
 
---6ae0cc9247--
+--6ae--
 
---c72d4fa142
+--c72
 content-type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
 
 wnUEARYKAB0FAl2twZwWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
-jmpkAP9jaWeIjHro7WUSGpx2o5c62uor3twLgIxU3WXNcjZczwEAubpUzpnNBYdD
-tI9IXlyc9GPKHc2/GcYgnFvaU4BS8QU=
-=53F9
+jnUTAP9YDBbjItEr14L3f/hpRDdkiexX96wHRZOZlP4VlsPbmgEA/zNQ5GZxOW70
+EyF6maqK0Dedw/FXsbL32iFiXMGaTgY=
+=EuL1
 -----END PGP SIGNATURE-----
 
---c72d4fa142--
+--c72--

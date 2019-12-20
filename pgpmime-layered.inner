@@ -1,12 +1,12 @@
-Content-Type: multipart/signed; boundary="80b307f18b";
+Content-Type: multipart/signed; boundary="80b";
  protocol="application/pgp-signature"; micalg="pgp-sha512"
 
---80b307f18b
-Content-Type: text/plain; charset="us-ascii"
+--80b
 From: Alice Lovelace <alice@openpgp.example>
 To: Bob Babbage <bob@openpgp.example>
 Date: Mon, 21 Oct 2019 07:12:00 -0700
 Subject: BarCorp contract signed, let's go!
+Content-Type: text/plain; charset="us-ascii"; protected-headers="v1"
 Message-ID: <pgpmime-layered@protected-headers.example>
 
 Hi Bob!
@@ -32,15 +32,15 @@ Alice Lovelace
 President
 Example Corp
 
---80b307f18b
+--80b
 content-type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
 
 wnUEARYKAB0FAl2tvLAWIQTrhbtfozp14V6UTmPyMVUMT0fjjgAKCRDyMVUMT0fj
-juW9AQCSOVOP81+DgM8na6/DUdwOInh3hNnJH5pMkpfrKyXzOwD/Sf1a7ywT1Ml6
-U0/6VUP49PV1b6b1JHvVvVTtaJ7M0wU=
-=Htmw
+jjiqAPwOjOQI/Sr3vG0hiAKmfBgmB7VhKiUbfFWKRaWKkzJ/kAD/eOjMNvaZ5MG1
+fw6xQXpB1vRrY9Ttz3zr+TfLnfHFwQM=
+=4v4Q
 -----END PGP SIGNATURE-----
 
---80b307f18b--
+--80b--
