@@ -460,7 +460,7 @@ Example Corp''')
     if params.get('multipart', True):
         msg.set_type('multipart/signed')
         # making up an arbitrary MIME boundary based on the Message-ID:
-        msg.set_boundary(hashlib.sha256(payload['Message-ID'].encode()).hexdigest()[:10])
+        msg.set_boundary(hashlib.sha256(payload['Message-ID'].encode()).hexdigest()[:3])
         msg.set_param('protocol', sigpart.get_content_type())
         msg.set_param('micalg', micalg)
         msg.attach(payload)
@@ -562,7 +562,7 @@ Example Corp<br/>
 
         altpart:email.message.MIMEPart = email.message.MIMEPart()
         altpart.set_type('multipart/alternative')
-        altpart.set_boundary(hashlib.sha256('multipart-alternative'.encode()).hexdigest()[:10])
+        altpart.set_boundary(hashlib.sha256('multipart-alternative'.encode()).hexdigest()[:3])
         cleanpart(altpart)
         altpart.attach(txtpart)
         altpart.attach(htmlpart)
@@ -575,7 +575,7 @@ Example Corp<br/>
         attachmentpart['Content-Disposition'] = 'inline; filename="testharness-config.diff"'
         
         payload.set_type('multipart/mixed')
-        payload.set_boundary(hashlib.sha256('multipart-mixed'.encode()).hexdigest()[:10])
+        payload.set_boundary(hashlib.sha256('multipart-mixed'.encode()).hexdigest()[:3])
         cleanpart(payload)
         payload.attach(altpart)
         payload.attach(attachmentpart)
@@ -623,7 +623,7 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes,int]]) -> email
         payload.set_type('multipart/mixed')
         del payload['MIME-Version'] # MIME-Version on subparts is meaningless
         # arbitrary fixed boundary for replicability:
-        payload.set_boundary(hashlib.sha256('legacy-wrapper'.encode()).hexdigest()[:10])
+        payload.set_boundary(hashlib.sha256('legacy-wrapper'.encode()).hexdigest()[:3])
         payload.attach(legacydisplay)
         payload.attach(innerpayload)
     
@@ -668,7 +668,7 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes,int]]) -> email
             sigwrapper.set_type('multipart/signed')
             del sigwrapper['MIME-Version'] # MIME-Version on subparts is meaningless
             del sigwrapper['Content-Transfer-Encoding'] # test data is all 7-bit clean
-            sigwrapper.set_boundary(hashlib.sha256(f"inner{payload['Message-ID']}".encode()).hexdigest()[:10])
+            sigwrapper.set_boundary(hashlib.sha256(f"inner{payload['Message-ID']}".encode()).hexdigest()[:3])
             sigwrapper.set_param('protocol', sigpart.get_content_type())
             sigwrapper.set_param('micalg', micalg)
             sigwrapper.attach(payload)
@@ -703,7 +703,7 @@ def signed_encrypted(msgid:str, params:Dict[str,Union[bool,bytes,int]]) -> email
 
         msg.set_type('multipart/encrypted')
         # making up an arbitrary MIME boundary based on the Message-ID:
-        msg.set_boundary(hashlib.sha256(payload['Message-ID'].encode()).hexdigest()[:10])
+        msg.set_boundary(hashlib.sha256(payload['Message-ID'].encode()).hexdigest()[:3])
         msg.set_param('protocol', 'application/pgp-encrypted')
         msg.attach(cruft)
         msg.attach(encpart)
