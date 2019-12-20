@@ -219,7 +219,11 @@ class IdX509:
 
     @property
     def mailaddr(self) -> str:
-        return str(self._x509.extensions.get_extension_for_oid(x509.oid.ExtensionOID.SUBJECT_ALTERNATIVE_NAME).value.get_values_for_type(x509.general_name.RFC822Name)[0])
+        sans = self._x509.extensions.get_extension_for_oid(x509.oid.ExtensionOID.SUBJECT_ALTERNATIVE_NAME).value
+        if not isinstance(sans, x509.SubjectAlternativeName):
+            raise ValueError("failed to get subjectAltName as expected")
+        # ignoring due to https://github.com/python/typeshed/issues/3519:
+        return str(sans.get_values_for_type(x509.general_name.RFC822Name)[0]) #type: ignore
 
     def encrypt(self, data:email.message.MIMEPart, when:datetime.datetime, others:List["IdX509"], msg:email.message.MIMEPart) -> email.message.MIMEPart:
         txt:str = data.as_string(policy=email.policy.EmailPolicy(linesep='\r\n'))
