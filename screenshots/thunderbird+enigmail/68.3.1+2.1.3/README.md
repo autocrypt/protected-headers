@@ -19,9 +19,7 @@ setup.
 Samples:
 
  - `pgpmime-signed`
- 
    ![pgpmime-signed](pgpmime-signed.png)
    
  - `smime-multipart-signed`
- 
    ![smime-multipart-signed](smime-multipart-signed.png)
