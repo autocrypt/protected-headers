@@ -1,0 +1,77 @@
+#!/bin/bash
+
+profdir=$(mktemp -d)
+cleanup() {
+    rm -rf "$profdir"
+}
+trap cleanup EXIT
+
+mkdir -m 0700 -p "$profdir/"{tbird,gpg}
+touch "$profdir/empty"
+
+export GNUPGHOME="$profdir/gpg"
+
+gpg --quiet --batch --import bob@openpgp.example.sec.asc alice@openpgp.example.pub.asc
+certutil -A -d "sql:$profdir/tbird" -a -n 'Sample CA' -t ,TC, -i sample-ca.pem
+grep -v '^-' < bob.p12 | base64 -d > "$profdir/bob.p12"
+pk12util -i "$profdir/bob.p12" -W '' -d "sql:$profdir/tbird"
+
+cat > "$profdir/tbird/prefs.js" <<EOF
+user_pref("mail.root.imap", "$profdir/tbird/ImapMail");
+user_pref("mail.root.imap-rel", "[ProfD]ImapMail");
+user_pref("mail.root.none", "$profdir/tbird/Mail");
+user_pref("mail.root.none-rel", "[ProfD]Mail");
+
+user_pref("mail.account.account1.identities", "id1");
+user_pref("mail.account.account1.server", "server1");
+user_pref("mail.account.account2.server", "server2");
+user_pref("mail.accountmanager.accounts", "account1,account2");
+user_pref("mail.accountmanager.defaultaccount", "account1");
+user_pref("mail.account.lastKey", 2);
+
+user_pref("mail.identity.id1.archive_folder", "mailbox://nobody@Local%20Folders/Archives");
+user_pref("mail.identity.id1.doBcc", false);
+user_pref("mail.identity.id1.draft_folder", "mailbox://nobody@Local%20Folders/Drafts");
+user_pref("mail.identity.id1.drafts_folder_picker_mode", "0");
+user_pref("mail.identity.id1.fcc_folder", "mailbox://nobody@Local%20Folders/Sent");
+user_pref("mail.identity.id1.fcc_folder_picker_mode", "0");
+user_pref("mail.identity.id1.fullName", "Bob");
+user_pref("mail.identity.id1.reply_on_top", 1);
+user_pref("mail.identity.id1.smtpServer", "smtp1");
+user_pref("mail.identity.id1.stationery_folder", "mailbox://nobody@Local%20Folders/Templates");
+user_pref("mail.identity.id1.tmpl_folder_picker_mode", "0");
+user_pref("mail.identity.id1.useremail", "bob@protected-headers.cmrg.net");
+user_pref("mail.identity.id1.valid", true);
+
+user_pref("mail.server.server1.hostname", "protected-headers.cmrg.net");
+user_pref("mail.server.server1.login_at_startup", true);
+user_pref("mail.server.server1.name", "bob@protected-headers.cmrg.net");
+user_pref("mail.server.server1.socketType", 2);
+user_pref("mail.server.server1.type", "imap");
+user_pref("mail.server.server1.userName", "bob");
+user_pref("mail.server.server1.directory", "$profdir/tbird/ImapMail/protected-headers.cmrg.net");
+user_pref("mail.server.server1.directory-rel", "[ProfD]ImapMail/protected-headers.cmrg.net");
+user_pref("mail.server.server1.storeContractID", "@mozilla.org/msgstore/berkeleystore;1");
+
+user_pref("mail.server.server2.directory", "$profdir/tbird/Mail/Local Folders");
+user_pref("mail.server.server2.directory-rel", "[ProfD]Mail/Local Folders");
+user_pref("mail.server.server2.hostname", "Local Folders");
+user_pref("mail.server.server2.lastFilterTime", 26271353);
+user_pref("mail.server.server2.name", "Local Folders");
+user_pref("mail.server.server2.nextFilterTime", 26271363);
+user_pref("mail.server.server2.spamActionTargetAccount", "mailbox://nobody@Local%20Folders");
+user_pref("mail.server.server2.storeContractID", "@mozilla.org/msgstore/berkeleystore;1");
+user_pref("mail.server.server2.type", "none");
+user_pref("mail.server.server2.userName", "nobody");
+
+user_pref("mail.smtpserver.smtp1.authMethod", 3);
+user_pref("mail.smtpserver.smtp1.hostname", "protected-headers.cmrg.net");
+user_pref("mail.smtpserver.smtp1.port", 587);
+user_pref("mail.smtpserver.smtp1.try_ssl", 2);
+user_pref("mail.smtpserver.smtp1.username", "bob");
+user_pref("mail.smtpservers", "smtp1");
+EOF
+
+thunderbird --profile "$profdir/tbird"
+find "$profdir" -ls
+
