@@ -481,7 +481,7 @@ As such, the existence of the Legacy Display part and its `multipart/mixed` wrap
 
 As the number of decryption-capable clients that understand Protected Headers grows in comparison to the number of legacy decryption-capable clients, it is expected that some senders will decide to stop generating Legacy Display parts entirely.
 
-A MUA developer concerned about accessiblity of the Subject header for their users of encrypted mail when Legacy Display parts are omitted SHOULD implement the Protected Headers scheme described in this document.
+A MUA developer concerned about accessiblity of the Subject header for their users of encrypted mail when Legacy Display parts are omitted by the sender SHOULD implement the Protected Headers scheme described in this document.
 
 
 Message Interpretation
