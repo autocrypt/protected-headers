@@ -51,8 +51,8 @@ informative:
       ins: R. Munroe
       org: xkcd
     date: 2011-08-10
- I-D.draft-bre-openpgp-samples-00:
- I-D.draft-dkg-lamps-samples-01:
+ I-D.draft-bre-openpgp-samples-01:
+ I-D.draft-dkg-lamps-samples-02:
  I-D.draft-luck-lamps-pep-header-protection-03:
  I-D.draft-ietf-lamps-header-protection-requirements-01:
  RFC2634:
@@ -709,9 +709,9 @@ Test Vectors {#test-vectors}
 
 The subsections below provide example messages that implement the Protected Header scheme.
 
-The secret keys and OpenPGP certificates from {{I-D.draft-bre-openpgp-samples-00}} can be used to decrypt and verify the PGP/MIME messages.
+The secret keys and OpenPGP certificates from {{I-D.draft-bre-openpgp-samples-01}} can be used to decrypt and verify the PGP/MIME messages.
 
-The secret keys and X.509 certificates from {{I-D.draft-dkg-lamps-samples-01}} can be used to decrypt and verify the S/MIME messages.
+The secret keys and X.509 certificates from {{I-D.draft-dkg-lamps-samples-02}} can be used to decrypt and verify the S/MIME messages.
 
 All test vectors are provided in textual source form as {{RFC5322}} messages.
 

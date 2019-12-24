@@ -54,8 +54,9 @@ smime-%.inner: smime-%.eml gpghome
 	mv $@.tmp $@
 
 gpghome: bob.p12
-	mkdir -p $@.tmp
-	touch $@.tmp/passwd
+	rm -rf $@ $@.tmp
+	mkdir $@.tmp
+	echo bob > $@.tmp/passwd
 	gpgsm --batch --disable-dirmngr --quiet --homedir $@.tmp --import --pinentry-mode loopback --passphrase-fd 4 4<$@.tmp/passwd bob.p12
 	mv $@.tmp $@
 
