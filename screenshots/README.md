@@ -42,7 +42,7 @@ For example, screenshots for
 [Thunderbird](https://www.thunderbird.net/) 68.3.1 using
 [Enigmail](https://enigmail.net) 2.1.3 are placed in:
 
-    ./screenshots/thunderbird+enigmail/68.3.1+2.1.3/
+    ./screenshots/Thunderbird+Enigmail/68.3.1+2.1.3/
 
 Feel free to include any additional relevant information in a
 markdown-formatted `README.md` file in the same directory.
