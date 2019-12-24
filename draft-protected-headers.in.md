@@ -697,7 +697,7 @@ Triple-Wrapping
 
 {{RFC2634}} defines "Triple Wrapping" as a means of providing cleartext signatures over signed and encrypted material.
 A mail list agent uses triple wrapping to sign the mail list expansion history.
-Others have observed that triple wrapping could be used in combination with the mechanism described in [RFC7508] to authenticate some headers for transport using S/MIME.
+Others have observed that triple wrapping could be used in combination with the mechanism described in {{RFC7508}} to authenticate some headers for transport using S/MIME.
 
 But it does not offer confidentiality protection for the protected headers, and the signer of the outer layer of a triple-wrapped message may not be the originator of the message either (as in the mail list case).
 
