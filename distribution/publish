@@ -1,7 +1,14 @@
 #!/bin/bash
 
 set -e
-publishhost="${1:-che.mayfirst.org}"
+publishhost="${publishhost:-che.mayfirst.org}"
+if [ "$1" = release ]; then
+    printf 'publishing to official server...\n' >&2
+    suffix=
+else
+    printf 'publishing to staging server...\n' >&2
+    suffix=-staging
+fi
 assembly=$(mktemp -d)
 cleanup() {
     rm -rf "$assembly"
@@ -11,6 +18,7 @@ trap cleanup EXIT
 printf "publishing to %s…" "$publishhost" >&2
 mkdir -p "$assembly"/{messages/{new,tmp,cur},meta}
 cp *.eml "$assembly/messages/cur/"
-cp distribution/{dovecot.conf,protected-headers-imap.service,dovecot.acls} "$assembly/meta/"
-tar --create -C "$assembly" messages meta | ssh "$publishhost" tar -x -C /srv/protected-headers
+cp distribution/{protected-headers-imap${suffix}.service,dovecot.acls} "$assembly/meta/"
+cp distribution/config${suffix}/dovecot.conf "$assembly/meta/"
+tar --create -C "$assembly" messages meta | ssh "$publishhost" tar -x -C "/srv/protected-headers${suffix}"
 printf "done\n" >&2

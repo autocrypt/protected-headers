@@ -1,11 +1,11 @@
 [Unit]
-Description=IMAP server hosting example messages with protected headers
+Description=IMAP server hosting example messages with protected headers (staging, ports 144 and 994)
 Documentation=https://datatracker.ietf.org/doc/draft-autocrypt-lamps-protected-headers/
 After=local-fs.target network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/sbin/dovecot -F -c /srv/protected-headers/meta/dovecot.conf
+ExecStart=/usr/sbin/dovecot -F -c /srv/protected-headers-staging/meta/dovecot.conf
 PrivateTmp=true
 NonBlocking=yes
 ProtectSystem=full
@@ -14,7 +14,7 @@ PrivateDevices=true
 User=protected-headers
 AmbientCapabilities=CAP_NET_BIND_SERVICE
 CapabilityBoundingSet=CAP_NET_BIND_SERVICE
-RuntimeDirectory=protected-headers
+RuntimeDirectory=protected-headers-staging
 
 [Install]
 WantedBy=multi-user.target
