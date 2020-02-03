@@ -2,15 +2,15 @@
 
 set -e
 publishhost="${1:-che.mayfirst.org}"
-staging=$(mktemp -d)
+assembly=$(mktemp -d)
 cleanup() {
-    rm -rf "$staging"
+    rm -rf "$assembly"
 }
 trap cleanup EXIT
 
 printf "publishing to %s…" "$publishhost" >&2
-mkdir -p "$staging"/{messages/{new,tmp,cur},meta}
-cp *.eml "$staging/messages/cur/"
-cp distribution/{dovecot.conf,protected-headers-imap.service,dovecot.acls} "$staging/meta/"
-tar --create -C "$staging" messages meta | ssh "$publishhost" tar -x -C /srv/protected-headers
+mkdir -p "$assembly"/{messages/{new,tmp,cur},meta}
+cp *.eml "$assembly/messages/cur/"
+cp distribution/{dovecot.conf,protected-headers-imap.service,dovecot.acls} "$assembly/meta/"
+tar --create -C "$assembly" messages meta | ssh "$publishhost" tar -x -C /srv/protected-headers
 printf "done\n" >&2
