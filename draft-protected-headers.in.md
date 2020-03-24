@@ -149,6 +149,8 @@ Note that no "user-facing" headers ({{user-facing-headers}}) are also "structura
 
 FIXME: are there any non-`Content-*` headers we should consider as structural?
 
+ - `MIME-Version`
+
 Protected Headers Summary
 =========================
 
