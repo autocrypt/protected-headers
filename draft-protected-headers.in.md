@@ -481,7 +481,7 @@ As such, the existence of the Legacy Display part and its `multipart/mixed` wrap
 
 As the number of decryption-capable clients that understand Protected Headers grows in comparison to the number of legacy decryption-capable clients, it is expected that some senders will decide to stop generating Legacy Display parts entirely.
 
-A MUA developer concerned about accessiblity of the Subject header for their users of encrypted mail when Legacy Display parts are omitted by the sender SHOULD implement the Protected Headers scheme described in this document.
+A MUA developer concerned about accessibility of the Subject header for their users of encrypted mail when Legacy Display parts are omitted by the sender SHOULD implement the Protected Headers scheme described in this document.
 
 
 Message Interpretation
@@ -685,7 +685,7 @@ S/MIME "Secure Headers"
 {{RFC7508}} describes a mechanism that embeds message header fields in the S/MIME signature using ASN.1.
 
 The mechanism proposed in that draft is undefined for use with PGP/MIME.
-While all S/MIME clients must be able to handle CMS and ASN.1 as well as MIME, a standard that works at the MIME layer itself should be applicable to any MUA that can work with MIME, regardess of whether end-to-end security layers are provided by S/MIME or PGP/MIME.
+While all S/MIME clients must be able to handle CMS and ASN.1 as well as MIME, a standard that works at the MIME layer itself should be applicable to any MUA that can work with MIME, regardless of whether end-to-end security layers are provided by S/MIME or PGP/MIME.
 
 That mechanism also does not propose a means to provide confidentiality protection for headers within an encrypted-but-not-signed message.
 
